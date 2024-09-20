@@ -1,5 +1,6 @@
 #include "Mylib.h"
 #include "Stud.h"
+#include "Util.h"
 
 int main()
 {
@@ -16,5 +17,6 @@ int main()
             clean(Temp_stud);
     }
     //Students data output---------------------------------------------------
+    output(Students);
     system("pause");
 }
