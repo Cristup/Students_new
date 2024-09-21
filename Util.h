@@ -37,7 +37,7 @@ double Median(vector<int> nd)
 	}
 }
 
-double Result(int egz, double avg)
+double Result(int egz, double value)
 {
-	return 0.4 * avg + 0.6 * egz;
+	return 0.4 * value + 0.6 * egz;
 }
