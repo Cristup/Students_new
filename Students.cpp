@@ -12,15 +12,26 @@ int main()
     vector<Stud> Students;
     Stud Temp_stud; //Temporary student data
     int n; //Student count
-    //Students data input---------------------------------------------------
-    cout << "How many students? "; cin >> n;
-    for (int i = 0; i < n; i++) {
-        cout << "Enter student number " << i + 1 << " data: " << endl;
+    string User_input; //Input that determine method of input
+
+    cout << "Enter either file name or number of students: ";
+    cin >> User_input;
+    //Students data input in terminal
+    if (is_digits(User_input)) {
+        n = stoi(User_input);
+        
+        for (int i = 0; i < n; i++) {
+            cout << "Enter student number " << i + 1 << " data: " << endl;
             input(Temp_stud);
             Students.push_back(Temp_stud);
             clean(Temp_stud);
+        }
     }
-    //Students data output---------------------------------------------------
+    //Students data input from file
+    else {
+        Input_from_file(Students, User_input);
+    }
+    //Students data output
     output(Students);
     system("pause");
 }

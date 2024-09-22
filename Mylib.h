@@ -6,11 +6,13 @@
 #include <algorithm>
 #include <string>
 #include <random>
+#include <fstream>
 
 #include <chrono>
 
 using std::vector;
 using std::string;
+using std::ifstream;
 using std::cout;
 using std::cin;
 using std::endl;

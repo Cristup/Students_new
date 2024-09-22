@@ -15,6 +15,9 @@ void Sort(vector<int>& vec)
 
 double Average(vector<int> nd)
 {
+	if (nd.empty()) {
+		throw std::invalid_argument("Vector is empty");
+	}
 	int sum = 0;
 	for (int i = 0; i < nd.size(); i++){
 		sum += nd[i];
@@ -24,6 +27,9 @@ double Average(vector<int> nd)
 
 double Median(vector<int> nd)
 {
+	if (nd.empty()) {
+		throw std::invalid_argument("Vector is empty");
+	}
 	int n = nd.size(); //vector length
 	Sort(nd);
 	if (n % 2 != 0) {
@@ -37,4 +43,15 @@ double Median(vector<int> nd)
 double Result(int egz, double value)
 {
 	return 0.4 * value + 0.6 * egz;
+}
+
+bool is_digits(string str)
+{
+	for (char ch : str) {
+		int value = ch;
+		if (!(ch >= 48 && ch <= 57)) {
+			return false;
+		}
+	}
+	return true;
 }

@@ -85,38 +85,13 @@ void input(Stud& local)
 
 void output(vector<Stud> local)
 {
-	string type;
-	double value;
-	cout << "Choose what value to use for counting final result:" << endl;
-	//Selecting value for counting of final result with input check
-	while (true) {
-		cout << "Average(Avg) or Median(Med): "; cin >> type;
-		transform(type.begin(), type.end(), type.begin(), ::tolower);
-		if (type.substr(0,2) == "av") {
-			type = "Avg";
-			break;
-		}
-		else if (type.substr(0, 2) == "me") {
-			type = "Med";
-			break;
-		}
-		else {
-			cout << "Wrong value type! Try again." << endl;
-		}
-	}
-	//Table printing
-	cout << "Name        |Surname     |Final result(" << type << ")" << endl;
-	cout << "------------+------------+-----------------" << endl;
+	cout << "Name        |Surname     |Final result(Avg) |Final result(Med)" << endl;
+	cout << "------------+------------+------------------+-----------------" << endl;
 	for (int i = 0; i < local.size(); i++) {
-		//Choosing preferred value
-		if (type == "Avg")
-			value = local[i].vid;
-		else
-			value = local[i].med;
-		//Printing
 		cout << setw(12) << left << local[i].vardas << '|' <<
 			setw(12) << left << local[i].pavarde << '|' <<
-			fixed << setprecision(2) << Result(local[i].egz, value) << endl;
+			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) << "|" <<
+			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << endl;
 	}
 }
 
@@ -125,4 +100,44 @@ void clean(Stud& local)
 	local.vardas.clear();
 	local.pavarde.clear();
 	local.nd.clear();
+}
+
+void Input_from_file(vector<Stud>& local, string filename)
+{
+	Stud Temp_stud;
+	int n = 0, //Number of homeworks
+		Temp_nd, Temp_egzam;
+	string Temp_value,
+		name, surname;
+
+	ifstream inFile;
+	inFile.open(filename);
+	//Cheking file structure
+	inFile >> Temp_value >> Temp_value; //Ignoring two strings
+	inFile >> Temp_value;
+	while (Temp_value.substr(0, 2) == "ND") {
+		n++;
+		inFile >> Temp_value;
+	}
+	//Reading data
+	while (inFile >> name >> surname) {
+		//name and surname
+		Temp_stud.vardas = name;
+		Temp_stud.pavarde = surname;
+		//home works
+		for (int i = 0; i < n; i++) {
+			inFile >> Temp_nd;
+			Temp_stud.nd.push_back(Temp_nd);
+		}
+		//egzam
+		inFile >> Temp_egzam;
+		Temp_stud.egz = Temp_egzam;
+		//average and median values
+		Temp_stud.vid = Average(Temp_stud.nd);
+		Temp_stud.med = Median(Temp_stud.nd);
+		//saving to local vector
+		local.push_back(Temp_stud);
+		clean(Temp_stud);
+	}
+	inFile.close();
 }
