@@ -5,6 +5,9 @@
 #include <iomanip>
 #include <algorithm>
 #include <string>
+#include <random>
+
+#include <chrono>
 
 using std::vector;
 using std::string;
@@ -20,3 +23,6 @@ using std::swap;
 using std::transform;
 using std::stoi;
 using std::getline;
+
+std::random_device rd;
+std::uniform_int_distribution<int> dist(1, 10);

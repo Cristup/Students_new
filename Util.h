@@ -4,13 +4,10 @@
 
 void Sort(vector<int>& vec)
 {
-	int temp;
 	for (int i = 0; i < vec.size() - 1; i++) {
 		for (int j = i + 1; j < vec.size(); j++) {
 			if (vec[j] < vec[i]) {
-				temp = vec[j];
-				vec[j] = vec[i];
-				vec[i] = temp;
+				swap(vec[j], vec[i]);
 			}
 		}
 	}
