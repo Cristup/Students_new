@@ -15,9 +15,6 @@ void Sort(vector<int>& vec)
 
 double Average(vector<int> nd)
 {
-	if (nd.empty()) {
-		throw std::invalid_argument("Vector is empty");
-	}
 	int sum = 0;
 	for (int i = 0; i < nd.size(); i++){
 		sum += nd[i];
@@ -27,9 +24,6 @@ double Average(vector<int> nd)
 
 double Median(vector<int> nd)
 {
-	if (nd.empty()) {
-		throw std::invalid_argument("Vector is empty");
-	}
 	int n = nd.size(); //vector length
 	Sort(nd);
 	if (n % 2 != 0) {

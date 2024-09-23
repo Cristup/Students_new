@@ -13,9 +13,8 @@ int main()
     Stud Temp_stud; //Temporary student data
     int n; //Student count
     string User_input; //Input that determine method of input
-
-    cout << "Enter either file name or number of students: ";
-    cin >> User_input;
+     cout << "Enter either file name or number of students: ";
+     cin >> User_input;        
     //Students data input in terminal
     if (is_digits(User_input)) {
         n = stoi(User_input);
@@ -29,6 +28,16 @@ int main()
     }
     //Students data input from file
     else {
+        ifstream file;
+        try {
+            file.open(User_input);
+            if (!file) {
+                throw std::runtime_error("File not found!");
+            }
+        }
+        catch (const std::exception& e) {
+            cout << "Exeption " << e.what() << endl;
+        }
         Input_from_file(Students, User_input);
     }
     //Students data output

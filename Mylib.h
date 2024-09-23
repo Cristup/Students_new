@@ -13,6 +13,7 @@
 using std::vector;
 using std::string;
 using std::ifstream;
+using std::ofstream;
 using std::cout;
 using std::cin;
 using std::endl;
@@ -28,3 +29,4 @@ using std::getline;
 
 std::random_device rd;
 std::uniform_int_distribution<int> dist(1, 10);
+std::uniform_int_distribution<int> dist1(5, 15);

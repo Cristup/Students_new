@@ -10,11 +10,18 @@ struct Stud {
 	double vid, med;
 };
 
+void clean(Stud& local)
+{
+	local.vardas.clear();
+	local.pavarde.clear();
+	local.nd.clear();
+}
+
 void Automatic_input(Stud& local)
 {
 	local.egz = dist(rd);
 	cout << "Generated egzam result: " << local.egz << endl;
-	int amount = dist(rd);
+	int amount = dist1(rd);
 	for (int i = 0; i < amount; i++) {
 		local.nd.push_back(dist(rd));
 		cout << "Generated home work result " << i + 1 << ": " << local.nd[i] << endl;
@@ -26,28 +33,36 @@ void Manual_input(Stud& local)
 	int Temp_nd, nd_count = 1;
 	int empty_count = 0;
 	string value;
+	getline(cin, value); // line to delete left empty space
 	while (true) {
 		cout << "Enter home work number " << nd_count << " result: ";
 		getline(cin, value);
 		if (value.empty()) {
 			empty_count++;
-			if (empty_count == 2) {
+			if (nd_count == 1) {
+				cout << "You must enter at least one home work!" << endl;
+			}
+			else if (empty_count == 2) {
 				break;
 			}
 		}
-		else {
+		else if (!is_digits(value)) {
+			cout << "Invalid input! Try again." << endl;
+		}
+		else if (stoi(value) > 0 && stoi(value) <= 10 ) {
 			empty_count = 0;
 			Temp_nd = stoi(value);
 			local.nd.push_back(Temp_nd);
 			nd_count++;
+		}
+		else {
+			cout << "Value must be in the interval [1;10]!" << endl;
 		}
 	}
 }
 
 void input(Stud& local)
 {
-	
-	
 	string line;
 	//Single values: name, surname, egzam result
 	cout << "Name, Surname: ";
@@ -63,9 +78,13 @@ void input(Stud& local)
 		}
 		//Manual input
 		else {
+			int exam_result;
 			try {
-				int exam_result = stoi(line);
-				local.egz = stoi(line);
+				exam_result = stoi(line);
+				if (exam_result < 1 || exam_result >= 10) {
+					throw std::out_of_range("Value out of range!");
+				}
+				local.egz = exam_result;
 				cout << "Enter home work results (Press enter twice to finish)." << endl;
 				Manual_input(local);
 				break;
@@ -95,11 +114,12 @@ void output(vector<Stud> local)
 	}
 }
 
-void clean(Stud& local)
+void output_to_file(vector<Stud> local)
 {
-	local.vardas.clear();
-	local.pavarde.clear();
-	local.nd.clear();
+	ofstream outFile;
+	outFile.open("Result.txt");
+
+	outFile.close();
 }
 
 void Input_from_file(vector<Stud>& local, string filename)
