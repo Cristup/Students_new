@@ -104,11 +104,11 @@ void input(Stud& local)
 
 void output(vector<Stud> local)
 {
-	cout << "Name        |Surname     |Final result(Avg) |Final result(Med)" << endl;
-	cout << "------------+------------+------------------+-----------------" << endl;
+	cout << "Name              |Surname           |Final result(Avg) |Final result(Med)" << endl;
+	cout << "------------------+------------------+------------------+-----------------" << endl;
 	for (int i = 0; i < local.size(); i++) {
-		cout << setw(12) << left << local[i].vardas << '|' <<
-			setw(12) << left << local[i].pavarde << '|' <<
+		cout << setw(18) << left << local[i].vardas << '|' <<
+			setw(18) << left << local[i].pavarde << '|' <<
 			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) << "|" <<
 			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << endl;
 	}
@@ -118,7 +118,14 @@ void output_to_file(vector<Stud> local)
 {
 	ofstream outFile;
 	outFile.open("Result.txt");
-
+	outFile << "Name              Surname           Final result(Avg) Final result(Med)\n";
+	outFile << "-----------------------------------------------------------------------\n";
+	for (int i = 0; i < local.size(); i++) {
+		outFile << setw(18) << left << local[i].vardas <<
+			setw(18) << left << local[i].pavarde <<
+			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) <<
+			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << "\n";
+	}
 	outFile.close();
 }
 
