@@ -41,6 +41,8 @@ int main()
         Input_from_file(Students, User_input);
     }
     //Students data output
-    output(Students);
+    simple_sort(Students);
+    output_to_file(Students);
+    cout << "Result in file 'Result.txt'." << endl;
     system("pause");
 }

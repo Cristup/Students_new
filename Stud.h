@@ -33,7 +33,7 @@ void Manual_input(Stud& local)
 	int Temp_nd, nd_count = 1;
 	int empty_count = 0;
 	string value;
-	getline(cin, value); // line to delete left empty space
+	getline(cin, value); // line to delete left empty space after cin >>
 	while (true) {
 		cout << "Enter home work number " << nd_count << " result: ";
 		getline(cin, value);
@@ -167,4 +167,13 @@ void Input_from_file(vector<Stud>& local, string filename)
 		clean(Temp_stud);
 	}
 	inFile.close();
+}
+
+void simple_sort(vector<Stud>& local) {
+	sort(local.begin(), local.end(), [](const Stud& a, const Stud& b) {
+		if (a.vardas == b.vardas) {
+			return a.pavarde < b.pavarde;
+		}
+		return a.vardas < b.vardas;
+		});
 }
