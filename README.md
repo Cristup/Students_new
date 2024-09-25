@@ -84,27 +84,27 @@ double Median(vector<int> nd)
 **Median** function uses std::sort with asymptotic speed O(n log n), where n is once again size of the vector.
 
 ### Data reading
-Files of sizes **10000**, **1000000**  and **1000000** were used for mesuring program speed.
+Files of sizes **10 000**, **100 000**  and **1 000 000** were used for mesuring program speed.
 
 Reading data from file for each file:
-1. For file with **10000** lines program took **0.26533 seconds**.
-2. For file with **100000** lines program took **3.24163 seconds**.
-3. For file with **1000000** lines program took **18.8752 seconds**.
+1. For file with **10 000** lines program took **0.26533 seconds**.
+2. For file with **100 000** lines program took **3.24163 seconds**.
+3. For file with **1 000 000** lines program took **18.8752 seconds**.
 
 Sorting data for each file:
-1. For file with **10000** lines program took **0.130148 seconds**.
-2. For file with **100000** lines program took **1.64338 seconds**.
-3. For file with **1000000** lines program took **20.9452 seconds**.
+1. For file with **10 000** lines program took **0.130148 seconds**.
+2. For file with **100 000** lines program took **1.64338 seconds**.
+3. For file with **1 000 000** lines program took **20.9452 seconds**.
 
 Writing to results file for each file:
-1. For file with **10000** lines program took **0.121206 seconds**.
-2. For file with **100000** lines program took **1.19328 seconds**.
-3. For file with **1000000** lines program took **12.2562 seconds**.
+1. For file with **10 000** lines program took **0.121206 seconds**.
+2. For file with **100 000** lines program took **1.19328 seconds**.
+3. For file with **1 000 000** lines program took **12.2562 seconds**.
 
 In total:
-1. For file with **10000** lines program took **0.525315 seconds**.
-2. For file with **100000** lines program took **6.25026 seconds**.
-3. For file with **1000000** lines program took **50.3132 seconds**.
+1. For file with **10 000** lines program took **0.525315 seconds**.
+2. For file with **100 000** lines program took **6.25026 seconds**.
+3. For file with **1 000 000** lines program took **50.3132 seconds**.
 
 ### Code for Measuring Execution Time
 The following code snippet demonstrates how execution time is measured:
