@@ -1,179 +1,104 @@
-#pragma once
+#ifndef STUD_H_INCLUDED
+#define STUD_H_INCLUDED
 
 #include "Mylib.h"
 #include "Util.h"
 
+/*	Structure for students data:
+*		vardas	- student name;
+*		pavarde - student last name;
+*		nd		- vector for storing home work marks;
+*		egz		- exam result;
+*		vid		- average value of all homework marks;
+*		med		- median value of all homework marks.
+*/
 struct Stud {
-	string vardas, pavarde;
-	vector<int> nd;
-	int egz;
-	double vid, med;
+	string	vardas;		//- student name;
+	string	pavarde;	//- student last name;
+	vector<int> nd;		//- vector for storing home work marks;
+	int		egz;		//- exam result;
+	double	vid;		//- average value of all homework marks;
+	double	med;		//- median value of all homework marks.
 };
 
-void clean(Stud& local)
-{
-	local.vardas.clear();
-	local.pavarde.clear();
-	local.nd.clear();
-}
+/*	Function for deleting students data:
+*		Name, Surname & Homework vector.
+* 
+	Precondition:
+*		local - type Stud argument.
+*/
+void clean(Stud& local);
 
-void Automatic_input(Stud& local)
-{
-	local.egz = dist(rd);
-	cout << "Generated egzam result: " << local.egz << endl;
-	int amount = dist1(rd);
-	for (int i = 0; i < amount; i++) {
-		local.nd.push_back(dist(rd));
-		cout << "Generated home work result " << i + 1 << ": " << local.nd[i] << endl;
-	}
-}
+/*	Function that generates and inputs values from 
+*		uniform distribution to Students structure.
+*		Also, prints generated values to terminal.
+*		
+	Generated values:
+*		Exam result in interval [1;10];
+*		Number of homeworks in interval [5;15];
+*		Homework marks in interval [1;10].
+*/
+void Automatic_input(Stud& local);
 
-void Manual_input(Stud& local)
-{
-	int Temp_nd, nd_count = 1;
-	int empty_count = 0;
-	string value;
-	getline(cin, value); // line to delete left empty space after cin >>
-	while (true) {
-		cout << "Enter home work number " << nd_count << " result: ";
-		getline(cin, value);
-		if (value.empty()) {
-			empty_count++;
-			if (nd_count == 1) {
-				cout << "You must enter at least one home work!" << endl;
-			}
-			else if (empty_count == 2) {
-				break;
-			}
-		}
-		else if (!is_digits(value)) {
-			cout << "Invalid input! Try again." << endl;
-		}
-		else if (stoi(value) > 0 && stoi(value) <= 10 ) {
-			empty_count = 0;
-			Temp_nd = stoi(value);
-			local.nd.push_back(Temp_nd);
-			nd_count++;
-		}
-		else {
-			cout << "Value must be in the interval [1;10]!" << endl;
-		}
-	}
-}
+/*	Function for entering x homework marks in 
+*		terminal and managing user input.
+*	
+	Data is writen to Stud.nd vector until 
+*		user presses Enter twice.
+* 
+	Function checks if:
+*		there is at least one value provided by user;
+*		value is an integer;
+*		value isn't something else;
+*		value is in interval [1;10].
+*/
+void Manual_input(Stud& local);
 
-void input(Stud& local)
-{
-	string line;
-	//Single values: name, surname, egzam result
-	cout << "Name, Surname: ";
-	cin >> local.vardas >> local.pavarde;
-	while (true) {
-		cout << "Enter egzam result or write 'auto' to generate egzam and home work results: ";
-		cin >> line;
-		transform(line.begin(), line.end(), line.begin(), ::tolower);
-		//Automatic input
-		if (line.substr(0, 2) == "au") {
-			Automatic_input(local);
-			break;
-		}
-		//Manual input
-		else {
-			int exam_result;
-			try {
-				exam_result = stoi(line);
-				if (exam_result < 1 || exam_result >= 10) {
-					throw std::out_of_range("Value out of range!");
-				}
-				local.egz = exam_result;
-				cout << "Enter home work results (Press enter twice to finish)." << endl;
-				Manual_input(local);
-				break;
-			}
-			catch (const std::invalid_argument&) {
-				cout << "Invalid input! Try again." << endl;
-			}
-			catch (const std::out_of_range&) {
-				cout << "Number out of range! Try again." << endl;
-			}
-		}
-	}
-	//Other values
-	local.vid = Average(local.nd);
-	local.med = Median(local.nd);
-}
+/*	Function for data input in terminal.
+*		local - type Stud argument for single student data.
+	Part 1:
+*		Name & Surname input to local structure
+	Part 2:
+*		Either exam result or 'auto' choice 
+*		and input managing.
+		Part 2.1:
+*			If user provided good exam result value,
+*			then it is directed to Manual_input() function.
+		Part 2.2:
+*			User chose to generate data, in which case
+*			Automatic_input() function is called.
+	Part 3:
+*		Finnaly function calculates Average and Median
+*		values and saves them in local sstructure.
+*/
+void input(Stud& local);
 
-void output(vector<Stud> local)
-{
-	cout << "Name              |Surname           |Final result(Avg) |Final result(Med)" << endl;
-	cout << "------------------+------------------+------------------+-----------------" << endl;
-	for (int i = 0; i < local.size(); i++) {
-		cout << setw(18) << left << local[i].vardas << '|' <<
-			setw(18) << left << local[i].pavarde << '|' <<
-			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) << "|" <<
-			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << endl;
-	}
-}
+/*	Data table printing in terminal:
+		Name, Surname, Final result using
+		Average and Median values.
+*/
+void output(vector<Stud> local);
 
-void output_to_file(vector<Stud> local)
-{
-	ofstream outFile;
-	outFile.open("Result.txt");
-	outFile << "Name              Surname           Final result(Avg) Final result(Med)\n";
-	outFile << "-----------------------------------------------------------------------\n";
-	for (int i = 0; i < local.size(); i++) {
-		outFile << setw(18) << left << local[i].vardas <<
-			setw(18) << left << local[i].pavarde <<
-			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) <<
-			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << "\n";
-	}
-	outFile.close();
-}
+/*	Data table writing in file:
+		Name, Surname, Final result using
+		Average and Median values.	
+*/
+void output_to_file(vector<Stud> local);
 
-void Input_from_file(vector<Stud>& local, string filename)
-{
-	Stud Temp_stud;
-	int n = 0, //Number of homeworks
-		Temp_nd, Temp_egzam;
-	string Temp_value,
-		name, surname;
+/*	Reading students data from a file to Stud structure
+*		Function counts number of homeworks;
+*		Then reads all data in a single line;
+*		Then counts Average and Median values;
+*		Then pushes data to Students vector;
+*		And repeats until the end of the file.
+*/
+void Input_from_file(vector<Stud>& local, string filename);
 
-	ifstream inFile;
-	inFile.open(filename);
-	//Cheking file structure
-	inFile >> Temp_value >> Temp_value; //Ignoring two strings
-	inFile >> Temp_value;
-	while (Temp_value.substr(0, 2) == "ND") {
-		n++;
-		inFile >> Temp_value;
-	}
-	//Reading data
-	while (inFile >> name >> surname) {
-		//name and surname
-		Temp_stud.vardas = name;
-		Temp_stud.pavarde = surname;
-		//home works
-		for (int i = 0; i < n; i++) {
-			inFile >> Temp_nd;
-			Temp_stud.nd.push_back(Temp_nd);
-		}
-		//egzam
-		inFile >> Temp_egzam;
-		Temp_stud.egz = Temp_egzam;
-		//average and median values
-		Temp_stud.vid = Average(Temp_stud.nd);
-		Temp_stud.med = Median(Temp_stud.nd);
-		//saving to local vector
-		local.push_back(Temp_stud);
-		clean(Temp_stud);
-	}
-	inFile.close();
-}
+/*	Function for sorting all students:
+*		First by name,
+*		If names are the same
+		then by surname
+*/
+void sort_students(vector<Stud>& local);
 
-void simple_sort(vector<Stud>& local) {
-	sort(local.begin(), local.end(), [](const Stud& a, const Stud& b) {
-		if (a.vardas == b.vardas) {
-			return a.pavarde < b.pavarde;
-		}
-		return a.vardas < b.vardas;
-		});
-}
+#endif

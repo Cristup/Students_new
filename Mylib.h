@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MYLIB_H_INCLUDED
+#define MYLIB_H_INCLUDED
 
 #include <iostream>
 #include <vector>
@@ -27,6 +28,4 @@ using std::transform;
 using std::stoi;
 using std::getline;
 
-std::random_device rd;
-std::uniform_int_distribution<int> dist(1, 10);
-std::uniform_int_distribution<int> dist1(5, 15);
+#endif

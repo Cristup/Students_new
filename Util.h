@@ -1,51 +1,24 @@
-#pragma once
+#ifndef UTIL_H_INCLUDED
+#define UTIL_H_INCLUDED
 
 #include "Mylib.h"
 
-void Sort(vector<int>& vec)
-{
-	for (int i = 0; i < vec.size() - 1; i++) {
-		for (int j = i + 1; j < vec.size(); j++) {
-			if (vec[j] < vec[i]) {
-				swap(vec[j], vec[i]);
-			}
-		}
-	}
-}
+/*	Mean of a vector.
+*/
+double Average(vector<int> nd);
 
-double Average(vector<int> nd)
-{
-	int sum = 0;
-	for (int i = 0; i < nd.size(); i++){
-		sum += nd[i];
-	}
-	return (double) sum / nd.size();
-}
+/*	Median of a vector.
+*/
+double Median(vector<int> nd);
 
-double Median(vector<int> nd)
-{
-	int n = nd.size(); //vector length
-	Sort(nd);
-	if (n % 2 != 0) {
-		return nd[n / 2];
-	}
-	else {
-		return (double) (nd[n / 2 - 1] + nd[n / 2]) / 2;
-	}
-}
+/*	Final result calculation.
+*/
+double Result(int egz, double value);
 
-double Result(int egz, double value)
-{
-	return 0.4 * value + 0.6 * egz;
-}
+/*	Function returns:
+*		TRUE if all symbols in the string are numbers.
+*		FALSE if there's at least one symbol other than number in the string
+*/
+bool is_digits(string str);
 
-bool is_digits(string str)
-{
-	for (char ch : str) {
-		int value = ch;
-		if (!(ch >= 48 && ch <= 57)) {
-			return false;
-		}
-	}
-	return true;
-}
+#endif
