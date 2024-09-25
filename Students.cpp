@@ -41,10 +41,10 @@ int main()
         try {
             file.open(User_input);
             if (!file) {
-                throw std::runtime_error("File not found!");
+                throw runtime_error("File not found!");
             }
         }
-        catch (const std::exception& e) {
+        catch (const exception& e) {
             cout << "Exeption " << e.what() << endl;
             system("pause");
             return 1;

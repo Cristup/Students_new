@@ -13,11 +13,11 @@ const int min_nd = 5;			//- Minimum number of homeworks
 		RANDOM NUMBER GENERATOR
 */
 
-std::random_device rd_generator;	//-Random number generator
+random_device rd_generator;	//-Random number generator
 //-Interval for random value of results
-std::uniform_int_distribution<int> Results_interval(min_result, max_result);
+uniform_int_distribution<int> Results_interval(min_result, max_result);
 //-Interval for random number of homeworks
-std::uniform_int_distribution<int> Amount_interval(min_nd, max_nd);
+uniform_int_distribution<int> Amount_interval(min_nd, max_nd);
 
 /*
 		DATA INPUT FUNCTIONS
@@ -105,7 +105,7 @@ void input(Stud& local)
 
 		//Manual input and user input handling
 		else {
-			int exam_result; // temporary value for storing
+			int exam_result; //-temporary value for storing exam result.
 			try {
 				exam_result = stoi(line);
 				if (exam_result < min_result || exam_result > max_result) {
@@ -116,10 +116,10 @@ void input(Stud& local)
 				Manual_input(local);
 				break;
 			}
-			catch (const std::invalid_argument&) {
+			catch (const invalid_argument&) {
 				cout << "Invalid input! Try again." << endl;
 			}
-			catch (const std::out_of_range&) {
+			catch (const out_of_range&) {
 				cout << "Number out of range! Try again." << endl;
 			}
 		}
@@ -131,13 +131,14 @@ void input(Stud& local)
 
 void Input_from_file(vector<Stud>& local, string filename)
 {
-	Stud Temp_stud;		//Temporary value for storing single students data
-	int n = 0,			//Number of homeworks
-		Temp_nd,		//Temporary value for storing homework mark
-		Temp_egzam;		//Temporary value for storing exam result
-	string Temp_value,	//Temporary value for working with headline
-			name,		//Temporary value for student name
-			surname;	//Temporary value for student surname
+	Stud Temp_stud;			//Temporary value for storing single students data.
+	int n = 0,				//Number of homeworks.
+		Line_number = 0;	//For counting lines in the file.
+	string	Temp_nd,		//Temporary value for storing homework mark.
+			Temp_egzam,		//Temporary value for storing exam result.
+			Temp_value,		//Temporary value for working with headline.
+			name,			//Temporary value for student name.
+			surname;		//Temporary value for student surname.
 
 	//Opening file
 	ifstream inFile; //-Data file
@@ -155,17 +156,38 @@ void Input_from_file(vector<Stud>& local, string filename)
 
 	//Reading data
 	while (inFile >> name >> surname) {
+		Line_number++;
 		//Name & Surname
 		Temp_stud.vardas = name;
 		Temp_stud.pavarde = surname;
 		//Homework marks
-		for (int i = 0; i < n; i++) {
-			inFile >> Temp_nd;
-			Temp_stud.nd.push_back(Temp_nd);
+		try {
+			for (int i = 0; i < n; i++) {
+				inFile >> Temp_nd;
+				Temp_stud.nd.push_back(stoi(Temp_nd));
+			}
+		}
+		catch (const exception& ) {
+			cout << "Invalid argument on line " << Line_number << "!" << endl;
+			cout << "Data was skipped!" << endl;
+			system("pause");
+			//Ignore all characters ubtil '\n'
+			inFile.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
 		}
 		//Egzam result
-		inFile >> Temp_egzam;
-		Temp_stud.egz = Temp_egzam;
+		try {
+			inFile >> Temp_egzam;
+			Temp_stud.egz = stoi(Temp_egzam);
+		}
+		catch (const exception&) {
+			cout << "Invalid argument on line " << Line_number << "!" << endl;
+			cout << "Data was skipped!" << endl;
+			system("pause");
+			//Ignore all characters ubtil '\n'
+			inFile.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
+		}
 		//Average & Median values
 		Temp_stud.vid = Average(Temp_stud.nd);
 		Temp_stud.med = Median(Temp_stud.nd);

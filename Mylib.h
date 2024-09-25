@@ -13,10 +13,24 @@
 
 using std::vector;
 using std::string;
+
 using std::ifstream;
 using std::ofstream;
+
+using std::numeric_limits;
+using std::streamsize;
+
+using std::exception;
+using std::invalid_argument;
+using std::out_of_range;
+using std::runtime_error;
+
+using std::random_device;
+using std::uniform_int_distribution;
+
 using std::cout;
 using std::cin;
+
 using std::endl;
 using std::setw;
 using std::fixed;

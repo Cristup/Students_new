@@ -86,6 +86,7 @@ void output(vector<Stud> local);
 void output_to_file(vector<Stud> local);
 
 /*	Reading students data from a file to Stud structure
+		and checking for errors.
 *		Function counts number of homeworks;
 *		Then reads all data in a single line;
 *		Then counts Average and Median values;
