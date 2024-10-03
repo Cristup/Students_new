@@ -19,6 +19,8 @@ struct Stud {
 	int		egz;		//- exam result;
 	double	vid;		//- average value of all homework marks;
 	double	med;		//- median value of all homework marks.
+	enum category {Under, Over};// Under if result < 5 and Over if result >= 5
+	category cat;		//- student category Under if result < 5 and Over if result >= 5
 };
 
 /*	Function for deleting students data:

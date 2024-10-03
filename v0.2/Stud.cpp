@@ -127,6 +127,12 @@ void input(Stud& local)
 	//Other values
 	local.vid = Average(local.nd);
 	local.med = Median(local.nd);
+	if (Result(local.egz, local.vid) < 5) {
+		local.cat = Stud::category::Under;
+	}
+	else {
+		local.cat = Stud::category::Over;
+	}
 }
 
 void Input_from_file(vector<Stud>& local, string filename)
@@ -188,9 +194,16 @@ void Input_from_file(vector<Stud>& local, string filename)
 			inFile.ignore(numeric_limits<streamsize>::max(), '\n');
 			continue;
 		}
-		//Average & Median values
+		//Average, Median values and category
 		Temp_stud.vid = Average(Temp_stud.nd);
 		Temp_stud.med = Median(Temp_stud.nd);
+		if (Result(Temp_stud.egz, Temp_stud.vid) < 5) {
+			Temp_stud.cat = Stud::category::Under;
+		}
+		else {
+			Temp_stud.cat = Stud::category::Over;
+		}
+
 		//Saving to local vector
 		local.push_back(Temp_stud);
 		//Cleaning temporary value for next input
@@ -234,6 +247,7 @@ void output_to_file(vector<Stud> local)
 			setw(18) << left << local[i].pavarde <<
 			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) <<
 			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << "\n";
+		cout << local[i].cat << endl;
 	}
 	//Closing file
 	outFile.close();
