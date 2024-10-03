@@ -85,7 +85,7 @@ void output(vector<Stud> local);
 		Name, Surname, Final result using
 		Average and Median values.	
 */
-void output_to_file(vector<Stud> local);
+void output_to_file(const vector<Stud>& local, const string& filename);
 
 /*	Reading students data from a file to Stud structure
 		and checking for errors.
@@ -104,4 +104,15 @@ void Input_from_file(vector<Stud>& local, string filename);
 */
 void sort_students(vector<Stud>& local);
 
+/*	Function for sorting Students vector into two separate vectors by category.
+*/
+void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
+
+/*	Function for sorting vectors in separate threads
+*/
+void sorting_in_threads(vector<Stud>& local1, vector<Stud>& local2);
+
+/*	Outputing on separate threads
+*/
+void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under);
 #endif

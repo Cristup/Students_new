@@ -10,6 +10,8 @@ int main()
     cout << "Execution time: " << duration.count() << " seconds" << endl;*/
     
     vector<Stud> Students;      //-Vector for storing students data
+    vector<Stud> Students_Under;//-Vector for storing students data with final result Under 5
+    vector<Stud> Students_Over; //-Vector for storing students data with final result 5 and Over
     Stud Temp_stud;             //-Temporary value for storing student data
     int n;                      //-Number of students
     string User_input;          //-Input that determine method of further input method
@@ -108,14 +110,15 @@ int main()
     }
     //Students data input from file
     else {
-        //Reading file in case it exists
+        //Reading file
         Input_from_file(Students, User_input);
     }
 
     //Students data sorting & output
-    sort_students(Students);
-    output_to_file(Students);
+    sort_to_categories(Students, Students_Under, Students_Over);
+    sorting_in_threads(Students_Under, Students_Over);
+    output_with_multithreading(Students_Over, Students_Under);
 
-    cout << "Results are in file: 'Result.txt'." << endl;
+    cout << "Results are in files: 'Stiprus.txt' & 'Silpni.txt'." << endl;
     system("pause");
 }

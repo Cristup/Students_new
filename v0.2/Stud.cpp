@@ -231,11 +231,11 @@ void output(vector<Stud> local)
 	}
 }
 
-void output_to_file(vector<Stud> local)
+void output_to_file(const vector<Stud>& local, const string& filename)
 {
 	//Opening file
 	ofstream outFile;	//-Results file
-	outFile.open("Result.txt");	//File name
+	outFile.open(filename);	//File name
 
 	//Writing Headline
 	outFile << "Name              Surname           Final result(Avg) Final result(Med)\n";
@@ -247,7 +247,6 @@ void output_to_file(vector<Stud> local)
 			setw(18) << left << local[i].pavarde <<
 			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) <<
 			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << "\n";
-		cout << local[i].cat << endl;
 	}
 	//Closing file
 	outFile.close();
@@ -274,4 +273,44 @@ void clean(Stud& local)
 	local.vardas.clear();
 	local.pavarde.clear();
 	local.nd.clear();
+}
+
+void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over)
+{
+	for (auto i : local) {
+		if (i.cat == Stud::category::Under) {
+			Under.push_back(i);
+			clean(i);
+		}
+		else {
+			Over.push_back(i);
+			clean(i);
+		}
+	}
+	local.clear();
+}
+
+void sorting_in_threads(vector<Stud>& local1, vector<Stud>& local2)
+{
+	vector<thread> threads;
+
+	threads.push_back(thread(sort_students, ref(local1)));
+	threads.push_back(thread(sort_students, ref(local2)));
+
+	for (auto& th : threads) {
+		th.join();
+	}
+
+}
+
+void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under)
+{
+	vector<thread> threads;
+
+	threads.push_back(thread(output_to_file, ref(Over), string("Stiprus.txt")));
+	threads.push_back(thread(output_to_file, ref(Under), string("Silpni.txt")));
+
+	for (auto& th : threads) {
+		th.join();
+	}
 }
