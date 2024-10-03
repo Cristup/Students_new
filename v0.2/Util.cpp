@@ -11,13 +11,9 @@ mutex file_mutex;
 const int num_threads = 4;
 const int part_size = 10000;
 
-double Average(vector<int> nd)
+double Average(const vector<int>& nd)
 {
-	int sum = 0;
-	for (int i = 0; i < nd.size(); i++) {
-		sum += nd[i];
-	}
-	return (double)sum / nd.size();
+	return accumulate(nd.begin(), nd.end(), 0.0) / nd.size();
 }
 
 double Median(vector<int> nd)
@@ -32,12 +28,12 @@ double Median(vector<int> nd)
 	}
 }
 
-double Result(int egz, double value)
+double Result(const int& egz,const double& value)
 {
 	return 0.4 * value + 0.6 * egz;
 }
 
-bool is_digits(string str)
+bool is_digits(const string& str)
 {
 	for (char ch : str) {
 		//converting to number
@@ -90,7 +86,7 @@ bool is_digits(string str)
 //	file.close();
 //}
 
-void create_data_chuncked(string filename, int start, int stop) {
+void create_data_chuncked(const string& filename, const int& start, const int& stop) {
 	ostringstream buffer;
 	int index;
 	
@@ -124,7 +120,7 @@ void create_data_chuncked(string filename, int start, int stop) {
 	}
 }
 
-void create_data(string filename, int size) {
+void create_data(const string& filename, const int& size) {
 	vector<thread> threads;
 	ostringstream line;
 	ofstream file;

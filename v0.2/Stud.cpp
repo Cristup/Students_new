@@ -135,7 +135,7 @@ void input(Stud& local)
 	}
 }
 
-void Input_from_file(vector<Stud>& local, string filename)
+void Input_from_file(vector<Stud>& local, const string& filename)
 {
 	Stud Temp_stud;			//Temporary value for storing single students data.
 	int n = 0,				//Number of homeworks.
@@ -145,23 +145,30 @@ void Input_from_file(vector<Stud>& local, string filename)
 			Temp_value,		//Temporary value for working with headline.
 			name,			//Temporary value for student name.
 			surname;		//Temporary value for student surname.
+	stringstream buffer;	//Buffer holding file content
 
 	//Opening file
 	ifstream inFile; //-Data file
 	inFile.open(filename);
+	
+	//Reading whole file to buffer
+	buffer << inFile.rdbuf();
 
 	//Cheking file structure
-	inFile >> Temp_value >> Temp_value; //Ignoring two strings
-	inFile >> Temp_value;				//Third headline string which is first homework
+	buffer >> Temp_value >> Temp_value; //Ignoring two strings
+	buffer >> Temp_value;				//Third headline string which is first homework
+
+	//Closing file
+	inFile.close();
 
 	//Counting homeworks
 	while (Temp_value.substr(0, 2) == "ND") {
 		n++;
-		inFile >> Temp_value;
+		buffer >> Temp_value;
 	}
 
 	//Reading data
-	while (inFile >> name >> surname) {
+	while (buffer >> name >> surname) {
 		Line_number++;
 		//Name & Surname
 		Temp_stud.vardas = name;
@@ -169,7 +176,7 @@ void Input_from_file(vector<Stud>& local, string filename)
 		//Homework marks
 		try {
 			for (int i = 0; i < n; i++) {
-				inFile >> Temp_nd;
+				buffer >> Temp_nd;
 				Temp_stud.nd.push_back(stoi(Temp_nd));
 			}
 		}
@@ -178,12 +185,12 @@ void Input_from_file(vector<Stud>& local, string filename)
 			cout << "Data was skipped!" << endl;
 			system("pause");
 			//Ignore all characters ubtil '\n'
-			inFile.ignore(numeric_limits<streamsize>::max(), '\n');
+			buffer.ignore(numeric_limits<streamsize>::max(), '\n');
 			continue;
 		}
 		//Egzam result
 		try {
-			inFile >> Temp_egzam;
+			buffer >> Temp_egzam;
 			Temp_stud.egz = stoi(Temp_egzam);
 		}
 		catch (const exception&) {
@@ -191,7 +198,7 @@ void Input_from_file(vector<Stud>& local, string filename)
 			cout << "Data was skipped!" << endl;
 			system("pause");
 			//Ignore all characters ubtil '\n'
-			inFile.ignore(numeric_limits<streamsize>::max(), '\n');
+			buffer.ignore(numeric_limits<streamsize>::max(), '\n');
 			continue;
 		}
 		//Average, Median values and category
@@ -209,8 +216,6 @@ void Input_from_file(vector<Stud>& local, string filename)
 		//Cleaning temporary value for next input
 		clean(Temp_stud);
 	}
-	//Closing file
-	inFile.close();
 }
 
 /*

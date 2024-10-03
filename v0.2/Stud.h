@@ -95,7 +95,7 @@ void output_to_file(const vector<Stud>& local, const string& filename);
 *		Then pushes data to Students vector;
 *		And repeats until the end of the file.
 */
-void Input_from_file(vector<Stud>& local, string filename);
+void Input_from_file(vector<Stud>& local, const string& filename);
 
 /*	Function for sorting all students:
 *		First by name,

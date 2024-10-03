@@ -11,12 +11,14 @@
 #include <sstream>
 #include <mutex>
 #include <thread>
+#include <numeric>
 
 #include <chrono>
 
 using std::vector;
 using std::string;
 using std::ostringstream;
+using std::stringstream;
 using std::ifstream;
 using std::ofstream;
 using std::ios;
@@ -39,6 +41,7 @@ using std::thread;
 using std::cout;
 using std::cin;
 
+using std::accumulate;
 using std::endl;
 using std::setw;
 using std::fixed;
