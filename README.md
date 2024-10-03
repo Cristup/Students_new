@@ -7,7 +7,7 @@
 - [Efficiency](#efficiency)
 
 ## Description
-The **Students** application is designed to help working with student data.
+The **Students** application is designed to help working with students data. Mainly for writing and reading data and quickly finding final results of student.
 
 ## Data Structure
 ### Struct: `Stud`
@@ -17,20 +17,21 @@ The **Students** application is designed to help working with student data.
 - `int egz`: Exam result.
 - `double vid`: Average of homework results.
 - `double med`: Median of homework results.
+- `category cat`: Categories: Under if result < 5 and Over if result >= 5
 
 ## Usage
-To use the application, run the program and follow the prompts to input either student data or file name. If you input data inside terminal, then you can choose between automatic generation of results or manual input.
+To use the application, run the program and follow the prompts to input either student data, file name or choose to generate large test file. If you input data inside terminal, then you can choose between automatic generation of results or manual input.
 
-After input using terminal, sorted student names and surnames together with final results will be printed both in terminal and results file. And if data was read from file, then results will be printed only to file.
+After input using terminal, sorted student names and surnames together with final results will be printed in two result files, one for students with **final score Under 5** and one with **score 5 and higher**.
 
 ## Efficiency
-
-Program bulds and runs in **9.568 seconds**.
 
 ### Sorting Function
 The `sort_students` function implements **std::sort** with lambda function for sorting by two keys: **name** and **surname**. The asymptotic speed of **std::sort** is `O(n log n)` where `n` is number of students in a vector. Lmabda function campares two strings which involves cheking each cahracter in a string. Thus, for each comparison, the time complexity is `O(m)` where `m` is the average length of the strings involved.
 
-Therefore, the overall time complexity of the sort_students function is: `O(n m log n)`
+Therefore, the overall time complexity of the `sort_students` function is: `O(n m log n)`.
+
+Furthermore `sort_students` function is implemented in `sorting_in_threads` function, which splits sorting into separate threads for even faster results. 
 
 **sort_students** funtion:
 ```cpp
@@ -46,65 +47,79 @@ void sort_students(vector<Stud>& local) {
 		});
 }
 ```
-
-### Statistical Functions
-This program utilizes two statistical functions:
-1. **Average**: Calculates the average value of a vector.
-2. **Median**: Computes the median value of a vector.
-
-For the same vector of size **1070**:
-- The **Average** function executed in **0.0000537 seconds**.
-- The **Median** function executed in **0.0247537 seconds**.
-
+**sort_in_threads** function:
 ```cpp
-double Average(vector<int> nd)
+void sorting_in_threads(vector<Stud>& local1, vector<Stud>& local2)
 {
-	int sum = 0;
-	for (int i = 0; i < nd.size(); i++) {
-		sum += nd[i];
-	}
-	return (double)sum / nd.size();
-}
+	vector<thread> threads;
 
-double Median(vector<int> nd)
-{
-	int n = nd.size();
-	sort(nd.begin(), nd.end());
-	if (n % 2 != 0) {
-		return nd[n / 2];
+	threads.push_back(thread(sort_students, ref(local1)));
+	threads.push_back(thread(sort_students, ref(local2)));
+
+	for (auto& th : threads) {
+		th.join();
 	}
-	else {
-		return (double)(nd[n / 2 - 1] + nd[n / 2]) / 2;
-	}
+
 }
 ```
 
-**Average** funtion uses for cycle, which reapeats for the same number of times as size of a vector. Therfor speed of **average** function is O(n).
+### Speed measurements
+Velocity was mesured using files of size `1 000`, `10 000`, `100 000`, `1 000 000` and `10 000 000`. Each speed result is an average of 5 tests. 
 
-**Median** function uses std::sort with asymptotic speed O(n log n), where n is once again size of the vector.
+### File generation
+For file of size `1 000`: **0.033 seconds**;
+
+For file of size `10 000`: **0.293 seconds**;
+
+For file of size `100 000`: **2.913 seconds**;
+
+For file of size `1 000 000`: **29.629 seconds**;
+
+For file of size `10 000 000`: **333.289 seconds (5 min 33 s)**.
 
 ### Data reading
-Files of sizes **10 000**, **100 000**  and **1 000 000** were used for mesuring program speed.
+For file of size `1 000`: **0.031 seconds**;
 
-Reading data from file for each file:
-1. For file with **10 000** lines program took **0.26533 seconds**.
-2. For file with **100 000** lines program took **3.24163 seconds**.
-3. For file with **1 000 000** lines program took **18.8752 seconds**.
+For file of size `10 000`: **0.303 seconds**;
 
-Sorting data for each file:
-1. For file with **10 000** lines program took **0.130148 seconds**.
-2. For file with **100 000** lines program took **1.64338 seconds**.
-3. For file with **1 000 000** lines program took **20.9452 seconds**.
+For file of size `100 000`: **3.056 seconds**;
 
-Writing to results file for each file:
-1. For file with **10 000** lines program took **0.121206 seconds**.
-2. For file with **100 000** lines program took **1.19328 seconds**.
-3. For file with **1 000 000** lines program took **12.2562 seconds**.
+For file of size `1 000 000`: **29.237 seconds**;
 
-In total:
-1. For file with **10 000** lines program took **0.525315 seconds**.
-2. For file with **100 000** lines program took **6.25026 seconds**.
-3. For file with **1 000 000** lines program took **50.3132 seconds**.
+For file of size `10 000 000`: **296.279 seconds (4 min 56 s)**.
+
+### Data sorting and categorising
+For file of size `1 000`: **0.017 seconds**;
+
+For file of size `10 000`: **0.214 seconds**;
+
+For file of size `100 000`: **2.414 seconds**;
+
+For file of size `1 000 000`: **29.075 seconds**;
+
+For file of size `10 000 000`: **330.778 seconds (5 min 30 s)**.
+
+### Data writing to file
+For file of size `1 000`: **0.008 seconds**;
+
+For file of size `10 000`: **0.076 seconds**;
+
+For file of size `100 000`: **0.714 seconds**;
+
+For file of size `1 000 000`: **7.428 seconds**;
+
+For file of size `10 000 000`: **27.385 seconds**.
+
+### Total duration
+For file of size `1 000`: **0.089 seconds**;
+
+For file of size `10 000`: **0.885 seconds**;
+
+For file of size `100 000`: **9.097 seconds**;
+
+For file of size `1 000 000`: **95.369 seconds (1 min 35 s)**;
+
+For file of size `10 000 000`: **987.731 seconds (16 min 27 s)**.
 
 ### Code for Measuring Execution Time
 The following code snippet demonstrates how execution time is measured:

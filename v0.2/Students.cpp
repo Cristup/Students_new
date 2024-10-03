@@ -89,7 +89,7 @@ int main()
             try {
                 cin >> temp;
                 number_of_lines = stoi(temp);
-                if (number_of_lines < 100 || number_of_lines >= 10000000) {
+                if (number_of_lines < 100 || number_of_lines > 10000000) {
                     throw out_of_range("Value out of range!");
                 }
                 break;
@@ -105,8 +105,17 @@ int main()
             }
         }
         //creating data and reading for procesing
+        auto start = std::chrono::high_resolution_clock::now();
         create_data(test_file_name, number_of_lines);
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> duration = end - start;
+        cout << "File of size " << number_of_lines << " was created in: " << duration.count() << " seconds." << endl;
+
+        start = std::chrono::high_resolution_clock::now();
         Input_from_file(Students, test_file_name);
+        end = std::chrono::high_resolution_clock::now();
+        duration = end - start;
+        cout << "File of size " << number_of_lines << " was read in: " << duration.count() << " seconds." << endl;
     }
     //Students data input from file
     else {
@@ -115,9 +124,18 @@ int main()
     }
 
     //Students data sorting & output
+    auto start = std::chrono::high_resolution_clock::now();
     sort_to_categories(Students, Students_Under, Students_Over);
     sorting_in_threads(Students_Under, Students_Over);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+    cout << "File was sorted and categorised in: " << duration.count() << " seconds." << endl;
+
+    start = std::chrono::high_resolution_clock::now();
     output_with_multithreading(Students_Over, Students_Under);
+    end = std::chrono::high_resolution_clock::now();
+    duration = end - start;
+    cout << "File was outputed in: " << duration.count() << " seconds." << endl;
 
     cout << "Results are in files: 'Stiprus.txt' & 'Silpni.txt'." << endl;
     system("pause");
