@@ -109,7 +109,7 @@ void input(Stud& local)
 			try {
 				exam_result = stoi(line);
 				if (exam_result < min_result || exam_result > max_result) {
-					throw std::out_of_range("Value out of range!");
+					throw out_of_range("Value out of range!");
 				}
 				local.egz = exam_result;
 				cout << "Enter home work results (Press enter twice to finish)." << endl;

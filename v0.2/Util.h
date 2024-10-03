@@ -21,4 +21,19 @@ double Result(int egz, double value);
 */
 bool is_digits(string str);
 
+/*	Function for creating test file
+	Precondition:
+*		filename - data output file
+*		size - number of lines
+*/
+//void create_test_file(string filename, int size);
+
+/*
+*/
+void create_data_chuncked(string filename, int start, int stop);
+
+/*
+*/
+void create_data(string filename, int size);
+
 #endif

@@ -8,14 +8,18 @@
 #include <string>
 #include <random>
 #include <fstream>
+#include <sstream>
+#include <mutex>
+#include <thread>
 
 #include <chrono>
 
 using std::vector;
 using std::string;
-
+using std::ostringstream;
 using std::ifstream;
 using std::ofstream;
+using std::ios;
 
 using std::numeric_limits;
 using std::streamsize;
@@ -27,6 +31,10 @@ using std::runtime_error;
 
 using std::random_device;
 using std::uniform_int_distribution;
+
+using std::mutex;
+using std::lock_guard;
+using std::thread;
 
 using std::cout;
 using std::cin;
