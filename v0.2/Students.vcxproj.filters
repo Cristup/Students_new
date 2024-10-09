@@ -18,6 +18,12 @@
     <ClCompile Include="Students.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Stud.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">

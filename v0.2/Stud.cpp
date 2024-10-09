@@ -33,6 +33,7 @@ void Automatic_input(Stud& local)
 	int amount = Amount_interval(rd_generator);
 
 	//Generate and print homework marks
+	local.nd.reserve(amount);
 	for (int i = 0; i < amount; i++) {
 		local.nd.push_back(Results_interval(rd_generator));
 		cout << "Generated home work result " << i + 1 << ": " << local.nd[i] << endl;
@@ -59,7 +60,7 @@ void Manual_input(Stud& local)
 		if (value.empty()) {
 			empty_count++;
 			if (nd_count == 1) {
-				cout << "You must enter at least one home work!" << endl;
+				cerr << "You must enter at least one home work!" << endl;
 			}
 			else if (empty_count == 2) {
 				break;
@@ -67,7 +68,7 @@ void Manual_input(Stud& local)
 		}
 		//Not positive integer input case
 		else if (!is_digits(value)) {
-			cout << "Invalid input! Try again." << endl;
+			cerr << "Invalid input! Try again." << endl;
 		}
 		//In range input case
 		else if (stoi(value) >= min_result && stoi(value) <= max_result) {
@@ -78,10 +79,11 @@ void Manual_input(Stud& local)
 		}
 		//Left over case
 		else {
-			cout << "Value must be in the interval [1;10]!" << endl;
+			cerr << "Value must be in the interval [1;10]!" << endl;
 		}
 	}
 }
+
 
 void input(Stud& local)
 {
@@ -112,26 +114,27 @@ void input(Stud& local)
 					throw out_of_range("Value out of range!");
 				}
 				local.egz = exam_result;
-				cout << "Enter home work results (Press enter twice to finish)." << endl;
+				cerr << "Enter home work results (Press enter twice to finish)." << endl;
 				Manual_input(local);
 				break;
 			}
 			catch (const invalid_argument&) {
-				cout << "Invalid input! Try again." << endl;
+				cerr << "Invalid input! Try again." << endl;
 			}
 			catch (const out_of_range&) {
-				cout << "Number out of range! Try again." << endl;
+				cerr << "Number out of range! Try again." << endl;
 			}
 		}
 	}
 	//Other values
 	local.vid = Average(local.nd);
 	local.med = Median(local.nd);
-	if (Result(local.egz, local.vid) < 5) {
-		local.cat = Stud::category::Under;
+	local.res = Result(local.egz, Average(local.nd));
+	if (local.res < 5) {
+		local.cat = Stud::Under;
 	}
 	else {
-		local.cat = Stud::category::Over;
+		local.cat = Stud::Over;
 	}
 }
 
@@ -141,31 +144,45 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 	int n = 0,				//Number of homeworks.
 		Line_number = 0;	//For counting lines in the file.
 	string	Temp_nd,		//Temporary value for storing homework mark.
-			Temp_egzam,		//Temporary value for storing exam result.
-			Temp_value,		//Temporary value for working with headline.
-			name,			//Temporary value for student name.
-			surname;		//Temporary value for student surname.
+		Temp_egzam,		//Temporary value for storing exam result.
+		Temp_value,		//Temporary value for working with headline.
+		name,			//Temporary value for student name.
+		headline,
+		surname;		//Temporary value for student surname.
 	stringstream buffer;	//Buffer holding file content
+
+	//Check file size
+	ifstream File;
+	File.open(filename, std::ios::ate);
+	std::streamsize fileSize = File.tellg();
+	File.close();
+	//cout << "File size: " << fileSize << " Bytes\n";
+
+	//Check line size
+	File.open(filename);
+	string firstline;
+	getline(File, firstline);
+	File.close();
+	int lineSize = firstline.size();
+	//cout << "Line size: " << lineSize << " Bytes\n";
+
+	//Guess number of lines
+	int numberOfLines = fileSize / lineSize;
+	int adjust_size = (int) log10(numberOfLines) - 1;
+	numberOfLines += pow(10, adjust_size);
+	//cout << "Aprox. number of lines: " << numberOfLines << endl;
+	local.reserve(numberOfLines);
 
 	//Opening file
 	ifstream inFile; //-Data file
 	inFile.open(filename);
-	
 	//Reading whole file to buffer
 	buffer << inFile.rdbuf();
-
-	//Cheking file structure
-	buffer >> Temp_value >> Temp_value; //Ignoring two strings
-	buffer >> Temp_value;				//Third headline string which is first homework
-
-	//Closing file
 	inFile.close();
 
-	//Counting homeworks
-	while (Temp_value.substr(0, 2) == "ND") {
-		n++;
-		buffer >> Temp_value;
-	}
+	//Cheking number of homeworks
+	getline(buffer, headline);
+	n = count(headline.begin(), headline.end(), 'N');
 
 	//Reading data
 	while (buffer >> name >> surname) {
@@ -173,15 +190,17 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 		//Name & Surname
 		Temp_stud.vardas = name;
 		Temp_stud.pavarde = surname;
+
 		//Homework marks
+		Temp_stud.nd.reserve(n);
 		try {
 			for (int i = 0; i < n; i++) {
 				buffer >> Temp_nd;
 				Temp_stud.nd.push_back(stoi(Temp_nd));
 			}
 		}
-		catch (const exception& ) {
-			cout << "Invalid argument on line " << Line_number << "!" << endl;
+		catch (const exception&) {
+			cerr << "Invalid argument on line " << Line_number << "!" << endl;
 			cout << "Data was skipped!" << endl;
 			system("pause");
 			//Ignore all characters ubtil '\n'
@@ -194,17 +213,18 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 			Temp_stud.egz = stoi(Temp_egzam);
 		}
 		catch (const exception&) {
-			cout << "Invalid argument on line " << Line_number << "!" << endl;
+			cerr << "Invalid argument on line " << Line_number << "!" << endl;
 			cout << "Data was skipped!" << endl;
 			system("pause");
-			//Ignore all characters ubtil '\n'
+			//Ignore all characters until '\n'
 			buffer.ignore(numeric_limits<streamsize>::max(), '\n');
 			continue;
 		}
 		//Average, Median values and category
 		Temp_stud.vid = Average(Temp_stud.nd);
 		Temp_stud.med = Median(Temp_stud.nd);
-		if (Result(Temp_stud.egz, Temp_stud.vid) < 5) {
+		Temp_stud.res = Result(Temp_stud.egz, Average(Temp_stud.nd));
+		if (Temp_stud.res < 5) {
 			Temp_stud.cat = Stud::category::Under;
 		}
 		else {
@@ -218,50 +238,60 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 	}
 }
 
+
+
 /*
 		DATA OUTPUT FUNCTIONS
 */
 
-void output(vector<Stud> local)
-{
-	//Table headline
-	cout << "Name              |Surname           |Final result(Avg) |Final result(Med)" << endl;
-	cout << "------------------+------------------+------------------+-----------------" << endl;
-	//Data
-	for (int i = 0; i < local.size(); i++) {
-		cout << setw(18) << left << local[i].vardas << '|' <<
-			setw(18) << left << local[i].pavarde << '|' <<
-			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) << "|" <<
-			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << endl;
-	}
-}
-
 void output_to_file(const vector<Stud>& local, const string& filename)
 {
+	ofstream file(filename, std::ios::trunc);
+	file.close();
 	//Opening file
 	ofstream outFile;	//-Results file
 	outFile.open(filename);	//File name
+	stringstream buffer;
+	//size_t chunk_size = 50000;
 
 	//Writing Headline
-	outFile << "Name              Surname           Final result(Avg) Final result(Med)\n";
-	outFile << "-----------------------------------------------------------------------\n";
+	outFile << "Name              Surname           Final result(Avg)\n";
+	outFile << "-----------------------------------------------------\n";
 
 	//Writing data
 	for (int i = 0; i < local.size(); i++) {
-		outFile << setw(18) << left << local[i].vardas <<
-			setw(18) << left << local[i].pavarde <<
-			setw(18) << fixed << setprecision(2) << Result(local[i].egz, local[i].vid) <<
-			fixed << setprecision(2) << Result(local[i].egz, local[i].med) << "\n";
+		buffer << setw(18) << left << local.at(i).vardas <<
+			setw(18) << left << local.at(i).pavarde <<
+			setw(18) << fixed << setprecision(2) << local.at(i).res << "\n";
+
+		/*if (i % chunk_size == 0) {
+			outFile << buffer.str();
+			buffer.clear();
+		}*/
 	}
+
+	outFile << buffer.str();
+
 	//Closing file
 	outFile.close();
 }
+
+void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under)
+{
+	vector<thread> threads;
+	threads.push_back(thread(output_to_file, ref(Over), string("Stiprus.txt")));
+	threads.push_back(thread(output_to_file, ref(Under), string("Silpni.txt")));
+	for (auto& th : threads) {
+		th.join();
+	}
+}
+
 
 /*
 		OTHER FUNCTIONS
 */
 
-void sort_students(vector<Stud>& local) {
+void sort_students(vector<Stud>& local, std::function<int(Stud, Stud)> comparator) {
 	//labda function for sorting by two keys of Stud structure
 	sort(local.begin(), local.end(), [](const Stud& a, const Stud& b) {
 		if (a.vardas == b.vardas) {
@@ -282,7 +312,11 @@ void clean(Stud& local)
 
 void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over)
 {
-	for (auto i : local) {
+	size_t size = local.size();
+	Under.reserve(size / 2);
+	Over.reserve(size / 2);
+
+	for (auto& i : local) {
 		if (i.cat == Stud::category::Under) {
 			Under.push_back(i);
 			clean(i);
@@ -295,27 +329,34 @@ void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& 
 	local.clear();
 }
 
-void sorting_in_threads(vector<Stud>& local1, vector<Stud>& local2)
-{
-	vector<thread> threads;
+/*
+	COMPARATORS
+*/
 
-	threads.push_back(thread(sort_students, ref(local1)));
-	threads.push_back(thread(sort_students, ref(local2)));
-
-	for (auto& th : threads) {
-		th.join();
-	}
-
+int nam_sur(const Stud& a, const Stud& b) {
+	return (a.vardas == b.vardas) ? a.pavarde < b.pavarde : a.vardas < b.vardas;
 }
-
-void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under)
-{
-	vector<thread> threads;
-
-	threads.push_back(thread(output_to_file, ref(Over), string("Stiprus.txt")));
-	threads.push_back(thread(output_to_file, ref(Under), string("Silpni.txt")));
-
-	for (auto& th : threads) {
-		th.join();
-	}
+int nam_res(const Stud& a, const Stud& b) {
+	return (a.vardas == b.vardas) ? a.res < b.res : a.vardas < b.vardas;
+}
+int sur_nam(const Stud& a, const Stud& b) {
+	return (a.pavarde == b.pavarde) ? a.vardas < b.vardas : a.pavarde < b.pavarde;
+}
+int sur_res(const Stud& a, const Stud& b) {
+	return (a.pavarde == b.pavarde) ? a.res < b.res : a.pavarde < b.pavarde;
+}
+int res_sur(const Stud& a, const Stud& b) {
+	return (a.res == b.res) ? a.pavarde < b.pavarde : a.res < b.res;
+}
+int res_nam(const Stud& a, const Stud& b) {
+	return (a.res == b.res) ? a.vardas < b.vardas : a.res < b.res;
+}
+int nam(const Stud& a, const Stud& b) {
+	return a.vardas < b.vardas;
+}
+int sur(const Stud& a, const Stud& b) {
+	return a.pavarde < b.pavarde;
+}
+int res(const Stud& a, const Stud& b) {
+	return a.res < b.res;
 }

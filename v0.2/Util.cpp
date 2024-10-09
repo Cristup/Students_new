@@ -8,12 +8,17 @@ random_device rd;	//-Random number generator
 //-Interval for random value of results
 uniform_int_distribution<int> interval(1, 10);
 mutex file_mutex;
-const int num_threads = 4;
 const int part_size = 10000;
+const int num_threads = thread::hardware_concurrency();
 
 double Average(const vector<int>& nd)
 {
 	return accumulate(nd.begin(), nd.end(), 0.0) / nd.size();
+}
+
+double Mean(const vector<double>& vec)
+{
+	return accumulate(vec.begin(), vec.end(), 0.0) / vec.size();
 }
 
 double Median(vector<int> nd)
@@ -21,7 +26,7 @@ double Median(vector<int> nd)
 	int n = nd.size();
 	sort(nd.begin(), nd.end());
 	if (n % 2 != 0) {
-		return nd[n / 2];
+		return nd.at(n / 2);
 	}
 	else {
 		return (double)(nd[n / 2 - 1] + nd[n / 2]) / 2;
@@ -46,46 +51,6 @@ bool is_digits(const string& str)
 	return true;
 }
 
-//void create_test_file(string filename, int size) {
-//	ostringstream line;		//-Line to be writen into the file
-//	string index;
-//
-//	//Creating headline
-//	line << setw(20) << left << "Vardas" <<
-//		setw(21) << left << "Pavarde";
-//	for (int i = 0; i < 15; i++) {
-//		line << "ND" << setw(8) << i + 1;
-//	}
-//	line << "Egz.\n";
-//
-//	//Opening file
-//	ofstream file;
-//	file.open(filename);
-//
-//	//Creting and writing data
-//	for (int i = 0; i < size; i++) {
-//
-//		if (i % part_size == 0 && i > 0) {
-//			file << line.rdbuf();
-//			line.str("");
-//			line.clear();
-//		}
-//
-//		index = i + 1;
-//		line << "Vardas" << setw(14) << index <<
-//			"Pavarde"<< setw(14) << index;
-//		for (int j = 0; j < 15; j++) {
-//			line << setw(10) << interval(rd);
-//		}
-//		line << interval(rd) << "\n";
-//	}
-//
-//	file << line.rdbuf();
-//
-//	//Closing file
-//	file.close();
-//}
-
 void create_data_chuncked(const string& filename, const int& start, const int& stop) {
 	ostringstream buffer;
 	int index;
@@ -101,7 +66,7 @@ void create_data_chuncked(const string& filename, const int& start, const int& s
 
 		if (i % part_size == 0 && i > 0) {
 			lock_guard<mutex> lock(file_mutex);
-			ofstream file(filename, ios::app | ios::binary);
+			ofstream file(filename, ios::app);
 			if (file.is_open()) {
 				file << buffer.str();
 				file.close();
@@ -113,7 +78,7 @@ void create_data_chuncked(const string& filename, const int& start, const int& s
 	}
 
 	lock_guard<mutex> lock(file_mutex);
-	ofstream file(filename, ios::app | ios::binary);
+	ofstream file(filename, ios::app);
 	if (file.is_open()) {
 		file << buffer.str();
 		file.close();
@@ -122,6 +87,7 @@ void create_data_chuncked(const string& filename, const int& start, const int& s
 
 void create_data(const string& filename, const int& size) {
 	vector<thread> threads;
+	threads.reserve(num_threads);
 	ostringstream line;
 	ofstream file;
 
@@ -149,4 +115,105 @@ void create_data(const string& filename, const int& size) {
 		th.join();
 	}
 	
+}
+
+void test_multiple_files()
+{
+
+	for (int i = 0; i < 5; i++) {
+		size_t size = 1000 * std::pow(10, i);
+		stringstream filename;
+		filename << size << ".txt";
+		string fname = filename.str();
+
+		vector<Stud> container;
+		vector<Stud> under;
+		vector<Stud> over;
+
+		double reading = 0;
+		double spliting = 0;
+		double sorting = 0;
+		double output = 0;
+		double total = 0;
+		double create_total = 0;
+
+		cout << "Testing a file of size: " << size << ".\n" << endl;
+
+		for (int j = 0; j < 5; j++) {
+			ofstream file(fname, std::ios::trunc);
+			file.close();
+
+			//Creating
+			auto start_create = high_resolution_clock::now();
+			create_data(fname, size);
+			auto end_create = high_resolution_clock::now();
+			duration<double> duration = end_create - start_create;
+			cout << "Creating of the file of size " << size << " took: " << duration.count() << endl;
+			create_total += duration.count();
+
+			//Reading
+			auto start_read = high_resolution_clock::now();
+			Input_from_file(container, fname);
+			auto end_read = high_resolution_clock::now();
+			duration = end_read - start_read;
+			reading += duration.count();
+
+			//Sorting
+			auto start_sort = high_resolution_clock::now();
+			//sorting_in_threads(under, over);
+			sort(container.begin(), container.end(), nam );
+			auto end_sort = high_resolution_clock::now();
+			duration = end_sort - start_sort;
+			sorting += duration.count();
+
+			//Spliting
+			auto start_split = high_resolution_clock::now();
+			sort_to_categories(container, under, over);
+			auto end_split = high_resolution_clock::now();
+			duration = end_split - start_split;
+			spliting += duration.count();
+
+			//Output
+			auto start_out = high_resolution_clock::now();
+			output_with_multithreading(under, over);
+			auto end_out = high_resolution_clock::now();
+			duration = end_out - start_out;
+			output += duration.count();
+
+			duration = end_out - start_read;
+			total += duration.count();
+		}
+
+		cout << "On average creating the files of size " << size << " took: " <<
+			fixed << setprecision(4) << create_total / 5 << endl;
+
+		cout << endl << "Reading the file of size " << size << " took:      " <<
+			fixed << setprecision(4) << reading / 5 << endl;
+
+		cout << "Sorting the file of size " << size << " took:      " <<
+			fixed << setprecision(4) << sorting / 5 << endl;
+
+		cout << "Categorising the file of size " << size << " took: " <<
+			fixed << setprecision(4) << spliting / 5 << endl;
+
+		cout << "Outputing the file of size " << size << " took:    " <<
+			fixed << setprecision(4) << output / 5 << endl;
+
+		cout << endl << "Total duration:  " << fixed << setprecision(4) << total / 5 << endl;
+
+		system("pause");
+		cout << endl;
+	}
+}
+
+void find_keys(string& line, vector<string>& keys)
+{
+	stringstream input(line);
+	string key;
+	keys.resize(2);
+	for (int i = 0; i < 2; i++) {
+		input >> key;			
+		transform(key.begin(), key.end(), key.begin(), ::tolower);
+			keys.at(i) = key;
+	}
 }

@@ -13,14 +13,14 @@
 *		med		- median value of all homework marks.
 */
 struct Stud {
-	string	vardas;		//- student name;
-	string	pavarde;	//- student last name;
+	string	vardas,		//- student name;
+			pavarde;	//- student last name;
 	vector<int> nd;		//- vector for storing home work marks;
 	int		egz;		//- exam result;
-	double	vid;		//- average value of all homework marks;
-	double	med;		//- median value of all homework marks.
-	enum category {Under, Over};// Under if result < 5 and Over if result >= 5
-	category cat;		//- student category Under if result < 5 and Over if result >= 5
+	double	vid,		//- average value of all homework marks;
+			med,		//- median value of all homework marks.
+			res;		//- final result using average value of homeworks
+	enum category {Under, Over} cat;// Under if result < 5 and Over if result >= 5
 };
 
 /*	Function for deleting students data:
@@ -56,12 +56,23 @@ void Automatic_input(Stud& local);
 */
 void Manual_input(Stud& local);
 
+/*	Function for sorting all students:
+*		First by name,
+*		If names are the same
+		then by surname
+*/
+void sort_students(vector<Stud>& local, std::function<void(Stud, Stud)> comparator);
+
+/*	Function for sorting Students vector into two separate vectors by category.
+*/
+void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
+
 /*	Function for data input in terminal.
 *		local - type Stud argument for single student data.
 	Part 1:
 *		Name & Surname input to local structure
 	Part 2:
-*		Either exam result or 'auto' choice 
+*		Either exam result or 'auto' choice
 *		and input managing.
 		Part 2.1:
 *			If user provided good exam result value,
@@ -75,15 +86,9 @@ void Manual_input(Stud& local);
 */
 void input(Stud& local);
 
-/*	Data table printing in terminal:
-		Name, Surname, Final result using
-		Average and Median values.
-*/
-void output(vector<Stud> local);
-
 /*	Data table writing in file:
 		Name, Surname, Final result using
-		Average and Median values.	
+		Average and Median values.
 */
 void output_to_file(const vector<Stud>& local, const string& filename);
 
@@ -97,22 +102,26 @@ void output_to_file(const vector<Stud>& local, const string& filename);
 */
 void Input_from_file(vector<Stud>& local, const string& filename);
 
-/*	Function for sorting all students:
-*		First by name,
-*		If names are the same
-		then by surname
-*/
-void sort_students(vector<Stud>& local);
-
-/*	Function for sorting Students vector into two separate vectors by category.
-*/
-void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
-
-/*	Function for sorting vectors in separate threads
-*/
-void sorting_in_threads(vector<Stud>& local1, vector<Stud>& local2);
-
 /*	Outputing on separate threads
 */
 void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under);
+
+int nam_sur(const Stud& a, const Stud& b);
+
+int nam_res(const Stud& a, const Stud& b);
+
+int sur_nam(const Stud& a, const Stud& b);
+
+int sur_res(const Stud& a, const Stud& b);
+
+int res_sur(const Stud& a, const Stud& b);
+
+int res_nam(const Stud& a, const Stud& b);
+
+int nam(const Stud& a, const Stud& b);
+
+int sur(const Stud& a, const Stud& b);
+
+int res(const Stud& a, const Stud& b);
+
 #endif

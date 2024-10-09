@@ -17,6 +17,7 @@ The **Students** application is designed to help working with students data. Mai
 - `int egz`: Exam result.
 - `double vid`: Average of homework results.
 - `double med`: Median of homework results.
+- `double res`: Result using average value of homeworks.
 - `category cat`: Categories: Under if result < 5 and Over if result >= 5
 
 ## Usage
@@ -27,99 +28,80 @@ After input using terminal, sorted student names and surnames together with fina
 ## Efficiency
 
 ### Sorting Function
-The `sort_students` function implements **std::sort** with lambda function for sorting by two keys: **name** and **surname**. The asymptotic speed of **std::sort** is `O(n log n)` where `n` is number of students in a vector. Lmabda function campares two strings which involves cheking each cahracter in a string. Thus, for each comparison, the time complexity is `O(m)` where `m` is the average length of the strings involved.
+For sorting **std::sort** was used with comparator function for sorting by diffrent keys. The asymptotic speed of **std::sort** is `O(n log n)` where `n` is number of students in a vector. Comparator function in some cases campares two strings which involves cheking each cahracter in a string. Thus, for each comparison, the time complexity is `O(m)` where `m` is the average length of the strings involved.
 
-Therefore, the overall time complexity of the `sort_students` function is: `O(n m log n)`.
-
-Furthermore `sort_students` function is implemented in `sorting_in_threads` function, which splits sorting into separate threads for even faster results. 
-
-**sort_students** funtion:
-```cpp
-void sort_students(vector<Stud>& local) {
-	//labda function for sorting by two keys from Stud structure
-	sort(local.begin(), local.end(), [](const Stud& a, const Stud& b) {
-		if (a.vardas == b.vardas) {
-			//comparing surnames in case if names are the same
-			return a.pavarde < b.pavarde;
-		}
-		//comparing names
-		return a.vardas < b.vardas;
-		});
-}
-```
-**sort_in_threads** function:
-```cpp
-void sorting_in_threads(vector<Stud>& local1, vector<Stud>& local2)
-{
-	vector<thread> threads;
-
-	threads.push_back(thread(sort_students, ref(local1)));
-	threads.push_back(thread(sort_students, ref(local2)));
-
-	for (auto& th : threads) {
-		th.join();
-	}
-
-}
-```
+Therfore, overall asymptotic speed of sorting is `O(m*n log(n))`.
 
 ### Speed measurements
 Velocity was mesured using files of size `1 000`, `10 000`, `100 000`, `1 000 000` and `10 000 000`. Each speed result is an average of 5 tests. 
 
 ### File generation
-For file of size `1 000`: **0.033 seconds**;
+Time of file generation was mesuered seperatly(not included in total time).
 
-For file of size `10 000`: **0.293 seconds**;
-
-For file of size `100 000`: **2.913 seconds**;
-
-For file of size `1 000 000`: **29.629 seconds**;
-
-For file of size `10 000 000`: **333.289 seconds (5 min 33 s)**.
-
-### Data reading
-For file of size `1 000`: **0.031 seconds**;
-
-For file of size `10 000`: **0.303 seconds**;
-
-For file of size `100 000`: **3.056 seconds**;
-
-For file of size `1 000 000`: **29.237 seconds**;
-
-For file of size `10 000 000`: **296.279 seconds (4 min 56 s)**.
-
-### Data sorting and categorising
-For file of size `1 000`: **0.017 seconds**;
-
-For file of size `10 000`: **0.214 seconds**;
-
-For file of size `100 000`: **2.414 seconds**;
-
-For file of size `1 000 000`: **29.075 seconds**;
-
-For file of size `10 000 000`: **330.778 seconds (5 min 30 s)**.
-
-### Data writing to file
 For file of size `1 000`: **0.008 seconds**;
 
-For file of size `10 000`: **0.076 seconds**;
+For file of size `10 000`: **0.067 seconds**;
 
-For file of size `100 000`: **0.714 seconds**;
+For file of size `100 000`: **0.652 seconds**;
 
-For file of size `1 000 000`: **7.428 seconds**;
+For file of size `1 000 000`: **7.009 seconds**;
 
-For file of size `10 000 000`: **27.385 seconds**.
+For file of size `10 000 000`: **74.560 seconds (1 min 15 s)**.
+
+### Data reading
+For file of size `1 000`: **0.005 seconds**;
+
+For file of size `10 000`: **0.043 seconds**;
+
+For file of size `100 000`: **0.419 seconds**;
+
+For file of size `1 000 000`: **4.433 seconds**;
+
+For file of size `10 000 000`: **43.826 seconds**.
+
+### Data sorting
+For file of size `1 000`: **0.0002 seconds**;
+
+For file of size `10 000`: **0.003 seconds**;
+
+For file of size `100 000`: **0.034 seconds**;
+
+For file of size `1 000 000`: **0.430 seconds**;
+
+For file of size `10 000 000`: **5.543 seconds**.
+
+### Categorising
+For file of size `1 000`: **0.0003 seconds**;
+
+For file of size `10 000`: **0.003 seconds**;
+
+For file of size `100 000`: **0.028 seconds**;
+
+For file of size `1 000 000`: **0.270 seconds**;
+
+For file of size `10 000 000`: **3.258 seconds**.
+
+### Data output to file
+For file of size `1 000`: **0.003 seconds**;
+
+For file of size `10 000`: **0.029 seconds**;
+
+For file of size `100 000`: **0.248 seconds**;
+
+For file of size `1 000 000`: **2.546 seconds**;
+
+For file of size `10 000 000`: **29.837 seconds**.
 
 ### Total duration
-For file of size `1 000`: **0.089 seconds**;
+For file of size `1 000`: **0.0087 seconds**;
 
-For file of size `10 000`: **0.885 seconds**;
+For file of size `10 000`: **0.078 seconds**;
 
-For file of size `100 000`: **9.097 seconds**;
+For file of size `100 000`: **0.728 seconds**;
 
-For file of size `1 000 000`: **95.369 seconds (1 min 35 s)**;
+For file of size `1 000 000`: **7.679 seconds**;
 
-For file of size `10 000 000`: **987.731 seconds (16 min 27 s)**.
+For file of size `10 000 000`: **82.464 seconds (1 min 22 s)**.
 
 ### Code for Measuring Execution Time
 The following code snippet demonstrates how execution time is measured:

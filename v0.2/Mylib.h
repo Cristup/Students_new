@@ -12,6 +12,7 @@
 #include <mutex>
 #include <thread>
 #include <numeric>
+#include <functional>
 
 #include <chrono>
 
@@ -19,6 +20,7 @@ using std::vector;
 using std::string;
 using std::ostringstream;
 using std::stringstream;
+using std::istringstream;
 using std::ifstream;
 using std::ofstream;
 using std::ios;
@@ -37,10 +39,19 @@ using std::uniform_int_distribution;
 using std::mutex;
 using std::lock_guard;
 using std::thread;
+using std::ref;
+
+using std::chrono::high_resolution_clock;
+using std::chrono::duration;
 
 using std::cout;
 using std::cin;
+using std::cerr;
 
+using std::log10;
+using std::pow;
+using std::count;
+using std::distance;
 using std::accumulate;
 using std::endl;
 using std::setw;
