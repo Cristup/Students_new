@@ -13,6 +13,7 @@
 #include <thread>
 #include <numeric>
 #include <functional>
+#include <map>
 
 #include <chrono>
 
@@ -24,6 +25,7 @@ using std::istringstream;
 using std::ifstream;
 using std::ofstream;
 using std::ios;
+using std::map;
 
 using std::numeric_limits;
 using std::streamsize;

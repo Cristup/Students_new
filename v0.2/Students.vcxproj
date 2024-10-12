@@ -135,6 +135,7 @@
     <ClInclude Include="Header.h" />
     <ClInclude Include="Mylib.h" />
     <ClInclude Include="Stud.h" />
+    <ClInclude Include="timer.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,139 +4,128 @@
 
 int main()
 {
-    /*auto start = std::chrono::high_resolution_clock::now();
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> duration = end - start;
-    cout << "Execution time: " << duration.count() << " seconds" << endl;*/
-    
+    //All variables
     vector<Stud> Students;      //-Vector for storing students data
     vector<Stud> Students_Under;//-Vector for storing students data with final result Under 5
     vector<Stud> Students_Over; //-Vector for storing students data with final result 5 and Over
-    Stud Temp_stud;             //-Temporary value for storing student data
-    int n;                      //-Number of students
-    string User_input;          //-Input that determine method of further input method
-    bool CreateTestFile = false;//-User disision to create test file
+    Stud        Temp_stud;      //-Temporary value for storing student data
+    string      main_input,
+                key,
+                filename;
+    int number_of_students;
+    enum program_branch { Test, Read, Manual } branch;
+    selection print_by;
+    vector<File_info> files;
+    vector<string> testFiles;
 
-     //Reapeating until good input
-     while (true) {
-         //First input
-         cout << "Enter either file name, number of students or 'Test' to create test file: ";
-         cin >> User_input;         //-First input for task branching
-         string original = User_input;     //-Original input
-         
-         //Transforming strings for a wider range of user misinputs
-         transform(User_input.begin(), User_input.end(), User_input.begin(), ::tolower);
+    //Information for user
+    stringstream functions;
+    functions << "Input functions:\n" <<
+        "'Test'    - selecting files for testing;\n" <<
+        "'Create   - creating test data files;\n" <<
+        "'Open'    - reading Students data;\n" <<
+        "'Show'    - show available '.txt' files;\n" <<
+        "'End'     - to stop application;\n" <<
+        "`Info'    - to list commands'\n" <<
+        "*integer* - number of students for manual input of data.\n";
+    cout << functions.str();
 
-         if (is_digits(User_input)) {
-             break;
-         }
-         else if (User_input.substr(0, 3) == "tes") {
-             CreateTestFile = true;
-             break;
-         }
-         else {
-             //Opening file for testing
-             ifstream file;
-             try {
-                 file.open(original);
-                 if (!file) {
-                     throw runtime_error("File not found!");
-                 }
-                 User_input = original;
-                 break;
-             }
-             catch (const exception& e) {
-                 cerr << "Exeption: " << e.what() << endl;
-                 continue;
-             }
-         }
-         cerr << "Invalid input! Try again.\n";
-     }
-
-    //Students data input in terminal in case first input is integer
-    if (is_digits(User_input)) {
-
-        //converting string to intger
-        n = stoi(User_input);
-
-        //reserving space
-        Students.reserve(n);
-        
-        //Dat input for n number of students
-        for (int i = 0; i < n; i++) {
-            cout << "Enter student number " << i + 1 << " data: " << endl;
-            input(Temp_stud);               //Writing
-            Students.push_back(Temp_stud);  //Saving in vector
-            clean(Temp_stud);               //Preparing temporary value for next input
-        }
-    }
-    //Creating test file
-    else if (CreateTestFile) {
-        test_multiple_files();
-        return 1;
-    }
-    //Students data input from file
-    else {
-        //Reading file
-        Input_from_file(Students, User_input);
-        //buffer_read(User_input, Students);
-    }
-
-    //Students data sorting & output
-    //Choosing key
-    string choices;
-    vector<string> keys;
-    cin.ignore();
+    //Choosing function
     while (true) {
-        cout << "Select keys for sorting {name, surname, result}: ";
-        getline(cin, choices);
-        find_keys(choices, keys);
+        cout << "Input function << ";
+        cin >> main_input;
+        transform(main_input.begin(), main_input.end(), main_input.begin(), ::tolower);
 
-        //Choosing comparator
-        if (keys.at(0).substr(0, 3) == "nam" && keys.at(1).substr(0, 3) == "sur") {
-            sort(Students.begin(), Students.end(), nam_sur);
+        if (main_input.substr(0, 3) == "tes") {
+            branch = program_branch::Test;
             break;
         }
-        else if (keys.at(0).substr(0, 3) == "nam" && keys.at(1).substr(0, 3) == "res") {
-            sort(Students.begin(), Students.end(), nam_res);
+        else if (main_input.substr(0, 3) == "ope") {
+            branch = program_branch::Read;
             break;
         }
-        else if (keys.at(0).substr(0, 3) == "sur" && keys.at(1).substr(0, 3) == "nam") {
-            sort(Students.begin(), Students.end(), sur_nam);
-            break;
+        else if (main_input.substr(0, 3) == "end") {
+            system("pause");
+            return 1;
         }
-        else if (keys.at(0).substr(0, 3) == "sur" && keys.at(1).substr(0, 3) == "res") {
-            sort(Students.begin(), Students.end(), sur_res);
-            break;
+        else if (main_input.substr(0, 3) == "inf") {
+            cout << functions.str();
+            continue;
         }
-        else if (keys.at(0).substr(0, 3) == "res" && keys.at(1).substr(0, 3) == "nam") {
-            sort(Students.begin(), Students.end(), res_nam);
-            break;
+        else if (main_input.substr(0, 3) == "sho") {
+            cout << "\nAvailable '.txt' files:\n";
+            system("dir *.txt /B");
+            continue;
         }
-        else if (keys.at(0).substr(0, 3) == "res" && keys.at(1).substr(0, 3) == "sur") {
-            sort(Students.begin(), Students.end(), res_sur);
-            break;
-        }
-        else if (keys.at(0).substr(0, 3) == "nam") {
-            sort(Students.begin(), Students.end(), nam);
-            break;
-        }
-        else if (keys.at(0).substr(0, 3) == "sur") {
-            sort(Students.begin(), Students.end(), sur);
-            break;
-        }
-        else if (keys.at(0).substr(0, 3) == "res") {
-            sort(Students.begin(), Students.end(), res);
-            break;
+        else if (main_input.substr(0, 3) == "cre") {
+            print_by = print_selection();
+            key = sort_selection(print_by);
+            create_file_selection(files);
+            create_multiple_files(files);
+            continue;
         }
         else {
-            cout << "Try again!" << endl;
+            try {
+                number_of_students = stoi(main_input);
+            }
+            catch (const exception&) {
+                cout << "Unknown command! Please try again.\n";
+                continue;
+            }
+            branch = program_branch::Manual;
+            break;
         }
     }
 
-    sort_to_categories(Students, Students_Under, Students_Over);
-    output_with_multithreading(Students_Over, Students_Under);
+    print_by = print_selection();
+    key = sort_selection(print_by);
+    cout << "Key is: " << key << endl;//////
 
+    switch (branch)
+    {
+    case Test:
+        file_selection(testFiles);
+        test_multiple_files(testFiles, print_by, key);
+        cout << "\nResults are in files: 'Stiprus.txt' & 'Silpni.txt'." << endl;
+        return 1;
+        break;
+    case Read:
+        cout << "Select file from this list:\n";
+        system("dir *.txt /B");
+        while (true) {
+            cout << "\nInput name << ";
+            cin >> filename;
+            //Opening file for testing
+            ifstream file;
+            try {
+                file.open(filename);
+                if (!file) {
+                    throw runtime_error("File not found!");
+                }
+                break;
+            }
+            catch (const exception& e) {
+                cerr << e.what() << endl;
+            }
+        }
+        Input_from_file(Students, filename);
+        break;
+    case Manual:
+        Students.reserve(number_of_students);
+        for (int i = 0; i < number_of_students; i++) {
+            input(Temp_stud);
+            Students.push_back(Temp_stud);
+            clean(Temp_stud);
+        }
+        break;
+    default:
+        break;
+    }
+    
+    sort_students(Students, key);
+    sort_to_categories(Students, Students_Under, Students_Over);
+    output_with_multithreading(Students_Over, Students_Under, print_by);
     cout << "Results are in files: 'Stiprus.txt' & 'Silpni.txt'." << endl;
+
     system("pause");
 }

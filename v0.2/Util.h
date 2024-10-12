@@ -3,18 +3,30 @@
 
 #include "Mylib.h"
 #include "Stud.h"
+#include "timer.h"
+
+struct File_info {
+	string name;
+	size_t size;
+};
+
+enum selection {
+	Average,
+	Median,
+	Both
+};
 
 /*	Mean of a vector.
 */
-double Average(const vector<int>& nd);
+double average_int(const vector<int>& nd);
 
 /*
 */
-double Mean(const vector<double>& vec);
+//double average_double(const vector<double>& vec);
 
 /*	Median of a vector.
 */
-double Median(vector<int> nd);
+double median(vector<int> nd);
 
 /*	Final result calculation.
 */
@@ -41,12 +53,32 @@ void create_data_chuncked(const string& filename, const int& start, const int& s
 */
 void create_data(const string& filename, const int& size);
 
+/*
+*/
+void create_multiple_files(const vector<File_info>& files);
+
 /*	Function for program testing
 */
-void test_multiple_files();
+void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key);
 
 /*	Function to find valid keys in a string
 */
-void find_keys(string& line, vector<string>& keys);
+void find_keys(string& line, const enum selection& print_by, size_t& n_keys, vector<string>& keys);
+
+/*
+*/
+enum selection print_selection();
+
+/*
+*/
+string sort_selection(const enum selection& print_by);
+
+/*
+*/
+void create_file_selection(vector<File_info>& files);
+
+/*
+*/
+void file_selection(vector<string>& files);
 
 #endif

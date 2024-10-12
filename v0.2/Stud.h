@@ -17,10 +17,9 @@ struct Stud {
 			pavarde;	//- student last name;
 	vector<int> nd;		//- vector for storing home work marks;
 	int		egz;		//- exam result;
-	double	vid,		//- average value of all homework marks;
-			med,		//- median value of all homework marks.
-			res;		//- final result using average value of homeworks
-	enum category {Under, Over} cat;// Under if result < 5 and Over if result >= 5
+	double	final_vid,	//- 
+			final_med;	//-
+	enum category { Under, Over } cat;// Under if result < 5 and Over if result >= 5
 };
 
 /*	Function for deleting students data:
@@ -61,7 +60,7 @@ void Manual_input(Stud& local);
 *		If names are the same
 		then by surname
 */
-void sort_students(vector<Stud>& local, std::function<void(Stud, Stud)> comparator);
+void sort_students(vector<Stud>& Students, const string& key);
 
 /*	Function for sorting Students vector into two separate vectors by category.
 */
@@ -90,7 +89,7 @@ void input(Stud& local);
 		Name, Surname, Final result using
 		Average and Median values.
 */
-void output_to_file(const vector<Stud>& local, const string& filename);
+void output_to_file(const vector<Stud>& local, const string& filename, const enum selection& print_by);
 
 /*	Reading students data from a file to Stud structure
 		and checking for errors.
@@ -104,24 +103,38 @@ void Input_from_file(vector<Stud>& local, const string& filename);
 
 /*	Outputing on separate threads
 */
-void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under);
+void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under, const enum selection& print_by);
 
 int nam_sur(const Stud& a, const Stud& b);
 
-int nam_res(const Stud& a, const Stud& b);
+int nam_ave(const Stud& a, const Stud& b);
+
+int nam_med(const Stud& a, const Stud& b);
 
 int sur_nam(const Stud& a, const Stud& b);
 
-int sur_res(const Stud& a, const Stud& b);
+int sur_ave(const Stud& a, const Stud& b);
 
-int res_sur(const Stud& a, const Stud& b);
+int sur_med(const Stud& a, const Stud& b);
 
-int res_nam(const Stud& a, const Stud& b);
+int ave_nam(const Stud& a, const Stud& b);
+
+int ave_sur(const Stud& a, const Stud& b);
+
+int ave_med(const Stud& a, const Stud& b);
+
+int med_nam(const Stud& a, const Stud& b);
+
+int med_sur(const Stud& a, const Stud& b);
+
+int med_ave(const Stud& a, const Stud& b);
 
 int nam(const Stud& a, const Stud& b);
 
 int sur(const Stud& a, const Stud& b);
 
-int res(const Stud& a, const Stud& b);
+int ave(const Stud& a, const Stud& b);
+
+int med(const Stud& a, const Stud& b);
 
 #endif

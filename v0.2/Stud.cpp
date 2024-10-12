@@ -127,15 +127,9 @@ void input(Stud& local)
 		}
 	}
 	//Other values
-	local.vid = Average(local.nd);
-	local.med = Median(local.nd);
-	local.res = Result(local.egz, Average(local.nd));
-	if (local.res < 5) {
-		local.cat = Stud::Under;
-	}
-	else {
-		local.cat = Stud::Over;
-	}
+	local.final_vid = Result(local.egz, average_int(local.nd));
+	local.final_med = Result(local.egz, median(local.nd));
+	local.cat = (local.final_vid < 5) ? Stud::Under : Stud::Over;
 }
 
 void Input_from_file(vector<Stud>& local, const string& filename)
@@ -155,15 +149,12 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 	ifstream File;
 	File.open(filename, std::ios::ate);
 	std::streamsize fileSize = File.tellg();
-	File.close();
-	//cout << "File size: " << fileSize << " Bytes\n";
-
-	//Check line size
-	File.open(filename);
+	File.seekg(ios::beg);
 	string firstline;
 	getline(File, firstline);
 	File.close();
 	int lineSize = firstline.size();
+	//cout << "File size: " << fileSize << " Bytes\n";
 	//cout << "Line size: " << lineSize << " Bytes\n";
 
 	//Guess number of lines
@@ -221,15 +212,9 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 			continue;
 		}
 		//Average, Median values and category
-		Temp_stud.vid = Average(Temp_stud.nd);
-		Temp_stud.med = Median(Temp_stud.nd);
-		Temp_stud.res = Result(Temp_stud.egz, Average(Temp_stud.nd));
-		if (Temp_stud.res < 5) {
-			Temp_stud.cat = Stud::category::Under;
-		}
-		else {
-			Temp_stud.cat = Stud::category::Over;
-		}
+		Temp_stud.final_vid = Result(Temp_stud.egz, average_int(Temp_stud.nd));
+		Temp_stud.final_med = Result(Temp_stud.egz, median(Temp_stud.nd));
+		Temp_stud.cat = (Temp_stud.final_vid < 5) ? Stud::Under : Stud::Over;
 
 		//Saving to local vector
 		local.push_back(Temp_stud);
@@ -244,63 +229,79 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 		DATA OUTPUT FUNCTIONS
 */
 
-void output_to_file(const vector<Stud>& local, const string& filename)
+void output_to_file(const vector<Stud>& local, const string& filename, const enum selection& print_by)
 {
-	ofstream file(filename, std::ios::trunc);
-	file.close();
 	//Opening file
 	ofstream outFile;	//-Results file
 	outFile.open(filename);	//File name
 	stringstream buffer;
-	//size_t chunk_size = 50000;
 
-	//Writing Headline
-	outFile << "Name              Surname           Final result(Avg)\n";
-	outFile << "-----------------------------------------------------\n";
-
-	//Writing data
-	for (int i = 0; i < local.size(); i++) {
-		buffer << setw(18) << left << local.at(i).vardas <<
-			setw(18) << left << local.at(i).pavarde <<
-			setw(18) << fixed << setprecision(2) << local.at(i).res << "\n";
-
-		/*if (i % chunk_size == 0) {
-			outFile << buffer.str();
-			buffer.clear();
-		}*/
+	switch (print_by)
+	{
+	case Average:
+		//Writing Headline
+		outFile << "Name              Surname           Final result(Avg)\n";
+		outFile << "-----------------------------------------------------\n";
+		//Writing data
+		for (auto& s : local) {
+			buffer << setw(18) << left << s.vardas <<
+			setw(18) << left << s.pavarde <<
+			setw(18) << fixed << setprecision(2) << s.final_vid << "\n";}
+		break;
+	case Median:
+		//Writing Headline
+		outFile << "Name              Surname           Final result(Med)\n";
+		outFile << "-----------------------------------------------------\n";
+		//Writing data
+		for (auto& s : local) {
+			buffer << setw(18) << left << s.vardas <<
+			setw(18) << left << s.pavarde <<
+			setw(18) << fixed << setprecision(2) << s.final_med << "\n";}
+		break;
+	case Both:
+		//Writing Headline
+		outFile << "Name              Surname           Final result(Avg) Final result(Med)\n";
+		outFile << "-----------------------------------------------------------------------\n";
+		//Writing data
+		for (auto& s : local) {
+			buffer << setw(18) << left << s.vardas <<
+			setw(18) << left << s.pavarde <<
+			setw(19) << fixed << setprecision(2) << s.final_vid <<
+			setw(18) << fixed << setprecision(2) << s.final_med << "\n";}
+		break;
+	default:
+		break;
 	}
-
 	outFile << buffer.str();
-
 	//Closing file
 	outFile.close();
 }
 
-void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under)
+void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under, const enum selection& print_by)
 {
 	vector<thread> threads;
-	threads.push_back(thread(output_to_file, ref(Over), string("Stiprus.txt")));
-	threads.push_back(thread(output_to_file, ref(Under), string("Silpni.txt")));
+	threads.push_back(thread(output_to_file, ref(Over), string("Stiprus.txt"), ref(print_by) ));
+	threads.push_back(thread(output_to_file, ref(Under), string("Silpni.txt"), ref(print_by) ));
 	for (auto& th : threads) {
 		th.join();
 	}
 }
 
-
 /*
 		OTHER FUNCTIONS
 */
 
-void sort_students(vector<Stud>& local, std::function<int(Stud, Stud)> comparator) {
-	//labda function for sorting by two keys of Stud structure
-	sort(local.begin(), local.end(), [](const Stud& a, const Stud& b) {
-		if (a.vardas == b.vardas) {
-			//comparing surnames in case if names are the same
-			return a.pavarde < b.pavarde;
-		}
-		//comparing names
-		return a.vardas < b.vardas;
-		});
+void sort_students(vector<Stud>& Students, const string& key) {
+	map<string, int(*)(const Stud&, const Stud&)> comparators = {
+		{"nam_sur", nam_sur}, {"nam_ave", nam_ave}, {"nam_med", nam_med},
+		{"sur_nam", sur_nam}, {"sur_ave", sur_ave}, {"sur_med", sur_med},
+		{"ave_sur", ave_sur}, {"ave_nam", ave_nam}, {"ave_med", ave_med},
+		{"med_nam", med_nam}, {"med_sur", med_sur}, {"med_ave", med_ave},
+		{"nam", nam}, {"sur", sur}, {"ave", ave}, {"med", med}
+	};
+
+	auto comparator = comparators.find(key);
+	sort(Students.begin(), Students.end(), comparator->second);
 }
 
 void clean(Stud& local)
@@ -333,30 +334,82 @@ void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& 
 	COMPARATORS
 */
 
-int nam_sur(const Stud& a, const Stud& b) {
+int nam_sur(const Stud& a, const Stud& b)
+{
 	return (a.vardas == b.vardas) ? a.pavarde < b.pavarde : a.vardas < b.vardas;
 }
-int nam_res(const Stud& a, const Stud& b) {
-	return (a.vardas == b.vardas) ? a.res < b.res : a.vardas < b.vardas;
+
+int nam_ave(const Stud& a, const Stud& b)
+{
+	return (a.vardas == b.vardas) ? a.final_vid < b.final_vid : a.vardas < b.vardas;
 }
-int sur_nam(const Stud& a, const Stud& b) {
+
+int nam_med(const Stud& a, const Stud& b)
+{
+	return (a.pavarde == b.pavarde) ? a.final_med < b.final_med : a.pavarde < b.pavarde;
+}
+
+int sur_nam(const Stud& a, const Stud& b)
+{
 	return (a.pavarde == b.pavarde) ? a.vardas < b.vardas : a.pavarde < b.pavarde;
 }
-int sur_res(const Stud& a, const Stud& b) {
-	return (a.pavarde == b.pavarde) ? a.res < b.res : a.pavarde < b.pavarde;
+
+int sur_ave(const Stud& a, const Stud& b)
+{
+	return (a.pavarde == b.pavarde) ? a.final_vid < b.final_vid : a.pavarde < b.pavarde;
 }
-int res_sur(const Stud& a, const Stud& b) {
-	return (a.res == b.res) ? a.pavarde < b.pavarde : a.res < b.res;
+
+int sur_med(const Stud& a, const Stud& b)
+{
+	return (a.pavarde == b.pavarde) ? a.final_med < b.final_med : a.pavarde < b.pavarde;
 }
-int res_nam(const Stud& a, const Stud& b) {
-	return (a.res == b.res) ? a.vardas < b.vardas : a.res < b.res;
+
+int ave_sur(const Stud& a, const Stud& b)
+{
+	return (a.final_vid == b.final_vid) ? a.pavarde < b.pavarde : a.final_vid < b.final_vid;
 }
-int nam(const Stud& a, const Stud& b) {
+
+int ave_nam(const Stud& a, const Stud& b)
+{
+	return (a.final_vid == b.final_vid) ? a.vardas < b.vardas : a.final_vid < b.final_vid;
+}
+
+int ave_med(const Stud& a, const Stud& b)
+{
+	return (a.final_vid == b.final_vid) ? a.final_med < b.final_med : a.final_vid < b.final_vid;
+}
+
+int med_nam(const Stud& a, const Stud& b)
+{
+	return (a.final_med == b.final_med) ? a.vardas < b.vardas : a.final_med < b.final_med;
+}
+
+int med_sur(const Stud& a, const Stud& b)
+{
+	return (a.final_med == b.final_med) ? a.pavarde < b.pavarde : a.final_med < b.final_med;
+}
+
+int med_ave(const Stud& a, const Stud& b)
+{
+	return (a.final_med == b.final_med) ? a.final_vid < b.final_vid : a.final_med < b.final_med;
+}
+
+int nam(const Stud& a, const Stud& b)
+{
 	return a.vardas < b.vardas;
 }
-int sur(const Stud& a, const Stud& b) {
+
+int sur(const Stud& a, const Stud& b)
+{
 	return a.pavarde < b.pavarde;
 }
-int res(const Stud& a, const Stud& b) {
-	return a.res < b.res;
+
+int ave(const Stud& a, const Stud& b)
+{
+	return a.final_vid < b.final_vid;
+}
+
+int med(const Stud& a, const Stud& b)
+{
+	return a.final_med < b.final_med;
 }
