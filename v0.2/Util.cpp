@@ -16,11 +16,6 @@ double average_int(const vector<int>& nd)
 	return accumulate(nd.begin(), nd.end(), 0.0) / nd.size();
 }
 
-//double average_double(const vector<double>& vec)
-//{
-//	return accumulate(vec.begin(), vec.end(), 0.0) / vec.size();
-//}
-
 double median(vector<int> nd)
 {
 	int n = nd.size();
@@ -116,10 +111,8 @@ void create_data(const string& filename, const int& size) {
 
 void create_multiple_files(const vector<File_info>& files)
 {
-	Timer timer;
-	timer.elapsed();
 	for (auto& file : files) {
-		timer.reset();
+		Timer timer;
 		create_data(file.name, file.size);
 		cout << "Creating file of size " << setw(8) << file.size << " took: " << timer.elapsed() << endl;
 	}
@@ -154,7 +147,7 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 			fixed << setprecision(4) << t.elapsed() << endl;
 		//Output
 		t.reset();
-		output_with_multithreading(under, over, print_by);
+		output_with_multithreading(over, under, print_by);
 		cout << "Outputing " << f << " took:    " <<
 			fixed << setprecision(4) << t.elapsed() << endl;
 
@@ -282,7 +275,7 @@ void create_file_selection(vector<File_info>& files)
 	int empty_count = 0,
 		temp_size;
 	File_info temp;
-	cout << "\nEnter files to create data(Name & Szie).\n" <<
+	cout << "\nEnter files to create data(Name & Size).\n" <<
 		"When finised press ENTER twice.\n" <<
 		"To get a list of existing files write 'Info'\n";
 	while (true) {
@@ -361,6 +354,7 @@ void file_selection(vector<string>& files)
 		}
 		else {
 			empty_count = 0;
+			if (input.length() > 4 && input.substr(input.length() - 4, 4) != ".txt") input += ".txt";
 			//Opening file for testing
 			ifstream file;
 			try {

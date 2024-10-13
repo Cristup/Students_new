@@ -292,7 +292,7 @@ void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under, const e
 */
 
 void sort_students(vector<Stud>& Students, const string& key) {
-	map<string, int(*)(const Stud&, const Stud&)> comparators = {
+	map<string, int(&)(const Stud&, const Stud&)> comparators = {
 		{"nam_sur", nam_sur}, {"nam_ave", nam_ave}, {"nam_med", nam_med},
 		{"sur_nam", sur_nam}, {"sur_ave", sur_ave}, {"sur_med", sur_med},
 		{"ave_sur", ave_sur}, {"ave_nam", ave_nam}, {"ave_med", ave_med},
@@ -309,6 +309,9 @@ void clean(Stud& local)
 	local.vardas.clear();
 	local.pavarde.clear();
 	local.nd.clear();
+	local.egz = 0;
+	local.final_med = 0;
+	local.final_vid = 0;
 }
 
 void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over)

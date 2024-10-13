@@ -16,13 +16,9 @@ enum selection {
 	Both
 };
 
-/*	Mean of a vector.
+/*	Mean of a type int vector.
 */
 double average_int(const vector<int>& nd);
-
-/*
-*/
-//double average_double(const vector<double>& vec);
 
 /*	Median of a vector.
 */
@@ -44,7 +40,7 @@ bool is_digits(const string& str);
 		start - First index of students
 		stop - Last index
 *	Postcondition:
-		File with stop - start lines and
+		File with (stop - start) lines and
 		student names, surnames and random homework and exam results
 */
 void create_data_chuncked(const string& filename, const int& start, const int& stop);
@@ -53,7 +49,9 @@ void create_data_chuncked(const string& filename, const int& start, const int& s
 */
 void create_data(const string& filename, const int& size);
 
-/*
+/*	Function for creating test files:
+*		files.name - file name
+*		files.size - file size
 */
 void create_multiple_files(const vector<File_info>& files);
 
@@ -65,7 +63,7 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 */
 void find_keys(string& line, const enum selection& print_by, size_t& n_keys, vector<string>& keys);
 
-/*
+/*	Finding valid keys in a string
 */
 enum selection print_selection();
 

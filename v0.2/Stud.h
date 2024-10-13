@@ -13,13 +13,13 @@
 *		med		- median value of all homework marks.
 */
 struct Stud {
-	string	vardas,		//- student name;
-			pavarde;	//- student last name;
-	vector<int> nd;		//- vector for storing home work marks;
-	int		egz;		//- exam result;
-	double	final_vid,	//- 
-			final_med;	//-
-	enum category { Under, Over } cat;// Under if result < 5 and Over if result >= 5
+	string		vardas,		//- student name;
+				pavarde;	//- student last name;
+	vector<int> nd;			//- vector for storing home work marks;
+	int			egz;		//- exam result;
+	double		final_vid,	//- final result using average value of homeworks;
+				final_med;	//- final result using median value of homeworks;
+	enum category { Under, Over } cat;// Under if result < 5 and Over if result >= 5.
 };
 
 /*	Function for deleting students data:
@@ -55,10 +55,9 @@ void Automatic_input(Stud& local);
 */
 void Manual_input(Stud& local);
 
-/*	Function for sorting all students:
-*		First by name,
-*		If names are the same
-		then by surname
+/*	Function for sorting all students by key:
+		Students - data container
+		key - comparator
 */
 void sort_students(vector<Stud>& Students, const string& key);
 
@@ -87,7 +86,8 @@ void input(Stud& local);
 
 /*	Data table writing in file:
 		Name, Surname, Final result using
-		Average and Median values.
+		Average and/or Median values based on `print_by`.
+		Printing to file named `filename`
 */
 void output_to_file(const vector<Stud>& local, const string& filename, const enum selection& print_by);
 
