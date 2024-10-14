@@ -60,6 +60,7 @@ int main()
         else if (main_input.substr(0, 3) == "sho") {
             cout << "\nAvailable '.txt' files:\n";
             system("dir *.txt /B");
+
             continue;
         }
         //Creating of test data files
@@ -97,7 +98,7 @@ int main()
         break;
     case Read:
         cout << "Select file from this list:\n";
-        system("dir *.txt /B"); //Printing list for choosing .txt file
+        system("dir  *.txt /B"); //Printing list for choosing .txt file
         while (true) {
             //input
             cout << "\nInput name << ";
@@ -132,7 +133,8 @@ int main()
     
     sort_students(Students, key);   //Sorting data by users choosen key
     sort_to_categories(Students, Students_Under, Students_Over);    //Spliting data to categories
-    output_with_multithreading(Students_Over, Students_Under, print_by);    //Outputing to files
+    output_to_file(Students_Over, "Stiprus.txt", print_by);         //Outputing to files
+    output_to_file(Students_Under, "Silpni.txt", print_by);         //Outputing to files
     cout << "Results are in files: 'Stiprus.txt' & 'Silpni.txt'." << endl;
 
     system("pause");

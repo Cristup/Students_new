@@ -277,22 +277,12 @@ void output_to_file(const vector<Stud>& local, const string& filename, const enu
 	outFile.close();
 }
 
-void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under, const enum selection& print_by)
-{
-	vector<thread> threads;
-	threads.push_back(thread(output_to_file, ref(Over), string("Stiprus.txt"), ref(print_by) ));
-	threads.push_back(thread(output_to_file, ref(Under), string("Silpni.txt"), ref(print_by) ));
-	for (auto& th : threads) {
-		th.join();
-	}
-}
-
 /*
 		OTHER FUNCTIONS
 */
 
 void sort_students(vector<Stud>& Students, const string& key) {
-	map<string, int(&)(const Stud&, const Stud&)> comparators = {
+	map<string, int(*)(const Stud&, const Stud&)> comparators = {
 		{"nam_sur", nam_sur}, {"nam_ave", nam_ave}, {"nam_med", nam_med},
 		{"sur_nam", sur_nam}, {"sur_ave", sur_ave}, {"sur_med", sur_med},
 		{"ave_sur", ave_sur}, {"ave_nam", ave_nam}, {"ave_med", ave_med},
@@ -300,8 +290,7 @@ void sort_students(vector<Stud>& Students, const string& key) {
 		{"nam", nam}, {"sur", sur}, {"ave", ave}, {"med", med}
 	};
 
-	auto comparator = comparators.find(key);
-	sort(Students.begin(), Students.end(), comparator->second);
+	sort(Students.begin(), Students.end(), comparators[key]);
 }
 
 void clean(Stud& local)
@@ -317,8 +306,8 @@ void clean(Stud& local)
 void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over)
 {
 	size_t size = local.size();
-	Under.reserve(size / 2);
-	Over.reserve(size / 2);
+	Under.reserve(size / 1.5);
+	Over.reserve(size / 1.5);
 
 	for (auto& i : local) {
 		if (i.cat == Stud::category::Under) {

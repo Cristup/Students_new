@@ -9,8 +9,6 @@
 #include <random>
 #include <fstream>
 #include <sstream>
-#include <mutex>
-#include <thread>
 #include <numeric>
 #include <functional>
 #include <map>
@@ -19,9 +17,7 @@
 
 using std::vector;
 using std::string;
-using std::ostringstream;
 using std::stringstream;
-using std::istringstream;
 using std::ifstream;
 using std::ofstream;
 using std::ios;
@@ -37,11 +33,6 @@ using std::runtime_error;
 
 using std::random_device;
 using std::uniform_int_distribution;
-
-using std::mutex;
-using std::lock_guard;
-using std::thread;
-using std::ref;
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration;

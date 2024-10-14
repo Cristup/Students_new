@@ -7,9 +7,6 @@
 random_device rd;	//-Random number generator
 //-Interval for random value of results
 uniform_int_distribution<int> interval(1, 10);
-mutex file_mutex;
-const int part_size = 10000;
-const int num_threads = thread::hardware_concurrency();
 
 double average_int(const vector<int>& nd)
 {
@@ -46,74 +43,38 @@ bool is_digits(const string& str)
 	return true;
 }
 
-void create_data_chuncked(const string& filename, const int& start, const int& stop) {
-	ostringstream buffer;
+void generate_file(const string& filename, const int& size)
+{
+	stringstream buffer;
 	int index;
-	
-	for (int i = start - 1; i < stop; i++) {
-		index = i + 1;
+	buffer << setw(20) << left << "Vardas" <<
+		setw(21) << left << "Pavarde";
+	for (int i = 0; i < 15; i++) {
+		buffer << "ND" << setw(8) << i + 1;
+	}
+	buffer << "Egz.\n";
+
+	for (int i = 1;  i <= size; i++) {
+		index = i;
 		buffer << "Vardas" << setw(14) << left << index <<
 			"Pavarde" << setw(14) << left << index;
 		for (int j = 0; j < 15; j++) {
 			buffer << setw(10) << interval(rd);
 		}
 		buffer << interval(rd) << "\n";
-
-		if (i % part_size == 0 && i > 0) {
-			lock_guard<mutex> lock(file_mutex);
-			ofstream file(filename, ios::app);
-			if (file.is_open()) {
-				file << buffer.str();
-				file.close();
-			}
-			
-			buffer.str("");
-			buffer.clear();
-		}
 	}
-
-	lock_guard<mutex> lock(file_mutex);
-	ofstream file(filename, ios::app);
-	if (file.is_open()) {
-		file << buffer.str();
-		file.close();
-	}
-}
-
-void create_data(const string& filename, const int& size) {
-	vector<thread> threads;
-	threads.reserve(num_threads);
-	ostringstream line;
-	ofstream file;
-
-	line << setw(20) << left << "Vardas" <<
-		setw(21) << left << "Pavarde";
-	for (int i = 0; i < 15; i++) {
-		line << "ND" << setw(8) << i + 1;
-	}
-	line << "Egz.\n";
-
-	file.open(filename);
-	file << line.str();
+	ofstream file(filename);
+	file << buffer.str();
+	buffer.str("");
+	buffer.clear();
 	file.close();
-
-	int range_size = size / num_threads;
-
-	for (int i = 0; i < num_threads; i++) {
-		int start = i * range_size + 1;
-		int stop = (i == num_threads - 1) ? size : (i + 1) * range_size;
-		threads.push_back(thread(create_data_chuncked, filename, start, stop));}
-
-	for (auto& th : threads) {
-		th.join();}
-	
 }
 
 void create_multiple_files(const vector<File_info>& files)
 {
 	for (auto& file : files) {
 		Timer timer;
-		create_data(file.name, file.size);
+		generate_file(file.name, file.size);
 		cout << "Creating file of size " << setw(8) << file.size << " took: " << timer.elapsed() << endl;
 	}
 	cout << "All files created.\n\n";
@@ -147,7 +108,8 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 			fixed << setprecision(4) << t.elapsed() << endl;
 		//Output
 		t.reset();
-		output_with_multithreading(over, under, print_by);
+		output_to_file(over, "Stiprus.txt", print_by);
+		output_to_file(under, "Silpni.txt", print_by);
 		cout << "Outputing " << f << " took:    " <<
 			fixed << setprecision(4) << t.elapsed() << endl;
 
@@ -278,6 +240,7 @@ void create_file_selection(vector<File_info>& files)
 	cout << "\nEnter files to create data(Name & Size).\n" <<
 		"When finised press ENTER twice.\n" <<
 		"To get a list of existing files write 'Info'\n";
+	cin.ignore();
 	while (true) {
 		cout << "\nInput name << ";
 		getline(cin, line);
@@ -304,7 +267,7 @@ void create_file_selection(vector<File_info>& files)
 		}
 		else {
 			empty_count = 0;
-			if (line.length() > 4 && line.substr(line.length() - 4, 4) != ".txt") line += ".txt";
+			if (line.length() >= 4 && line.substr(line.length() - 4, 4) != ".txt") line += ".txt";
 			temp.name = line;
 			cout << "Enter size for file " << line << endl;
 			while (true) {

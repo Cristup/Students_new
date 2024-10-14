@@ -34,20 +34,9 @@ double Result(const int& egz, const double& value);
 */
 bool is_digits(const string& str);
 
-/*	Function for creating test data
-*	Precondition:
-		filename - data output file
-		start - First index of students
-		stop - Last index
-*	Postcondition:
-		File with (stop - start) lines and
-		student names, surnames and random homework and exam results
+/*
 */
-void create_data_chuncked(const string& filename, const int& start, const int& stop);
-
-/*	Function for spliting test data generation into threads
-*/
-void create_data(const string& filename, const int& size);
+void generate_file(const string& filename, const int& size);
 
 /*	Function for creating test files:
 *		files.name - file name

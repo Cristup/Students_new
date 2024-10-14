@@ -101,9 +101,9 @@ void output_to_file(const vector<Stud>& local, const string& filename, const enu
 */
 void Input_from_file(vector<Stud>& local, const string& filename);
 
-/*	Outputing on separate threads
+/*
+	COMPARATORS
 */
-void output_with_multithreading(vector<Stud>& Over, vector<Stud>& Under, const enum selection& print_by);
 
 int nam_sur(const Stud& a, const Stud& b);
 
