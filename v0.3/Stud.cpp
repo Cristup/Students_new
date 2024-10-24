@@ -27,23 +27,25 @@ void Automatic_input(Stud& local)
 {
 	//Generate exam result and print them to terminal
 	local.egz = Results_interval(rd_generator);
-	cout << "Generated egzam result: " << local.egz << endl;
+	cout << "\nGenerated egzam result: " << local.egz << endl;
 
 	//Generate number of homeworks
 	int amount = Amount_interval(rd_generator);
 
 	//Generate and print homework marks
 	local.nd.reserve(amount);
+	cout << "Generated home work result: {";
 	for (int i = 0; i < amount; i++) {
 		local.nd.push_back(Results_interval(rd_generator));
-		cout << "Generated home work result " << i + 1 << ": " << local.nd[i] << endl;
+		cout << local.nd[i] << ", ";
 	}
+	cout << "}" << endl;
 }
 
 void Manual_input(Stud& local)
 {
 	int Temp_nd,		//-Temporary place for storing a value
-		nd_count	= 1,//-Total number and index of homeworks
+		nd_count = 1,//-Total number and index of homeworks
 		empty_count = 0;//-Number of times when user pressed Enter
 	string value;		//-User input
 
@@ -132,37 +134,40 @@ void input(Stud& local)
 	local.cat = (local.final_vid < 5) ? Stud::Under : Stud::Over;
 }
 
-void Input_from_file(vector<Stud>& local, const string& filename)
+template<typename Container>
+void Input_from_file(Container& local, const string& filename)
 {
 	Stud Temp_stud;			//Temporary value for storing single students data.
 	int n = 0,				//Number of homeworks.
 		Line_number = 0;	//For counting lines in the file.
 	string	Temp_nd,		//Temporary value for storing homework mark.
-		Temp_egzam,		//Temporary value for storing exam result.
-		Temp_value,		//Temporary value for working with headline.
-		name,			//Temporary value for student name.
-		headline,
-		surname;		//Temporary value for student surname.
+		Temp_egzam,			//Temporary value for storing exam result.
+		Temp_value,			//Temporary value for working with headline.
+		name,				//Temporary value for student name.
+		headline,			//
+		surname;			//Temporary value for student surname.
 	stringstream buffer;	//Buffer holding file content
 
-	//Check file size
-	ifstream File;
-	File.open(filename, std::ios::ate);
-	std::streamsize fileSize = File.tellg();
-	File.seekg(ios::beg);
-	string firstline;
-	getline(File, firstline);
-	File.close();
-	int lineSize = firstline.size();
-	//cout << "File size: " << fileSize << " Bytes\n";
-	//cout << "Line size: " << lineSize << " Bytes\n";
+	if constexpr (is_same<Container, vector<Stud>>::value) {
+		//Check file size
+		ifstream File;
+		File.open(filename, std::ios::ate);
+		std::streamsize fileSize = File.tellg();
+		File.seekg(ios::beg);
+		string firstline;
+		getline(File, firstline);
+		File.close();
+		int lineSize = firstline.size();
+		//cout << "File size: " << fileSize << " Bytes\n";
+		//cout << "Line size: " << lineSize << " Bytes\n";
 
-	//Guess number of lines
-	int numberOfLines = fileSize / lineSize;
-	int adjust_size = (int) log10(numberOfLines) - 1;
-	numberOfLines += pow(10, adjust_size);
-	//cout << "Aprox. number of lines: " << numberOfLines << endl;
-	local.reserve(numberOfLines);
+		//Guess number of lines
+		int numberOfLines = fileSize / lineSize;
+		int adjust_size = (int)log10(numberOfLines) - 1;
+		numberOfLines += pow(10, adjust_size);
+		//cout << "Aprox. number of lines: " << numberOfLines << endl;
+		local.reserve(numberOfLines);
+	}
 
 	//Opening file
 	ifstream inFile; //-Data file
@@ -223,19 +228,24 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 	}
 }
 
-
-
 /*
 		DATA OUTPUT FUNCTIONS
 */
 
-void output_to_file(const vector<Stud>& local, const string& filename, const enum selection& print_by)
+template<typename T>
+void output_to_file(T& local, const string& filename, const enum selection& print_by)
 {
+	stringstream name_front(filename.substr(0, filename.size() - 4));
+	string name_end;
+	if constexpr (is_same<T, vector<Stud>>::value)
+		(local[0].final_vid >= 5) ? name_end = "_stiprus.txt" : name_end = "_silpni.txt";
+	else
+		(local.front().final_vid >= 5) ? name_end = "_stiprus.txt" : name_end = "_silpni.txt";
+	string fname = name_front.str() + name_end;
 	//Opening file
 	ofstream outFile;	//-Results file
-	outFile.open(filename);	//File name
+	outFile.open(fname);	//File name
 	stringstream buffer;
-
 	switch (print_by)
 	{
 	case Average:
@@ -245,8 +255,9 @@ void output_to_file(const vector<Stud>& local, const string& filename, const enu
 		//Writing data
 		for (auto& s : local) {
 			buffer << setw(18) << left << s.vardas <<
-			setw(18) << left << s.pavarde <<
-			setw(18) << fixed << setprecision(2) << s.final_vid << "\n";}
+				setw(18) << left << s.pavarde <<
+				setw(18) << fixed << setprecision(2) << s.final_vid << "\n";
+		}
 		break;
 	case Median:
 		//Writing Headline
@@ -255,8 +266,9 @@ void output_to_file(const vector<Stud>& local, const string& filename, const enu
 		//Writing data
 		for (auto& s : local) {
 			buffer << setw(18) << left << s.vardas <<
-			setw(18) << left << s.pavarde <<
-			setw(18) << fixed << setprecision(2) << s.final_med << "\n";}
+				setw(18) << left << s.pavarde <<
+				setw(18) << fixed << setprecision(2) << s.final_med << "\n";
+		}
 		break;
 	case Both:
 		//Writing Headline
@@ -265,9 +277,10 @@ void output_to_file(const vector<Stud>& local, const string& filename, const enu
 		//Writing data
 		for (auto& s : local) {
 			buffer << setw(18) << left << s.vardas <<
-			setw(18) << left << s.pavarde <<
-			setw(19) << fixed << setprecision(2) << s.final_vid <<
-			setw(18) << fixed << setprecision(2) << s.final_med << "\n";}
+				setw(18) << left << s.pavarde <<
+				setw(19) << fixed << setprecision(2) << s.final_vid <<
+				setw(18) << fixed << setprecision(2) << s.final_med << "\n";
+		}
 		break;
 	default:
 		break;
@@ -275,13 +288,15 @@ void output_to_file(const vector<Stud>& local, const string& filename, const enu
 	outFile << buffer.str();
 	//Closing file
 	outFile.close();
+	local.clear();
 }
 
 /*
 		OTHER FUNCTIONS
 */
 
-void sort_students(vector<Stud>& Students, const string& key) {
+template<typename T>
+void sort_students(T& Students, const string& key) {
 	map<string, int(*)(const Stud&, const Stud&)> comparators = {
 		{"nam_sur", nam_sur}, {"nam_ave", nam_ave}, {"nam_med", nam_med},
 		{"sur_nam", sur_nam}, {"sur_ave", sur_ave}, {"sur_med", sur_med},
@@ -289,8 +304,13 @@ void sort_students(vector<Stud>& Students, const string& key) {
 		{"med_nam", med_nam}, {"med_sur", med_sur}, {"med_ave", med_ave},
 		{"nam", nam}, {"sur", sur}, {"ave", ave}, {"med", med}
 	};
-
-	sort(Students.begin(), Students.end(), comparators[key]);
+	if constexpr (is_same<T, vector<Stud>>::value) {
+		//concurrency::parallel_sort(Students.begin(), Students.end(), comparators[key]);
+		sort(Students.begin(), Students.end(), comparators[key]);
+	}
+	else if constexpr (is_same<T, list<Stud>>::value) {
+		Students.sort(comparators[key]);
+	}
 }
 
 void clean(Stud& local)
@@ -303,11 +323,14 @@ void clean(Stud& local)
 	local.final_vid = 0;
 }
 
-void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over)
+template<typename T>
+void sort_to_categories(T& local, T& Under, T& Over)
 {
 	size_t size = local.size();
-	Under.reserve(size / 1.5);
-	Over.reserve(size / 1.5);
+	if constexpr (is_same<T, vector<Stud>>::value) {
+		Under.reserve(size / 1.5);
+		Over.reserve(size / 1.5);
+	}
 
 	for (auto& i : local) {
 		if (i.cat == Stud::category::Under) {

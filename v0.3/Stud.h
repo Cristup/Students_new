@@ -14,26 +14,26 @@
 */
 struct Stud {
 	string		vardas,		//- student name;
-				pavarde;	//- student last name;
+		pavarde;	//- student last name;
 	vector<int> nd;			//- vector for storing home work marks;
 	int			egz;		//- exam result;
 	double		final_vid,	//- final result using average value of homeworks;
-				final_med;	//- final result using median value of homeworks;
+		final_med;	//- final result using median value of homeworks;
 	enum category { Under, Over } cat;// Under if result < 5 and Over if result >= 5.
 };
 
 /*	Function for deleting students data:
 *		Name, Surname & Homework vector.
-* 
+*
 	Precondition:
 *		local - type Stud argument.
 */
 void clean(Stud& local);
 
-/*	Function that generates and inputs values from 
+/*	Function that generates and inputs values from
 *		uniform distribution to Students structure.
 *		Also, prints generated values to terminal.
-*		
+*
 	Generated values:
 *		Exam result in interval [1;10];
 *		Number of homeworks in interval [5;15];
@@ -41,12 +41,12 @@ void clean(Stud& local);
 */
 void Automatic_input(Stud& local);
 
-/*	Function for entering x homework marks in 
+/*	Function for entering x homework marks in
 *		terminal and managing user input.
-*	
-	Data is writen to Stud.nd vector until 
+*
+	Data is writen to Stud.nd vector until
 *		user presses Enter twice.
-* 
+*
 	Function checks if:
 *		there is at least one value provided by user;
 *		value is an integer;
@@ -59,11 +59,13 @@ void Manual_input(Stud& local);
 		Students - data container
 		key - comparator
 */
-void sort_students(vector<Stud>& Students, const string& key);
+template<typename T>
+void sort_students(T& Students, const string& key);
 
 /*	Function for sorting Students vector into two separate vectors by category.
 */
-void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
+template<typename T>
+void sort_to_categories(T& local, T& Under, T& Over);
 
 /*	Function for data input in terminal.
 *		local - type Stud argument for single student data.
@@ -89,7 +91,9 @@ void input(Stud& local);
 		Average and/or Median values based on `print_by`.
 		Printing to file named `filename`
 */
-void output_to_file(const vector<Stud>& local, const string& filename, const enum selection& print_by);
+
+template<typename T>
+void output_to_file(T& local, const string& filename, const enum selection& print_by);
 
 /*	Reading students data from a file to Stud structure
 		and checking for errors.
@@ -99,7 +103,22 @@ void output_to_file(const vector<Stud>& local, const string& filename, const enu
 *		Then pushes data to Students vector;
 *		And repeats until the end of the file.
 */
-void Input_from_file(vector<Stud>& local, const string& filename);
+template<typename Container>
+void Input_from_file(Container& local, const string& filename);
+
+/*
+	CONSTRUCTING FUNCTIONS
+*/
+//With vector<>
+template void Input_from_file<vector<Stud>>(vector<Stud>& local, const string& filename);
+template void output_to_file<vector<Stud>>(vector<Stud>& local, const string& filename, const enum selection& print_by);
+template void sort_students<vector<Stud>>(vector<Stud>& Students, const string& key);
+template void sort_to_categories<vector<Stud>>(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
+//With list<>
+template void Input_from_file<list<Stud>>(list<Stud>& local, const string& filename);
+template void output_to_file<list<Stud>>(list<Stud>& local, const string& filename, const enum selection& print_by);
+template void sort_students<list<Stud>>(list<Stud>& Students, const string& key);
+template void sort_to_categories<list<Stud>>(list<Stud>& local, list<Stud>& Under, list<Stud>& Over);
 
 /*
 	COMPARATORS

@@ -10,11 +10,50 @@ struct File_info {
 	size_t size;
 };
 
+struct Directory_files {
+	int id;
+	string name;
+	enum types { Data, Results } type;
+};
+
+struct Record {
+
+	double input = 0.0;
+	double sorting = 0.0;
+	double categorising = 0.0;
+	double output = 0.0;
+	double total = 0.0;
+	int	   count = 0;
+};
+
+struct Test_data {
+	map<string, Record> vec_test;
+	map<string, Record> list_test;
+	map<string, double> fg_durations;
+};
+
 enum selection {
 	Average,
 	Median,
 	Both
 };
+
+enum container_types {
+	Vector,
+	List
+};
+
+void update_info(stringstream& info, const enum container_types& type);
+
+void update_files(vector<Directory_files>& files);
+
+void table(const vector<Directory_files> files);
+
+void markdown_table();
+
+bool is_data_file(const string& filename);
+
+void get_type(const enum container_types& type);
 
 /*	Mean of a type int vector.
 */
@@ -46,7 +85,7 @@ void create_multiple_files(const vector<File_info>& files);
 
 /*	Function for program testing
 */
-void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key);
+void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key, const enum container_types& c_type);
 
 /*	Function to find valid keys in a string
 */
