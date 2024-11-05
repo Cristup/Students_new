@@ -45,7 +45,7 @@ void update_files(vector<Directory_files>& files)
 	ifstream inFile("lists/list_of_txt.txt");
 	buf << inFile.rdbuf();
 	inFile.close();
-	while (buf >> filename) {
+	while(buf >> filename) {
 		id++;
 		temp_info.id = id;
 		temp_info.name = filename;
@@ -57,13 +57,13 @@ void update_files(vector<Directory_files>& files)
 void table(const vector<Directory_files> files)
 {
 	cout << "\nID |File_name           |Content\n" <<
-		"---+--------------------+--------\n";
+			  "---+--------------------+--------\n";
 	for (const auto& file : files) {
 		cout << setw(3) << left << file.id << "|" <<
 			setw(20) << left << file.name << "|";
 		(file.type == Directory_files::Data) ?
 			cout << "Data\n" :
-			cout << "Results\n";
+			cout << "Results\n" ;
 	}
 	cout << endl;
 }
@@ -80,7 +80,7 @@ void get_type(const enum container_types& type)
 {
 
 	(type == container_types::Vector) ?
-		cout << "Program currently is using container type: VECTOR.\n\n" :
+		cout << "Program currently is using container type: VECTOR.\n\n":
 		cout << "Program currently is using container type: LIST.\n\n";
 }
 
@@ -101,7 +101,7 @@ double median(vector<int> nd)
 	}
 }
 
-double Result(const int& egz, const double& value)
+double Result(const int& egz,const double& value)
 {
 	return 0.4 * value + 0.6 * egz;
 }
@@ -131,7 +131,7 @@ void generate_file(const string& filename, const int& size)
 	}
 	buffer << "Egz.\n";
 
-	for (int i = 1; i <= size; i++) {
+	for (int i = 1;  i <= size; i++) {
 		index = i;
 		buffer << "Vardas" << setw(14) << left << index <<
 			"Pavarde" << setw(14) << left << index;
@@ -176,7 +176,7 @@ void markdown_table()
 
 		Record rec1 = test.second;
 		Record rec2;
-
+		
 		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
 			rec2 = test_results.list_test[filename];
 		}
@@ -323,15 +323,14 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 				[&]() { output_to_file(over_vector, f, print_by); },
 				[&]() { output_to_file(under_vector, f, print_by); }
 			);
-		}
-		else
+		} else 
 		{
 			concurrency::parallel_invoke(
 				[&]() { output_to_file(over_list, f, print_by); },
 				[&]() { output_to_file(under_list, f, print_by); }
 			);
 		}
-
+		
 		time = t.elapsed();
 		(c_type == container_types::Vector) ?
 			test_results.vec_test[f].output += time :
@@ -348,19 +347,19 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 		system("pause");
 		cout << endl;
 	}
-
+	
 }
 
 void find_keys(string& line, const enum selection& print_by, size_t& n_keys, vector<string>& keys)
 {
 	stringstream input(line),
-		output;
+				output;
 	string key;
 	bool name_used = false,
 		surname_used = false,
 		median_used = false,
 		average_used = false;
-	while (input >> key && n_keys < 2) {
+	while(input >> key && n_keys < 2) {
 		transform(key.begin(), key.end(), key.begin(), ::tolower);
 		if (!name_used && key.substr(0, 3) == "nam") {
 			output << "nam_";
@@ -440,7 +439,7 @@ string sort_selection(const enum selection& print_by)
 		getline(cin, line);
 		if (line.empty() && input_happend)
 			return key_output;
-		else if (line.empty())
+		else if(line.empty())
 		{
 			cout << "Enter at least one key.\n";
 			continue;
@@ -480,7 +479,7 @@ void create_file_selection(vector<File_info>& files)
 			empty_count++;
 			if (files.size() > 0 && empty_count >= 2) {
 				cout << "Files:\n";
-				cout << setw(20) << left << "Name" << "|" << "Size\n--------------------+--------------------\n";
+				cout << setw(20) <<left << "Name" << "|" << "Size\n--------------------+--------------------\n";
 				for (auto& f : files) {
 					cout << setw(20) << left << f.name << "|" << f.size << endl;
 				}

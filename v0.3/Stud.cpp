@@ -37,7 +37,7 @@ void Automatic_input(Stud& local)
 	cout << "Generated home work result: {";
 	for (int i = 0; i < amount; i++) {
 		local.nd.push_back(Results_interval(rd_generator));
-		cout << local.nd[i] << ", ";
+		cout << local.nd[i]  << ", ";
 	}
 	cout << "}" << endl;
 }
@@ -45,7 +45,7 @@ void Automatic_input(Stud& local)
 void Manual_input(Stud& local)
 {
 	int Temp_nd,		//-Temporary place for storing a value
-		nd_count = 1,//-Total number and index of homeworks
+		nd_count	= 1,//-Total number and index of homeworks
 		empty_count = 0;//-Number of times when user pressed Enter
 	string value;		//-User input
 
@@ -255,9 +255,8 @@ void output_to_file(T& local, const string& filename, const enum selection& prin
 		//Writing data
 		for (auto& s : local) {
 			buffer << setw(18) << left << s.vardas <<
-				setw(18) << left << s.pavarde <<
-				setw(18) << fixed << setprecision(2) << s.final_vid << "\n";
-		}
+			setw(18) << left << s.pavarde <<
+			setw(18) << fixed << setprecision(2) << s.final_vid << "\n";}
 		break;
 	case Median:
 		//Writing Headline
@@ -266,9 +265,8 @@ void output_to_file(T& local, const string& filename, const enum selection& prin
 		//Writing data
 		for (auto& s : local) {
 			buffer << setw(18) << left << s.vardas <<
-				setw(18) << left << s.pavarde <<
-				setw(18) << fixed << setprecision(2) << s.final_med << "\n";
-		}
+			setw(18) << left << s.pavarde <<
+			setw(18) << fixed << setprecision(2) << s.final_med << "\n";}
 		break;
 	case Both:
 		//Writing Headline
@@ -277,10 +275,9 @@ void output_to_file(T& local, const string& filename, const enum selection& prin
 		//Writing data
 		for (auto& s : local) {
 			buffer << setw(18) << left << s.vardas <<
-				setw(18) << left << s.pavarde <<
-				setw(19) << fixed << setprecision(2) << s.final_vid <<
-				setw(18) << fixed << setprecision(2) << s.final_med << "\n";
-		}
+			setw(18) << left << s.pavarde <<
+			setw(19) << fixed << setprecision(2) << s.final_vid <<
+			setw(18) << fixed << setprecision(2) << s.final_med << "\n";}
 		break;
 	default:
 		break;

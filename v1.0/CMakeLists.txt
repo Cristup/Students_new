@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.31)
+project(Students_App)
+include_directories(include)
+file(GLOB SOURCES "src/*.cpp")
+add_executable(Students_App ${SOURCES})

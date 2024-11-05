@@ -13,7 +13,7 @@ struct File_info {
 struct Directory_files {
 	int id;
 	string name;
-	enum types { Data, Results } type;
+	enum types{Data, Results} type;
 };
 
 struct Record {
