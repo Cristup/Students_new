@@ -20,9 +20,11 @@ After running the program you will see the list of commands. Commands can be cat
 <img src="Table_OF_txts.png" alt="Table of available .txt files" style="height: 140px;"/>   
 Then user just needs to enter the ID of the files it wants to open.
 
-* **Integer input** - After running the command, the user is asked to make [these](#printing-and-sorting-key-selection) selections. The integer he enters is the number of students, which data will have to be entered manually by the user. Every student's name and surname will have to be entered manually. Then there will be a couple of choices:
-* 1. Enter the exam result and then the homework marks, and in the end, press ENTER twice.
-* 2. Or enter `Auto` to generate exam results and a random number of homework marks. (Results are generated using Uniform Distribution.)
+* **Integer input** - After running the command, the user is asked to make [these](#printing-and-sorting-key-selection) selections. The integer 
+he enters is the number of students, which data will have to be entered manually by the user. Every student's name and
+ surname will have to be entered manually. Then there will be a couple of choices:
+	- Enter the exam result and then the homework marks, and in the end press ENTER twice.
+	- Or enter `Auto` to generate exam results and a random number of homework marks. (Results are generated using Uniform Distribution.)
 
 Here's a snippet of the code for data generating for one student:
 ```cpp
