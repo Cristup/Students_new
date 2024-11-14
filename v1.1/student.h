@@ -7,6 +7,10 @@
 #include <numeric>
 #include <algorithm>
 #include <random>
+#include <list>
+#include <map>
+#include <type_traits>
+#include <ppl.h>
 
 class student {
 private:
@@ -23,46 +27,53 @@ private:
 public:
 	student(std::string name, std::string surname, std::vector<int> homeworks, int exam);
 	student(std::string name, std::string surname);
+	~student();
 	inline std::string name() const { return name_; }
 	inline std::string surname() const { return surname_; }
 	inline double final_average() const { return final_average_; }
 	inline double final_median() const { return final_median_; }
 
-	/*
+};
+
+/*
 	COMPARATORS
 */
 
-	int nam_sur(const student& a, const student& b);
+int nam_sur(const student& a, const student& b);
 
-	int nam_ave(const student& a, const student& b);
+int nam_ave(const student& a, const student& b);
 
-	int nam_med(const student& a, const student& b);
+int nam_med(const student& a, const student& b);
 
-	int sur_nam(const student& a, const student& b);
+int sur_nam(const student& a, const student& b);
 
-	int sur_ave(const student& a, const student& b);
+int sur_ave(const student& a, const student& b);
 
-	int sur_med(const student& a, const student& b);
+int sur_med(const student& a, const student& b);
 
-	int ave_nam(const student& a, const student& b);
+int ave_nam(const student& a, const student& b);
 
-	int ave_sur(const student& a, const student& b);
+int ave_sur(const student& a, const student& b);
 
-	int ave_med(const student& a, const student& b);
+int ave_med(const student& a, const student& b);
 
-	int med_nam(const student& a, const student& b);
+int med_nam(const student& a, const student& b);
 
-	int med_sur(const student& a, const student& b);
+int med_sur(const student& a, const student& b);
 
-	int med_ave(const student& a, const student& b);
+int med_ave(const student& a, const student& b);
 
-	int nam(const student& a, const student& b);
+int nam(const student& a, const student& b);
 
-	int sur(const student& a, const student& b);
+int sur(const student& a, const student& b);
 
-	int ave(const student& a, const student& b);
+int ave(const student& a, const student& b);
 
-	int med(const student& a, const student& b);
-};
+int med(const student& a, const student& b);
+
+template<typename T>
+void sort_students(T& Students, const std::string& key);
+template void sort_students<std::vector<student>>(std::vector<student>& Students, const std::string& key);
+template void sort_students<std::list<student>>(std::list<student>& Students, const std::string& key);
 
 #endif

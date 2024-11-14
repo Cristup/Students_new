@@ -47,6 +47,8 @@ enum container_types {
 	List
 };
 
+void update_info(stringstream& info, const enum container_types& type);
+
 void update_files(vector<Directory_files>& files);
 
 void table(const vector<Directory_files> files);
@@ -58,5 +60,17 @@ void get_type(const enum container_types& type);
 bool is_digits(const string& str);
 
 void progress_clock(const size_t& lines);
+
+void find_keys(string& line, const enum selection& print_by, size_t& n_keys, vector<string>& keys);
+
+enum selection print_selection();
+
+string sort_selection(const enum selection& print_by);
+
+void create_file_selection(vector<File_info>& files);
+
+void file_selection(vector<string>& files);
+
+enum strategy cycle_strat(enum strategy& strat);
 
 #endif

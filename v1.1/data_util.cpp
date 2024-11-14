@@ -103,6 +103,7 @@ void Input_from_file(Container& local, const string& filename)
 
 		//Saving to local vector
 		local.push_back(student(name, surname, temp_homeworks, stoi(Temp_exam) ));
+		temp_homeworks.clear();
 	}
 }
 
@@ -208,4 +209,300 @@ void create_multiple_files(vector<File_info>& files)
 	}
 	cout << "All files created.\n\n";
 	files.clear();
+}
+
+void markdown_table()
+{
+	//File generation
+	printf("FILE GENERATION\n| Size | Duration |\n|:-------|-------:|\n");
+	for (const auto& record : test_results.fg_durations) {
+		printf("| %s | `%f` |\n", record.first.substr(0, record.first.size() - 4), record.second);
+	}
+	cout << endl;
+
+	//File reading
+	printf("DATA READING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
+	for (const auto& test : test_results.vec_test) {
+		string filename = test.first;
+
+		Record rec1 = test.second;
+		Record rec2;
+
+		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
+			rec2 = test_results.list_test[filename];
+		}
+
+		string size = filename.substr(0, filename.size() - 4);
+		printf("| %s | `%f` | `%f` |\n", size, rec1.input / rec1.count, rec2.input / rec2.count);
+	}
+	cout << endl;
+
+	//File sorting
+	printf("DATA SORTING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
+	for (const auto& test : test_results.vec_test) {
+		string filename = test.first;
+
+		Record rec1 = test.second;
+		Record rec2;
+
+		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
+			rec2 = test_results.list_test[filename];
+		}
+
+		string size = filename.substr(0, filename.size() - 4);
+		printf("| %s | `%f` | `%f` |\n", size, rec1.sorting / rec1.count, rec2.sorting / rec2.count);
+	}
+	cout << endl;
+
+	//File categorising
+	printf("DATA CATEGORISING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
+	for (const auto& test : test_results.vec_test) {
+		string filename = test.first;
+
+		Record rec1 = test.second;
+		Record rec2;
+
+		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
+			rec2 = test_results.list_test[filename];
+		}
+
+		string size = filename.substr(0, filename.size() - 4);
+		printf("| %s | `%f` | `%f` |\n", size, rec1.categorising / rec1.count, rec2.categorising / rec2.count);
+	}
+	cout << endl;
+
+	//File output
+	printf("DATA OUTPUT\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
+	for (const auto& test : test_results.vec_test) {
+		string filename = test.first;
+
+		Record rec1 = test.second;
+		Record rec2;
+
+		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
+			rec2 = test_results.list_test[filename];
+		}
+
+		string size = filename.substr(0, filename.size() - 4);
+		printf("| %s | `%f` | `%f` |\n", size, rec1.output / rec1.count, rec2.output / rec2.count);
+	}
+	cout << endl;
+
+	//Total
+	printf("TOTAL DURATION\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
+	for (const auto& test : test_results.vec_test) {
+		string filename = test.first;
+
+		Record rec1 = test.second;
+		Record rec2;
+
+		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
+			rec2 = test_results.list_test[filename];
+		}
+
+		string size = filename.substr(0, filename.size() - 4);
+		printf("| %s | `%f` | `%f` |\n", size, rec1.total / rec1.count, rec2.total / rec2.count);
+	}
+	cout << endl;
+}
+
+template<typename T>
+void sort_to_categories(T& local, T& Under, T& Over)
+{
+	size_t size = local.size();
+	if constexpr (is_same<T, vector<student> >::value) {
+		Under.reserve(size / 1.5);
+		Over.reserve(size / 1.5);
+	}
+
+	for (auto& i : local) {
+		if (i.final_average() < 5) {
+			Under.push_back(i);
+			//clean(i);
+		}
+		else {
+			Over.push_back(i);
+			//clean(i);
+		}
+	}
+}
+
+template<typename T>
+void sort_to_categories2(T& firstc, T& newc)
+{
+	size_t size = firstc.size();
+	if constexpr (is_same<T, vector<student>>::value) {
+		newc.reserve(size / 1.5);
+	}
+
+	sort_students(firstc, "ave");
+
+	for (auto it = firstc.rbegin(); it != firstc.rend();) {
+		if (it->final_average() >= 5) {
+			newc.emplace_back(*it);
+			it = decltype(it)(firstc.erase(std::next(it).base()));
+		}
+		else {
+			++it;
+		}
+	}
+}
+
+template<typename T>
+void sort_to_categories3(T& local, T& over)
+{
+	//vector str1 duration: | `0.017287` |
+
+	size_t size = local.size();
+	if constexpr (is_same<T, vector<student>>::value) {
+		over.reserve(size / 1.5);
+	}
+
+	auto pivot = std::partition(local.begin(), local.end(), [](student& a) { return a.final_average() < 5; });
+
+	for (auto it = local.rbegin(); it != local.rend();) {
+		if (it->final_average() >= 5) {
+			over.emplace_back(*it);
+			it = decltype(it)(local.erase(std::next(it).base()));
+		}
+		else {
+			++it;
+		}
+	}
+}
+
+void test_multiple_files(const vector<string>& files, const enum selection& print_by,
+	const string& key, const enum container_types& c_type, const enum strategy& strat)
+{
+	for (auto& f : files) {
+
+		vector<student> container_vector;
+		vector<student> under_vector;
+		vector<student> over_vector;
+		list<student> container_list;
+		list<student> under_list;
+		list<student> over_list;
+
+		cout << "Testing " << f;
+		if (c_type == container_types::Vector) {
+			cout << " using Vector ";
+			test_results.vec_test[f].count++;
+		}
+		else {
+			cout << " using List ";
+			test_results.list_test[f].count++;
+		}
+		cout << "& split strategy nr: " << strat << "\n\n";
+		//Reading
+		Timer total;
+		Timer t;
+		double time = 0.0;
+		(c_type == container_types::Vector) ?
+			Input_from_file(container_vector, f) :
+			Input_from_file(container_list, f);
+
+		time = t.elapsed();
+		(c_type == container_types::Vector) ?
+			test_results.vec_test[f].input += time :
+			test_results.list_test[f].input += time;
+		cout << endl << "Reading " << f << " took:      " <<
+			fixed << setprecision(4) << time << endl;
+
+		//Sorting
+		t.reset();
+		(c_type == container_types::Vector) ?
+			sort_students(container_vector, key) :
+			sort_students(container_list, key);
+
+		time = t.elapsed();
+		(c_type == container_types::Vector) ?
+			test_results.vec_test[f].sorting += time :
+			test_results.list_test[f].sorting += time;
+		cout << "Sorting " << f << " took:      " <<
+			fixed << setprecision(4) << time << endl;
+
+		//Spliting
+		//##STRATEGY #1
+		if (strat == strategy::s1) {
+			t.reset();
+			(c_type == container_types::Vector) ?
+				sort_to_categories(container_vector, under_vector, over_vector) :
+				sort_to_categories(container_list, under_list, over_list);
+			time = t.elapsed();
+			/*| Size | Vector	  |   List     |
+			| 100000 | `0.017287` | `0.036902` |*/
+		}
+		//##STRATEGY #2
+		else if (strat == strategy::s2) {
+			if (c_type == container_types::Vector) {
+				over_vector = container_vector;
+				t.reset();
+				sort_to_categories2(over_vector, under_vector);
+			}
+			else {
+				over_list = container_list;
+				t.reset();
+				sort_to_categories2(over_list, under_list);
+			}
+			time = t.elapsed();
+			/*| Size | Vector	   | List       |
+			| 100000 | `0.010542` | `0.017855` |*/
+		}
+		//##STRATEGY #3
+		else if (strat == strategy::s3) {
+			if (c_type == container_types::Vector) {
+				t.reset();
+				sort_to_categories3(container_vector, under_vector);
+				time = t.elapsed();
+				over_vector = container_vector;
+			}
+			else {
+				t.reset();
+				sort_to_categories3(container_list, under_list);
+				time = t.elapsed();
+				over_list = container_list;
+			}
+			/*| Size   | Vector	    | List       |
+			//| 100000 | `0.015857` | `0.036290` |*/
+		}
+
+		(c_type == container_types::Vector) ?
+			test_results.vec_test[f].categorising += time :
+			test_results.list_test[f].categorising += time;
+		cout << "Categorising " << f << " took: " <<
+			fixed << setprecision(4) << time << endl;
+
+		//Output
+		t.reset();
+		if (c_type == container_types::Vector) {
+			concurrency::parallel_invoke(
+				[&]() { output_to_file(over_vector, f, print_by); },
+				[&]() { output_to_file(under_vector, f, print_by); }
+			);
+		}
+		else
+		{
+			concurrency::parallel_invoke(
+				[&]() { output_to_file(over_list, f, print_by); },
+				[&]() { output_to_file(under_list, f, print_by); }
+			);
+		}
+
+		time = t.elapsed();
+		(c_type == container_types::Vector) ?
+			test_results.vec_test[f].output += time :
+			test_results.list_test[f].output += time;
+		cout << "Outputing " << f << " took:    " <<
+			fixed << setprecision(4) << time << endl;
+
+		time = total.elapsed();
+		(c_type == container_types::Vector) ?
+			test_results.vec_test[f].total += time :
+			test_results.list_test[f].total += time;
+		cout << endl << "Total duration:  " << fixed << setprecision(4) << time << endl;
+
+		system("pause");
+		cout << endl;
+	}
+
 }

@@ -64,6 +64,32 @@ student::student(std::string name, std::string surname)
 	final_median_ = student::final_med(homeworks_, exam_);
 }
 
+student::~student() {
+	name_.clear();
+	surname_.clear();
+	homeworks_.clear();
+	exam_ = 0;
+	final_average_ = 0;
+	final_median_ = 0;
+}
+
+template<typename T>
+void sort_students(T& Students, const std::string& key) {
+	std::map<std::string, int(*)(const student&, const student&)> comparators = {
+		{"nam_sur", nam_sur}, {"nam_ave", nam_ave}, {"nam_med", nam_med},
+		{"sur_nam", sur_nam}, {"sur_ave", sur_ave}, {"sur_med", sur_med},
+		{"ave_sur", ave_sur}, {"ave_nam", ave_nam}, {"ave_med", ave_med},
+		{"med_nam", med_nam}, {"med_sur", med_sur}, {"med_ave", med_ave},
+		{"nam", nam}, {"sur", sur}, {"ave", ave}, {"med", med}
+	};
+	if constexpr (std::is_same<T, std::vector<student>>::value) {
+		concurrency::parallel_sort(Students.begin(), Students.end(), comparators[key]);
+	}
+	else if constexpr (std::is_same<T, std::list<student>>::value) {
+		Students.sort(comparators[key]);
+	}
+}
+
 int nam_sur(const student& a, const student& b)
 {
 	return (a.name() == b.name()) ? a.surname() < b.surname() : a.name() < b.name();

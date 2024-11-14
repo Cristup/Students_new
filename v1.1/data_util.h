@@ -20,4 +20,25 @@ void generate_file(const string& filename, const int& size);
 
 void create_multiple_files(vector<File_info>& files);
 
+void markdown_table();
+
+void test_multiple_files(const vector<string>& files, const enum selection& print_by,
+	const string& key, const enum container_types& c_type, const enum strategy& strat);
+
+template<typename T>
+void sort_to_categories(T& local, T& Under, T& Over);
+template void sort_to_categories<vector<student>>(vector<student>& local, vector<student>& Under, vector<student>& Over);
+template void sort_to_categories<list<student>>(list<student>& local, list<student>& Under, list<student>& Over);
+
+template<typename T>
+void sort_to_categories2(T& firstc, T& newc);
+template void sort_to_categories2<vector<student>>(vector<student>& firstc, vector<student>& newc);
+template void sort_to_categories2<list<student>>(list<student>& firstc, list<student>& newc);
+
+template<typename T>
+void sort_to_categories3(T& local, T& over);
+template void sort_to_categories3<vector<student>>(vector<student>& local, vector<student>& over);
+template void sort_to_categories3<list<student>>(list<student>& local, list<student>& over);
+
+
 #endif
