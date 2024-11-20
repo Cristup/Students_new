@@ -312,90 +312,27 @@ void markdown_table()
 	}
 	cout << endl;
 
-	//File reading
-	printf("DATA READING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
+	//VECTOR
+	printf("VECTOR\n| Size | Reading | Sorting | Categorising | Output | Total |\n|:-------|:------:|:-------:|:-------:|:-------:|:-------:|\n");
 	for (const auto& test : test_results.vec_test) {
 		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
+		Record rec = test.second;
+		int n = rec.count;
 
 		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.input / rec1.count, rec2.input / rec2.count);
+		printf("| **%s** | %f | %f | %f | %f | %f |\n", size, rec.input/n, rec.sorting/n, rec.categorising/n, rec.output/n, rec.total/n);
 	}
-	cout << endl;
 
-	//File sorting
-	printf("DATA SORTING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
+	//LIST
+	printf("LIST\n| Size | Reading | Sorting | Categorising | Output | Total |\n|:-------|:------:|:-------:|:-------:|:-------:|:-------:|\n");
+	for (const auto& test : test_results.list_test) {
 		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
+		Record rec = test.second;
+		int n = rec.count;
 
 		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.sorting / rec1.count, rec2.sorting / rec2.count);
+		printf("| **%s** | %f | %f | %f | %f | %f |\n", size, rec.input / n, rec.sorting / n, rec.categorising / n, rec.output / n, rec.total / n);
 	}
-	cout << endl;
-
-	//File categorising
-	printf("DATA CATEGORISING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
-		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
-
-		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.categorising / rec1.count, rec2.categorising / rec2.count);
-	}
-	cout << endl;
-
-	//File output
-	printf("DATA OUTPUT\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
-		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
-
-		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.output / rec1.count, rec2.output / rec2.count);
-	}
-	cout << endl;
-
-	//Total
-	printf("TOTAL DURATION\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
-		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
-
-		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.total / rec1.count, rec2.total / rec2.count);
-	}
-	cout << endl;
 }
 
 template<typename T>

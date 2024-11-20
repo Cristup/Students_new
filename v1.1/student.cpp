@@ -66,14 +66,7 @@ student::student(std::string name, std::string surname)
 	final_median_ = student::final_med(homeworks_, exam_);
 }
 
-student::~student() {
-	/*name_.clear();
-	surname_.clear();
-	homeworks_.clear();
-	exam_ = 0;
-	final_average_ = 0;
-	final_median_ = 0;*/
-}
+student::~student(){}
 
 template<typename T>
 void sort_students(T& Students, const std::string& key) {
