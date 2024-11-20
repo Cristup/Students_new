@@ -50,6 +50,8 @@ student::student(std::string name, std::string surname, std::vector<int> homewor
 
 student::student(std::string name, std::string surname)
 {
+	name_ = name;
+	surname_ = surname;
 	exam_ = Results_interval(rd_generator);
 	std::cout << "\nGenerated egzam result: " << exam_ << std::endl;
 	int amount = Amount_interval(rd_generator);
@@ -65,12 +67,12 @@ student::student(std::string name, std::string surname)
 }
 
 student::~student() {
-	name_.clear();
+	/*name_.clear();
 	surname_.clear();
 	homeworks_.clear();
 	exam_ = 0;
 	final_average_ = 0;
-	final_median_ = 0;
+	final_median_ = 0;*/
 }
 
 template<typename T>

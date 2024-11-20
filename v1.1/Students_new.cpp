@@ -174,33 +174,27 @@ int main()
         }
         //Cases for manual input and bad inputs
         else {
-            //try {
-            //    number_of_students = stoi(main_input);
-            //}
-            //catch (const exception&) {
-            //    cout << "Unknown command! Please try again.\n";
-            //    continue;
-            //}
-            ////Key and result values selection
-            //print_by = print_selection();
-            //key = sort_selection(print_by);
-            ////Manual input
-            //if (container_type == container_types::Vector) {
-            //    Students.reserve(number_of_students);
-            //    for (int i = 0; i < number_of_students; i++) {
-            //        input(Temp_stud);
-            //        Students.push_back(Temp_stud);
-            //        cout << "In-memory address of this student: " << &Students.back() << "\n\n";
-            //        //clean(Temp_stud);
-            //    }
-            //}
-            //else {
-            //    for (int i = 0; i < number_of_students; i++) {
-            //        input(Temp_stud);
-            //        Students_list.push_back(Temp_stud);
-            //        cout << "In-memory address of this student: " << &Students_list.back() << "\n\n";
-            //        //clean(Temp_stud);
-            //    }
+            try {
+                number_of_students = stoi(main_input);
+            }
+            catch (const exception&) {
+                cout << "Unknown command! Please try again.\n";
+                continue;
+            }
+            //Key and result values selection
+            print_by = print_selection();
+            key = sort_selection(print_by);
+            //Manual input
+            if (container_type == container_types::Vector) {
+                
+                for (int i = 0; i < number_of_students; i++) {
+                    manual_input(Students);
+                }
+            }
+            else {
+                for (int i = 0; i < number_of_students; i++) {
+                    manual_input(Students_list);
+                }
             }
             //Sorting data by users choosen key
             if (container_type == container_types::Vector) {
@@ -234,6 +228,6 @@ int main()
             }
             cout << "Results are in files: 'Data_stiprus.txt' & 'Data_silpni.txt'." << endl;
             continue;
-        
+        }
     }
 }

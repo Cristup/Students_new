@@ -108,6 +108,98 @@ void Input_from_file(Container& local, const string& filename)
 }
 
 template<typename T>
+void manual_input(T& container)
+{
+	string line;	//-User input
+	string temp_name,
+		temp_surname;
+	vector<int> temp_hw;
+
+	//Name & Surname input
+	cout << "Name, Surname: ";
+	cin >> temp_name >> temp_surname;
+
+	while (true) {
+		//Preparing input for further cases
+		cout << "Enter egzam result or write 'auto' to generate egzam and home work results: ";
+		cin >> line;
+		transform(line.begin(), line.end(), line.begin(), ::tolower);
+
+		//Generate data
+		if (line.substr(0, 2) == "au") {
+			container.emplace_back(student(temp_name, temp_surname));
+			break;
+		}
+
+		//Manual input and user input handling
+		else {
+			int exam_result; //-temporary value for storing exam result.
+			try {
+				exam_result = stoi(line);
+				if (exam_result < min_result || exam_result > max_result) {
+					throw out_of_range("Value out of range!");
+				}
+				homework_input(temp_hw);
+				container.emplace_back(student(temp_name, temp_surname, temp_hw, exam_result));
+				temp_hw.clear();
+				cout << "In-memory address of this student: " << &container.back() << "\n\n";
+				break;
+			}
+			catch (const invalid_argument&) {
+				cerr << "Invalid input! Try again." << endl;
+			}
+			catch (const out_of_range&) {
+				cerr << "Number out of range! Try again." << endl;
+			}
+		}
+	}
+}
+
+void homework_input(vector<int>& homework) {
+	cerr << "Enter home work results (Press enter twice to finish)." << endl;
+	int Temp_nd,		//-Temporary place for storing a value
+		nd_count = 1,//-Total number and index of homeworks
+		empty_count = 0;//-Number of times when user pressed Enter
+	string value;		//-User input
+
+	//Delete left over empty space after "cin >>"
+	getline(cin, value);
+
+	//Data input until break(Enter press twice)
+	while (true) {
+		//Input
+		cout << "Enter home work number " << nd_count << " result: ";
+		getline(cin, value);
+
+		//Empty input cases
+		if (value.empty()) {
+			empty_count++;
+			if (nd_count == 1) {
+				cerr << "You must enter at least one home work!" << endl;
+			}
+			else if (empty_count == 2) {
+				break;
+			}
+		}
+		//Not positive integer input case
+		else if (!is_digits(value)) {
+			cerr << "Invalid input! Try again." << endl;
+		}
+		//In range input case
+		else if (stoi(value) >= min_result && stoi(value) <= max_result) {
+			empty_count = 0;
+			Temp_nd = stoi(value);
+			homework.push_back(Temp_nd);
+			nd_count++;
+		}
+		//Left over case
+		else {
+			cerr << "Value must be in the interval [1;10]!" << endl;
+		}
+	}
+}
+
+template<typename T>
 void output_to_file(T& local, const string& filename, const enum selection& print_by)
 {
 	stringstream name_front(filename.substr(0, filename.size() - 4));

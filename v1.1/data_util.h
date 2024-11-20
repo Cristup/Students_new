@@ -16,6 +16,13 @@ void output_to_file(T& local, const string& filename, const enum selection& prin
 template void output_to_file<vector<student>>(vector<student>& local, const string& filename, const enum selection& print_by);
 template void output_to_file<list<student>>(list<student>& local, const string& filename, const enum selection& print_by);
 
+template<typename T>
+void manual_input(T& container);
+template void manual_input<vector<student>>(vector<student>& container);
+template void manual_input<list<student>>(list<student>& container);
+
+void homework_input(vector<int>& homework);
+
 void generate_file(const string& filename, const int& size);
 
 void create_multiple_files(vector<File_info>& files);
