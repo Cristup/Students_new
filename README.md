@@ -152,8 +152,8 @@ Here are the duration with data files of size `10 000` and `100 000` using diffr
 DATA CATEGORISING
 | Size | Vector #1 | List #1 | Vector #2 | List #2 | Vector #3 | List #3 |
 |:-------|:------:|:-------:|:------:|:-------:|:------:|:-------:|
-| 10000 | **0.002231** | `0.002769` | **0.289413** | `0.000692` | **0.001754** | `0.000843` |
-| 100000 | **0.018695** | `0.037012` | **41.425276** | `0.008061` | **0.027830** | `0.009392` |
+| 10000 | **0.001294** | `0.002810` | **0.001347 ** | `0.001177` | **0.001069** | `0.001576` |
+| 100000 | **0.012059** | `0.035752` | **0.011493** | `0.018726` | **0.008020** | `0.036967` |
 
 1. Creating two new containers and copying data from the main container to those containers by checking the users' category.
 ```cpp
@@ -214,10 +214,11 @@ void sort_to_categories3(T& local, T& Under, T& Over)
 ## Installation
 
 Here are the steps to install and run the program:
-1. Download release **v1.0** by going to releases, then release `v1.0` and press on `Source code (zip)`.
-2. **Unzip** the file `Students-1.0.zip`.
-3. Run the `run.bat` file.
-4. Follow the instructions on the screen or read [instructions](#how-to-use-the-program) on how to use the program.
+1. Install CMake.
+2. Download release **v1.0** by going to releases, then release `v1.0` and press on `Source code (zip)`.
+3. **Unzip** the file `Students-1.0.zip`.
+4. Run the `run.bat` file.
+5. Follow the instructions on the screen or read [instructions](#how-to-use-the-program) on how to use the program.
 
 If everything is done right program should run immediately. To run the program again, next time you can run the `Students_App.exe` file found in the `Debug` folder or create **shortcut** by right-clicking on file `Students_App.exe` and there you should find an option **Create shortcut**, which can be moved to any convenient location from where then you'll be able to run the program.
 
