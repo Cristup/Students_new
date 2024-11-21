@@ -152,7 +152,7 @@ Here are the duration with data files of size `10 000` and `100 000` using diffr
 DATA CATEGORISING
 | Size | Vector #1 | List #1 | Vector #2 | List #2 | Vector #3 | List #3 |
 |:-------|:------:|:-------:|:------:|:-------:|:------:|:-------:|
-| 10000 | **0.001294** | `0.002810` | **0.001347 ** | `0.001177` | **0.001069** | `0.001576` |
+| 10000 | **0.001294** | `0.002810` | **0.001347** | `0.001177` | **0.001069** | `0.001576` |
 | 100000 | **0.012059** | `0.035752` | **0.011493** | `0.018726` | **0.008020** | `0.036967` |
 
 1. Creating two new containers and copying data from the main container to those containers by checking the users' category.
@@ -273,6 +273,33 @@ Each speed result is an average of 5 tests for both containers (**list** and **v
 | 100000 | `0.438405` | `0.029920` | `0.021619` | `0.139788` | `0.648227` |
 | 1000000 | `4.338644` | `0.593802` | `0.257161` | `1.361221` | `6.741938` |
 | 10000000 | `44.318183` | `9.359349` | `2.916692` | `14.062739` | `73.233081` |
+
+### Speed with Struct vs Class
+
+Speed was mesured using files of size **100 000** and **1 000 000**, container type: `Vector`, strategie number **3** as it is the fastest for Vector, 
+printing and sorting by **Average** value. Results are an average of 5 tests.
+
+## STRUCT (v1.0)
+
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:-------:|:-------:|:-------:|:-------:|
+| **100000** | 0.447252 | 0.009250 | 0.016377 | 0.087681 | 0.570796 |
+| **1000000** | 4.362230 | 0.115803 | 0.211153 | 1.216610 | 5.997334 |
+
+## CLASS (v1.1)
+
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:-------:|:-------:|:-------:|:-------:|
+| **100000** | 0.459598 | 0.027587 | 0.008553 | 0.086712 | 0.590689 |
+| **1000000** | 4.612989 | 0.282477 | 0.083921 | 0.917937 | 5.946657 |
+
+## Conclusion
+
+Result show that:
+* Output, Categorising is quicker with Class;
+* Reading is slightly slower with class;
+* Sorting is quicker with Struct;
+* Overall Total result is simmilar. 
 
 ## Releases
 Here are brief descriptions of all releases, what has been added in each release, and performance changes.
