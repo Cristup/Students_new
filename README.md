@@ -279,27 +279,98 @@ Each speed result is an average of 5 tests for both containers (**list** and **v
 Speed was mesured using files of size **100 000** and **1 000 000**, container type: `Vector`, strategie number **3** as it is the fastest for Vector, 
 printing and sorting by **Average** value. Results are an average of 5 tests.
 
-## STRUCT (v1.0)
+#### STRUCT (v1.0)
 
 | Size | Reading | Sorting | Categorising | Output | Total |
 |:-------|:------:|:-------:|:-------:|:-------:|:-------:|
 | **100000** | 0.447252 | 0.009250 | 0.016377 | 0.087681 | 0.570796 |
 | **1000000** | 4.362230 | 0.115803 | 0.211153 | 1.216610 | 5.997334 |
 
-## CLASS (v1.1)
+#### CLASS (v1.1)
 
 | Size | Reading | Sorting | Categorising | Output | Total |
 |:-------|:------:|:-------:|:-------:|:-------:|:-------:|
 | **100000** | 0.459598 | 0.027587 | 0.008553 | 0.086712 | 0.590689 |
 | **1000000** | 4.612989 | 0.282477 | 0.083921 | 0.917937 | 5.946657 |
 
-## Conclusion
+#### Conclusion
 
 Result show that:
 * Output, Categorising is quicker with Class;
 * Reading is slightly slower with class;
 * Sorting is quicker with Struct;
 * Overall Total result is simmilar. 
+
+### optimization flags
+
+#### O1
+
+Maximum Optimization (Favor Size)
+
+v1.1
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:-------:|:-------:|:-------:|:-------:|
+| **10000** | 0.061641 | 0.004922 | 0.001107 | 0.011247 | 0.081626 |
+| **100000** | 0.571633 | 0.031730 | 0.009195 | 0.095881 | 0.714976 |
+| **1000000** | 4.741982 | 0.291417 | 0.082419 | 0.829481 | 5.993171 |
+exe file size: 137 KB.
+
+v1.0
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:-------:|:-------:|:-------:|:-------:|
+| **10000** | 0.046892 | 0.001646 | 0.001102 | 0.010627 | 0.063374 |
+| **100000** | 0.461144 | 0.009477 | 0.017288 | 0.092045 | 0.589758 |
+| **1000000** | 4.395864 | 0.115768 | 0.202249 | 1.196068 | 6.001026 |
+exe file size: 127 KB.
+
+#### O2
+
+Maximum Optimization (Favor Speed)
+
+v1.1
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:-------:|:-------:|:-------:|:-------:|
+| **10000** | 0.046781 | 0.003988 | 0.000832 | 0.010789 | 0.065195 |
+| **100000** | 0.458139 | 0.027426 | 0.007843 | 0.089315 | 0.588833 |
+| **1000000** | 4.497420 | 0.277505 | 0.080206 | 1.041062 | 5.941863 |
+exe file size: 165 KB.
+
+v1.0
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:-------:|:-------:|:-------:|:-------:|
+| **10000** | 0.047916 | 0.001598 | 0.001340 | 0.010550 | 0.063929 |
+| **100000** | 0.446289 | 0.009369 | 0.016309 | 0.089656 | 0.571256 |
+| **1000000** | 4.335244 | 0.118182 | 0.201086 | 1.313573 | 6.056769 |
+exe file size:  153 KB.
+
+#### Ox
+
+Optimizations (Favor Speed)
+
+v1.1
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:-------:|:-------:|:-------:|:-------:|
+| **10000** | 0.046769 | 0.004401 | 0.000867 | 0.009778 | 0.065381 |
+| **100000** | 0.468329 | 0.028114 | 0.007588 | 0.084145 | 0.594742 |
+| **1000000** | 4.510867 | 0.279612 | 0.078070 | 0.972629 | 5.886561 |
+exe file size: 168 KB.
+
+v1.0
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:-------:|:-------:|:-------:|:-------:|
+| **10000** | 0.044693 | 0.001650 | 0.001240 | 0.011385 | 0.061909 |
+| **100000** | 0.519732 | 0.010492 | 0.017566 | 0.102595 | 0.661174 |
+| **1000000** | 4.417530 | 0.116418 | 0.202404 | 1.246562 | 6.072421 |
+exe file size: 155 KB.
+
+#### Conclusion
+For next table `Speed ratio` collumn show average value of ratios between file size and total work duration in ms.
+
+|  Flag  | Speed ratio #v1.1 | exe size(KB) #v1.1 | Speed ratio #v1.0 | exe size(KB) #v1.0 |
+|:------:|:-----------------:|:------------------:|:-----------------:|:------------------:|
+|  `O1`  |    **142.6**      |         137        |    **164.6**      |         127        |
+|  `O2`  |    **163.6**      |         165        |    **165.3**      |         153        |
+|  `Ox`  |    **163.7**      |         168        |    **159.3**      |         155        |
 
 ## Releases
 Here are brief descriptions of all releases, what has been added in each release, and performance changes.
