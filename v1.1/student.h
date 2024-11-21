@@ -27,9 +27,18 @@ private:
 public:
 	student(std::string name, std::string surname, std::vector<int> homeworks, int exam);
 	student(std::string name, std::string surname);
-	~student();
+	student() : name_(""), surname_(""), homeworks_({}), exam_(0), final_average_(0), final_median_(0) {};
+	~student() = default;
+
+	inline void setName(const std::string& name) { name_ = name; }
+	inline void setSurname(const std::string& surname) { surname_ = surname; }
+	inline void setHomework(const std::vector<int>& homework) { homeworks_ = homework; }
+	inline void setExam(const int& exam) { exam_ = exam; }
+
 	inline std::string name() const { return name_; }
 	inline std::string surname() const { return surname_; }
+	inline std::vector<int> homeworks() const { return homeworks_; }
+	inline int exam() const { return exam_; }
 	inline double final_average() const { return final_average_; }
 	inline double final_median() const { return final_median_; }
 

@@ -34,7 +34,7 @@ void Input_from_file(Container& local, const string& filename)
 		surname;			//Temporary value for student surname.
 	stringstream buffer;	//Buffer holding file content
 	vector<int> temp_homeworks;
-
+	
 	if constexpr (is_same<Container, vector<student>>::value) {
 		//Check file size
 		ifstream File;
@@ -102,7 +102,7 @@ void Input_from_file(Container& local, const string& filename)
 		}
 
 		//Saving to local vector
-		local.push_back(student(name, surname, temp_homeworks, stoi(Temp_exam) ));
+		local.emplace_back(student(name, surname, temp_homeworks, stoi(Temp_exam) ));
 		temp_homeworks.clear();
 	}
 }

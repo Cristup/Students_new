@@ -66,8 +66,6 @@ student::student(std::string name, std::string surname)
 	final_median_ = student::final_med(homeworks_, exam_);
 }
 
-student::~student(){}
-
 template<typename T>
 void sort_students(T& Students, const std::string& key) {
 	std::map<std::string, int(*)(const student&, const student&)> comparators = {
