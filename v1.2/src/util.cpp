@@ -1,15 +1,4 @@
-#include "Util.h"
-
-/*
-		RANDOM NUMBER GENERATOR
-*/
-
-random_device rd;	//-Random number generator
-std::mt19937 gen(rd());
-//-Interval for random value of results
-uniform_int_distribution<int> interval(1, 10);
-
-Test_data test_results;
+#include "util.h"
 
 void update_info(stringstream& info, const enum container_types& type)
 {
@@ -25,9 +14,10 @@ void update_info(stringstream& info, const enum container_types& type)
 		"'End'     - to stop application;\n" <<
 		"`Info'    - to list commands;\n" <<
 		"`Change`  - to change container type;\n" <<
+		"`Strategy`- change data splitting strategy;\n" <<
 		"`Results` - print results of all tests;\n" <<
 		"*integer* - number of students for manual input of data.\n" <<
-		"Program currently is using container type: ";
+		"Program currently is using container type:";
 	info << functions.str();
 	(type == container_types::Vector) ? info << "VECTOR.\n\n" : info << "LIST.\n\n";
 }
@@ -45,7 +35,7 @@ void update_files(vector<Directory_files>& files)
 	ifstream inFile("lists/list_of_txt.txt");
 	buf << inFile.rdbuf();
 	inFile.close();
-	while(buf >> filename) {
+	while (buf >> filename) {
 		id++;
 		temp_info.id = id;
 		temp_info.name = filename;
@@ -57,13 +47,13 @@ void update_files(vector<Directory_files>& files)
 void table(const vector<Directory_files> files)
 {
 	cout << "\nID |File_name           |Content\n" <<
-			  "---+--------------------+--------\n";
+		"---+--------------------+--------\n";
 	for (const auto& file : files) {
 		cout << setw(3) << left << file.id << "|" <<
 			setw(20) << left << file.name << "|";
 		(file.type == Directory_files::Data) ?
 			cout << "Data\n" :
-			cout << "Results\n" ;
+			cout << "Results\n";
 	}
 	cout << endl;
 }
@@ -78,32 +68,9 @@ bool is_data_file(const string& filename)
 
 void get_type(const enum container_types& type)
 {
-
 	(type == container_types::Vector) ?
-		cout << "Program currently is using container type: VECTOR.\n\n":
-		cout << "Program currently is using container type: LIST.\n\n";
-}
-
-double average_int(const vector<int>& nd)
-{
-	return accumulate(nd.begin(), nd.end(), 0.0) / nd.size();
-}
-
-double median(vector<int> nd)
-{
-	int n = nd.size();
-	sort(nd.begin(), nd.end());
-	if (n % 2 != 0) {
-		return nd.at(n / 2);
-	}
-	else {
-		return (double)(nd[n / 2 - 1] + nd[n / 2]) / 2;
-	}
-}
-
-double Result(const int& egz,const double& value)
-{
-	return 0.4 * value + 0.6 * egz;
+		cout << "Program currently is using container type: VECTOR.\n" :
+		cout << "Program currently is using container type: LIST.\n";
 }
 
 bool is_digits(const string& str)
@@ -119,247 +86,32 @@ bool is_digits(const string& str)
 	return true;
 }
 
-void generate_file(const string& filename, const int& size)
+void progress_clock(const size_t& lines)
 {
-	stringstream buffer;
-	buffer.str().reserve(size * 190);
-	int index;
-	buffer << setw(20) << left << "Vardas" <<
-		setw(21) << left << "Pavarde";
-	for (int i = 0; i < 15; i++) {
-		buffer << "ND" << setw(8) << i + 1;
+	const size_t parts = 50;
+	int progress = 0;
+	const int duration = lines / parts * 5;
+	for (int i = 0; i < parts; i++) {
+		cout << "Progress: " << "\033[" << 31 << "m" << progress << "%" << "\033[" << 97 << "m" << "\r";
+		progress += 100 / parts;
+		std::this_thread::sleep_for(std::chrono::microseconds(duration));
 	}
-	buffer << "Egz.\n";
-
-	for (int i = 1;  i <= size; i++) {
-		index = i;
-		buffer << "Vardas" << setw(14) << left << index <<
-			"Pavarde" << setw(14) << left << index;
-		for (int j = 0; j < 15; j++) {
-			buffer << setw(10) << interval(gen);
-		}
-		buffer << interval(gen) << "\n";
-	}
-	ofstream file(filename);
-	file << buffer.str();
-	buffer.str("");
-	buffer.clear();
-	file.close();
-}
-
-void create_multiple_files(const vector<File_info>& files)
-{
-	double time;
-	for (auto& file : files) {
-		Timer timer;
-		generate_file(file.name, file.size);
-		time = timer.elapsed();
-		cout << "Creating file of size " << setw(8) << file.size << " took: " << time << endl;
-		test_results.fg_durations[file.name] = time;
-	}
-	cout << "All files created.\n\n";
-}
-
-void markdown_table()
-{
-	//File generation
-	printf("FILE GENERATION\n| Size | Duration |\n|:-------|-------:|\n");
-	for (const auto& record : test_results.fg_durations) {
-		printf("| %s | `%f` |\n", record.first.substr(0, record.first.size() - 4), record.second);
-	}
-	cout << endl;
-
-	//File reading
-	printf("DATA READING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
-		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-		
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
-
-		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.input / rec1.count, rec2.input / rec2.count);
-	}
-	cout << endl;
-
-	//File sorting
-	printf("DATA SORTING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
-		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
-
-		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.sorting / rec1.count, rec2.sorting / rec2.count);
-	}
-	cout << endl;
-
-	//File categorising
-	printf("DATA CATEGORISING\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
-		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
-
-		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.categorising / rec1.count, rec2.categorising / rec2.count);
-	}
-	cout << endl;
-
-	//File output
-	printf("DATA OUTPUT\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
-		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
-
-		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.output / rec1.count, rec2.output / rec2.count);
-	}
-	cout << endl;
-
-	//Total
-	printf("TOTAL DURATION\n| Size | Vector | List |\n|:-------|:------:|:-------:|\n");
-	for (const auto& test : test_results.vec_test) {
-		string filename = test.first;
-
-		Record rec1 = test.second;
-		Record rec2;
-
-		if (test_results.list_test.find(filename) != test_results.list_test.end()) {
-			rec2 = test_results.list_test[filename];
-		}
-
-		string size = filename.substr(0, filename.size() - 4);
-		printf("| %s | `%f` | `%f` |\n", size, rec1.total / rec1.count, rec2.total / rec2.count);
-	}
-	cout << endl;
-}
-
-void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key, const enum container_types& c_type)
-{
-	for (auto& f : files) {
-
-		vector<Stud> container_vector;
-		vector<Stud> under_vector;
-		vector<Stud> over_vector;
-		list<Stud> container_list;
-		list<Stud> under_list;
-		list<Stud> over_list;
-
-		cout << "Testing " << f;
-		if (c_type == container_types::Vector) {
-			cout << " using Vector.\n\n";
-			test_results.vec_test[f].count++;
-		}
-		else {
-			cout << " using List.\n\n";
-			test_results.list_test[f].count++;
-		}
-		//Reading
-		Timer total;
-		Timer t;
-		double time = 0.0;
-		(c_type == container_types::Vector) ?
-			Input_from_file(container_vector, f) :
-			Input_from_file(container_list, f);
-
-		time = t.elapsed();
-		(c_type == container_types::Vector) ?
-			test_results.vec_test[f].input += time :
-			test_results.list_test[f].input += time;
-		cout << endl << "Reading " << f << " took:      " <<
-			fixed << setprecision(4) << time << endl;
-
-		//Sorting
-		t.reset();
-		(c_type == container_types::Vector) ?
-			sort_students(container_vector, key) :
-			sort_students(container_list, key);
-
-		time = t.elapsed();
-		(c_type == container_types::Vector) ?
-			test_results.vec_test[f].sorting += time :
-			test_results.list_test[f].sorting += time;
-		cout << "Sorting " << f << " took:      " <<
-			fixed << setprecision(4) << time << endl;
-
-		//Spliting
-		t.reset();
-		(c_type == container_types::Vector) ?
-			sort_to_categories(container_vector, under_vector, over_vector) :
-			sort_to_categories(container_list, under_list, over_list);
-
-		time = t.elapsed();
-		(c_type == container_types::Vector) ?
-			test_results.vec_test[f].categorising += time :
-			test_results.list_test[f].categorising += time;
-		cout << "Categorising " << f << " took: " <<
-			fixed << setprecision(4) << time << endl;
-
-		//Output
-		t.reset();
-		if (c_type == container_types::Vector) {
-			concurrency::parallel_invoke(
-				[&]() { output_to_file(over_vector, f, print_by); },
-				[&]() { output_to_file(under_vector, f, print_by); }
-			);
-		} else 
-		{
-			concurrency::parallel_invoke(
-				[&]() { output_to_file(over_list, f, print_by); },
-				[&]() { output_to_file(under_list, f, print_by); }
-			);
-		}
-		
-		time = t.elapsed();
-		(c_type == container_types::Vector) ?
-			test_results.vec_test[f].output += time :
-			test_results.list_test[f].output += time;
-		cout << "Outputing " << f << " took:    " <<
-			fixed << setprecision(4) << time << endl;
-
-		time = total.elapsed();
-		(c_type == container_types::Vector) ?
-			test_results.vec_test[f].total += time :
-			test_results.list_test[f].total += time;
-		cout << endl << "Total duration:  " << fixed << setprecision(4) << time << endl;
-
-		system("pause");
-		cout << endl;
-	}
-	
+	//NOTES
+	// //cout << "\033[" << 31 << "m";
+	//cout << "\033[" << 92 << "m"; //92 for bright green, 97 for bright white
+	//cout << "\033[0m";
 }
 
 void find_keys(string& line, const enum selection& print_by, size_t& n_keys, vector<string>& keys)
 {
 	stringstream input(line),
-				output;
+		output;
 	string key;
 	bool name_used = false,
 		surname_used = false,
 		median_used = false,
 		average_used = false;
-	while(input >> key && n_keys < 2) {
+	while (input >> key && n_keys < 2) {
 		transform(key.begin(), key.end(), key.begin(), ::tolower);
 		if (!name_used && key.substr(0, 3) == "nam") {
 			output << "nam_";
@@ -439,7 +191,7 @@ string sort_selection(const enum selection& print_by)
 		getline(cin, line);
 		if (line.empty() && input_happend)
 			return key_output;
-		else if(line.empty())
+		else if (line.empty())
 		{
 			cout << "Enter at least one key.\n";
 			continue;
@@ -479,7 +231,7 @@ void create_file_selection(vector<File_info>& files)
 			empty_count++;
 			if (files.size() > 0 && empty_count >= 2) {
 				cout << "Files:\n";
-				cout << setw(20) <<left << "Name" << "|" << "Size\n--------------------+--------------------\n";
+				cout << setw(20) << left << "Name" << "|" << "Size\n--------------------+--------------------\n";
 				for (auto& f : files) {
 					cout << setw(20) << left << f.name << "|" << f.size << endl;
 				}
@@ -586,5 +338,20 @@ void file_selection(vector<string>& files)
 				}
 			}
 		}
+	}
+}
+
+enum strategy cycle_strat(enum strategy& strat) {
+	if (strat == strategy::s1) {
+		cout << "Strategy is set to 2" << "\n\n";
+		return strategy::s2;
+	}
+	else if (strat == strategy::s2) {
+		cout << "Strategy is set to 3" << "\n\n";
+		return strategy::s3;
+	}
+	else {
+		cout << "Strategy is set to 1" << "\n\n";
+		return strategy::s1;
 	}
 }

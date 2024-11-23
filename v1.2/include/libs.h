@@ -1,5 +1,5 @@
-#ifndef MYLIB_H_INCLUDED
-#define MYLIB_H_INCLUDED
+#ifndef LIBS_H_INCLUDED
+#define LIBS_H_INCLUDED
 
 #include <iostream>
 #include <vector>
