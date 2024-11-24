@@ -11,8 +11,12 @@
 #include <map>
 #include <type_traits>
 #include <ppl.h>
+#include <iomanip>
 
 class student {
+
+	friend std::ostream& operator<<(std::ostream& os, const student& s);
+
 private:
 	std::string name_;
 	std::string surname_;

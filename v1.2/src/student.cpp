@@ -66,6 +66,16 @@ student::student(std::string name, std::string surname)
 	final_median_ = student::final_med(homeworks_, exam_);
 }
 
+std::ostream& operator<<(std::ostream& os, const student& s)
+{
+	os << std::setw(18) << std::left << s.name_ <<
+		std::setw(18) << std::left << s.surname_ <<
+		std::setw(19) << std::fixed << std::setprecision(2) << s.final_average_ <<
+		std::setw(18) << std::fixed << std::setprecision(2) << s.final_median_ << "\n";
+
+	return os;
+}
+
 template<typename T>
 void sort_students(T& Students, const std::string& key) {
 	std::map<std::string, int(*)(const student&, const student&)> comparators = {

@@ -16,6 +16,7 @@ void update_info(stringstream& info, const enum container_types& type)
 		"`Change`  - to change container type;\n" <<
 		"`Strategy`- change data splitting strategy;\n" <<
 		"`Results` - print results of all tests;\n" <<
+		"`Enviroment` - run a test enviroment;\n" <<
 		"*integer* - number of students for manual input of data.\n" <<
 		"Program currently is using container type:";
 	info << functions.str();

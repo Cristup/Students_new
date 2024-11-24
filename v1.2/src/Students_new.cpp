@@ -51,6 +51,25 @@ int main()
             testFiles.clear();
             continue;
         }
+        //Enviroment for testing
+        //####################################################################################
+        if (main_input.substr(0, 3) == "env")
+        {
+            //Testing output operator
+            vector<int> hw = { 5,7,6,8,6,9 };
+            student a = { "Vardenis", "Pavardenis", hw, 8 };
+
+            cout << a;
+
+            ofstream test_output("Student_output.txt");
+            test_output << a;
+            test_output.close();
+            
+            string tmp;
+            cin >> tmp;
+
+        }
+        //####################################################################################
         //Strategy
         if (main_input.substr(0, 3) == "str") {
             strat = cycle_strat(strat);
