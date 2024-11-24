@@ -17,6 +17,11 @@ template void output_to_file<vector<student>>(vector<student>& local, const stri
 template void output_to_file<list<student>>(list<student>& local, const string& filename, const enum selection& print_by);
 
 template<typename T>
+void output_to_screen(T& local);
+template void output_to_screen<vector<student>>(vector<student>& local);
+template void output_to_screen<list<student>>(list<student>& local);
+
+template<typename T>
 void manual_input(T& container);
 template void manual_input<vector<student>>(vector<student>& container);
 template void manual_input<list<student>>(list<student>& container);

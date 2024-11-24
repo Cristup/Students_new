@@ -243,10 +243,7 @@ void output_to_file(T& local, const string& filename, const enum selection& prin
 		outFile << "-----------------------------------------------------------------------\n";
 		//Writing data
 		for (auto& s : local) {
-			buffer << setw(18) << left << s.name() <<
-				setw(18) << left << s.surname() <<
-				setw(19) << fixed << setprecision(2) << s.final_average() <<
-				setw(18) << fixed << setprecision(2) << s.final_median() << "\n";
+			buffer << s;
 		}
 		break;
 	default:
@@ -256,6 +253,14 @@ void output_to_file(T& local, const string& filename, const enum selection& prin
 	//Closing file
 	outFile.close();
 	local.clear();
+}
+
+template<typename T>
+void output_to_screen(T& local)
+{
+	cout << "\nName              Surname           Final result(Avg) Final result(Med)\n";
+	cout << "-----------------------------------------------------------------------\n\n";
+	for (auto& s : local) {cout << s;}
 }
 
 void generate_file(const string& filename, const int& size)

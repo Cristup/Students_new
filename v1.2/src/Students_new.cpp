@@ -221,7 +221,8 @@ int main()
                 sort_students(Students, key);
                 //Spliting data to categories
                 sort_to_categories(Students, Students_Under, Students_Over);
-                //Outputing to files
+
+                output_to_screen(Students);
                 printf("Printing vector.\n");
                 //Outputing to files
                 if (!Students_Over.empty() && !Students_Under.empty()) {
@@ -237,9 +238,10 @@ int main()
                 sort_students(Students_list, key);
                 //Spliting data to categories
                 sort_to_categories(Students_list, Under_list, Over_list);
+
+                output_to_screen(Students_list);
                 //Outputing to files
                 printf("Printing list.\n");
-                //Outputing to files
                 concurrency::parallel_invoke(
                     [&]() {output_to_file(Over_list, "Data.txt", print_by); },
                     [&]() {output_to_file(Under_list, "Data.txt", print_by); }
