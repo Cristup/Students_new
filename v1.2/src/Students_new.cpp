@@ -6,19 +6,18 @@
 int main()
 {
     //All variables inside main()
-    vector<student> Students,              //-Vector for storing students data.
-        Students_Under,         //-Vector for storing students data with final result Under 5.
-        Students_Over;          //-Vector for storing students data with final result 5 and Over.
-    list<student>  Students_list,          //-List for storing students data.
-        Under_list,             //-List for storing students data with final result Under 5.
-        Over_list;              //-List for storing students data with final result 5 and Over.
-    //Stud        Temp_stud;              //-Temporary value for storing student data.
+    vector<student> Students,           //-Vector for storing students data.
+                Students_Under,         //-Vector for storing students data with final result Under 5.
+                Students_Over;          //-Vector for storing students data with final result 5 and Over.
+    list<student>  Students_list,       //-List for storing students data.
+                Under_list,             //-List for storing students data with final result Under 5.
+                Over_list;              //-List for storing students data with final result 5 and Over.
     string      main_input,             //-User command.
-        key,                    //-Key for sorting functions.
-        filename,               //-Name of a file to read.
-        file_ID_string;         //-User input for file selection.
+                key,                    //-Key for sorting functions.
+                filename,               //-Name of a file to read.
+                file_ID_string;         //-User input for file selection.
     int         number_of_students,     //-Number of students in case of manual input.
-        file_ID;                //int type conversion from string type user input.
+                file_ID;                //int type conversion from string type user input.
     selection print_by;                 //-Result values to print.
     vector<File_info> files;            //-Files data {Name, Size} to create.
     vector<Directory_files> directory;  //-Information about .txt files in local directory.
@@ -55,18 +54,19 @@ int main()
         //####################################################################################
         if (main_input.substr(0, 3) == "env")
         {
-            //Testing output operator
-            vector<int> hw = { 5,7,6,8,6,9 };
-            student a = { "Vardenis", "Pavardenis", hw, 8 };
+            //Testing input operator
+            student a, b;
+            cin >> a;
 
+            stringstream file_line_example("Vardas11 Pavarde11 6 7 6 8 7 9");
+            file_line_example >> b;
+            
+            //Testing output operator
             cout << a;
 
             ofstream test_output("Student_output.txt");
-            test_output << a;
+            test_output << b;
             test_output.close();
-            
-            string tmp;
-            cin >> tmp;
 
         }
         //####################################################################################

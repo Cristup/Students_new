@@ -12,10 +12,12 @@
 #include <type_traits>
 #include <ppl.h>
 #include <iomanip>
+#include <sstream>
 
 class student {
 
 	friend std::ostream& operator<<(std::ostream& os, const student& s);
+	friend std::istream& operator>>(std::istream& is, student& s);
 
 private:
 	std::string name_;

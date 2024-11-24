@@ -76,6 +76,54 @@ std::ostream& operator<<(std::ostream& os, const student& s)
 	return os;
 }
 
+std::istream& operator>>(std::istream& is, student& s)
+{
+	//? Namu darbu skaiciaus radimas skaitant is failo
+	//? Zinutes termnale
+	//? Automatinis ivedimas
+
+	//! Tipo tikrinimas: &is == &std::cin pries cout'us
+	//! Isskirti namudarbu skaitymo logika skaitan is 
+	// failo skaityti iki eilutes galo(std::istringstream line_stream.. ir while ciklas)
+	//! Del automatinio nuskaitymo islieka pasirinkimas su cin tipu
+	
+	if (&is == &std::cin) {
+		std::cout << "Name, Surname: ";
+	}
+	is >> s.name_ >> s.surname_;
+
+	//From terminal
+	if (&is == &std::cin) {
+		std::cout << "Enter number of homeworks: ";
+		int hw_count;
+		is >> hw_count;
+		s.homeworks_.resize(hw_count);
+		for (int i = 0; i < hw_count; i++) {
+			std::cout << "Enter homework number " << i + 1 << ": ";
+			is >> s.homeworks_.at(i);
+		}
+		std::cout << "Enter exam result: ";
+		is >> s.exam_;
+	}
+	//From file
+	else {
+		std::string line;
+		std::vector<int> temp_vec;
+		std::getline(is, line);
+		std::stringstream ss(line);
+		int grade;
+		while (ss >> grade) {
+			temp_vec.push_back(grade);
+		}
+		s.exam_ = temp_vec.back();
+		temp_vec.pop_back();
+		s.homeworks_ = temp_vec;
+	}
+	s.final_average_ = s.final_ave(s.homeworks_, s.exam_);
+	s.final_median_ = s.final_med(s.homeworks_, s.exam_);
+	return is;
+}
+
 template<typename T>
 void sort_students(T& Students, const std::string& key) {
 	std::map<std::string, int(*)(const student&, const student&)> comparators = {
