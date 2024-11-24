@@ -4,6 +4,7 @@
 - [Description](#description)
 - [Usage](#how-to-use-the-program)
 - [Installation](#installation)
+- [StudentClass](#student-class)
 - [Releases](#releases)
 - [Efficiency](#efficiency)
 
@@ -221,6 +222,74 @@ Here are the steps to install and run the program:
 
 If everything is done right program should run immediately. To run the program again, next time you can run the `Students_App.exe` file found in the `Debug` folder or create **shortcut** by right-clicking on file `Students_App.exe` and there you should find an option **Create shortcut**, which can be moved to any convenient location from where then you'll be able to run the program.
 
+## Student Class
+
+### Input Operator
+
+1. **Manual Input**: The user can input student data through terminal. Folowing instruction user can either enter: Name, Surname, Homework marks and Exam result or choose to generate data automaticaly. 
+
+
+2. **File Input** If stream isn't type std::cin data will be read without messages in the terminal.
+
+```cpp
+std::istream& operator>>(std::istream& is, student& s)
+{
+	if (&is == &std::cin) {
+		std::cout << "Name, Surname: ";
+	}
+	is >> s.name_ >> s.surname_;
+
+	//From terminal
+	if (&is == &std::cin) {
+		std::cout << "Enter number of homeworks: ";
+		int hw_count;
+		is >> hw_count;
+		s.homeworks_.resize(hw_count);
+		for (int i = 0; i < hw_count; i++) {
+			std::cout << "Enter homework number " << i + 1 << ": ";
+			is >> s.homeworks_.at(i);
+		}
+		std::cout << "Enter exam result: ";
+		is >> s.exam_;
+	}
+	//From file
+	else {
+		std::string line;
+		std::vector<int> temp_vec;
+		std::getline(is, line);
+		std::stringstream ss(line);
+		int grade;
+		while (ss >> grade) {
+			temp_vec.push_back(grade);
+		}
+		s.exam_ = temp_vec.back();
+		temp_vec.pop_back();
+		s.homeworks_ = temp_vec;
+	}
+	s.final_average_ = s.final_ave(s.homeworks_, s.exam_);
+	s.final_median_ = s.final_med(s.homeworks_, s.exam_);
+	return is;
+}
+```
+
+Operator checks wheather stream type is `cin`. This is used so that user would get input instructions, only when data input is manual. Data is read in this order: Name, Surnmae, Homeworks, Exam.
+For input from file all values after surname are read into the vector and after last one is taken and saved as exam result.
+
+### Output Operator
+
+Output operator prints Name, Surname, Final result by Average and by Median values in order;
+
+```cpp
+std::ostream& operator<<(std::ostream& os, const student& s)
+{
+	os << std::setw(18) << std::left << s.name_ <<
+		std::setw(18) << std::left << s.surname_ <<
+		std::setw(19) << std::fixed << std::setprecision(2) << s.final_average_ <<
+		std::setw(18) << std::fixed << std::setprecision(2) << s.final_median_ << "\n";
+
+	return os;
+}
+```
 
 ## Efficiency
 
