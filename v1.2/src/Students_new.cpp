@@ -58,16 +58,17 @@ int main()
             student a, b;
             cin >> a;
 
+            student c(a), d = a;
+
             stringstream file_line_example("Vardas11 Pavarde11 6 7 6 8 7 9");
             file_line_example >> b;
             
             //Testing output operator
-            cout << a;
+            cout << a << c << d;
 
             ofstream test_output("Student_output.txt");
             test_output << b;
             test_output.close();
-
         }
         //####################################################################################
         //Strategy

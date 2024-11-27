@@ -66,8 +66,7 @@ student::student(std::string name, std::string surname)
 	final_median_ = student::final_med(homeworks_, exam_);
 }
 
-std::ostream& operator<<(std::ostream& os, const student& s)
-{
+std::ostream& operator<<(std::ostream& os, const student& s) {
 	os << std::setw(18) << std::left << s.name_ <<
 		std::setw(18) << std::left << s.surname_ <<
 		std::setw(19) << std::fixed << std::setprecision(2) << s.final_average_ <<
@@ -76,43 +75,77 @@ std::ostream& operator<<(std::ostream& os, const student& s)
 	return os;
 }
 
-std::istream& operator>>(std::istream& is, student& s)
-{
-	//? Namu darbu skaiciaus radimas skaitant is failo
-	//? Zinutes termnale
-	//? Automatinis ivedimas
-
-	//! Tipo tikrinimas: &is == &std::cin pries cout'us
-	//! Isskirti namudarbu skaitymo logika skaitan is 
-	// failo skaityti iki eilutes galo(std::istringstream line_stream.. ir while ciklas)
-	//! Del automatinio nuskaitymo islieka pasirinkimas su cin tipu
-	
+std::istream& operator>>(std::istream& is, student& s) {
 	if (&is == &std::cin) {
 		std::cout << "Name, Surname: ";
 	}
 	is >> s.name_ >> s.surname_;
-
+	
 	//From terminal
 	if (&is == &std::cin) {
-		std::cout << "Enter number of homeworks: ";
-		int hw_count;
-		is >> hw_count;
-		s.homeworks_.resize(hw_count);
-		for (int i = 0; i < hw_count; i++) {
-			std::cout << "Enter homework number " << i + 1 << ": ";
-			is >> s.homeworks_.at(i);
+		std::string temp;
+		std::cout << "Enter either exam result or 'Auto': ";
+		while (true) {
+			is >> temp;
+			std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+			if (temp.substr(0, 2) == "au") {
+				s = student(s.name_, s.surname_);
+				break;
+			}
+			else {
+				try {
+					s.exam_ = stoi(temp);
+					break;
+				}
+				catch (const std::invalid_argument&) {
+					std::cerr << "Invalid input! Try again.\n" << std::endl;
+					continue;
+				}
+				std::cerr << "Enter home work results (Press enter twice to finish)." << std::endl;
+				int Temp_nd,			//-Temporary place for storing a value
+					nd_count = 1,		//-Total number and index of homeworks
+					empty_count = 0;	//-Number of times when user pressed Enter
+				std::string value;		//-User input
+
+				//Delete left over empty space after "cin >>"
+				getline(is, value);
+
+				//Data input until break(Enter press twice)
+				while (true) {
+					//Input
+					std::cout << "Enter home work number " << nd_count << " result: ";
+					std::getline(is, value);
+
+					//Empty input cases
+					if (value.empty()) {
+						empty_count++;
+						if (nd_count == 1) {
+							std::cerr << "You must enter at least one home work!" << std::endl;
+						}
+						else if (empty_count == 2) {
+							break;
+						}
+					}
+					//In range input case
+					else if (stoi(value) >= min_result && stoi(value) <= max_result) {
+						empty_count = 0;
+						Temp_nd = stoi(value);
+						s.homeworks_.push_back(Temp_nd);
+						nd_count++;
+					}
+					//Left over case
+					else {
+						std::cerr << "Value must be in the interval [1;10]!" << std::endl;
+					}
+				}
+			}
 		}
-		std::cout << "Enter exam result: ";
-		is >> s.exam_;
 	}
 	//From file
 	else {
-		std::string line;
 		std::vector<int> temp_vec;
-		std::getline(is, line);
-		std::stringstream ss(line);
 		int grade;
-		while (ss >> grade) {
+		while (is >> grade) {
 			temp_vec.push_back(grade);
 		}
 		s.exam_ = temp_vec.back();

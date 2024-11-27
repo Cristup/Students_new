@@ -35,7 +35,9 @@ public:
 	student(std::string name, std::string surname);
 	student() : name_(""), surname_(""), homeworks_({}), exam_(0), final_average_(0), final_median_(0) {}
 	student(const student& other) : name_(other.name_), surname_(other.surname_),
-		homeworks_(other.homeworks_), exam_(other.exam_), final_average_(other.final_average_), final_median_(other.final_median_) {}
+		homeworks_(other.homeworks_), exam_(other.exam_), final_average_(other.final_average_), final_median_(other.final_median_) {
+		//std::cout << "Copy constructor!\n";
+	}
 	~student() {
 		homeworks_.clear();
 	};
@@ -53,6 +55,7 @@ public:
 	inline double final_median() const { return final_median_; }
 
 	student& operator=(const student& other) {
+		//std::cout << "Operator = was called!\n";
 		if (this == &other) return *this;
 		name_ = other.name_;
 		surname_ = other.surname_;
