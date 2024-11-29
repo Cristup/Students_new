@@ -95,7 +95,6 @@ std::istream& operator>>(std::istream& is, student& s) {
 			else {
 				try {
 					s.exam_ = stoi(temp);
-					break;
 				}
 				catch (const std::invalid_argument&) {
 					std::cerr << "Invalid input! Try again.\n" << std::endl;
@@ -139,6 +138,7 @@ std::istream& operator>>(std::istream& is, student& s) {
 					}
 				}
 			}
+			break;
 		}
 	}
 	//From file

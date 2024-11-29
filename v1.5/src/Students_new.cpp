@@ -54,20 +54,19 @@ int main()
         //####################################################################################
         if (main_input.substr(0, 3) == "env")
         {
-            //Testing input operator
             student a, b;
             cin >> a;
-
-            student c(a), d = a;
-
-            stringstream file_line_example("Vardas11 Pavarde11 6 7 6 8 7 9");
-            file_line_example >> b;
+            b = a;
+            student c(b);
             
-            //Testing output operator
-            cout << a << c << d;
+            cout << a << b << c;
+
+            student d;
+            stringstream file_line_example("Vardas11 Pavarde11 6 7 6 8 7 9");
+            file_line_example >> d;
 
             ofstream test_output("Student_output.txt");
-            test_output << b;
+            test_output << d;
             test_output.close();
         }
         //####################################################################################
