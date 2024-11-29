@@ -17,36 +17,21 @@
 #include <sstream>
 
 class student : public person{
-
 	friend std::ostream& operator<<(std::ostream& os, const student& s);
 	friend std::istream& operator>>(std::istream& is, student& s);
-
 private:
 	std::vector<int> homeworks_;
 	int exam_;
 	double final_average_;
 	double final_median_;
-
 	double final_ave(std::vector<int> homeworks, int exam);
 	double final_med(std::vector<int> homeworks, int exam);
-
 public:
-	student() : person("", ""), homeworks_({}), exam_(0), final_average_(0), final_median_(0) {}
-
-	student(std::string name, std::string surname, std::vector<int> homeworks, int exam) :
-		person(name, surname), homeworks_(homeworks), exam_(exam), 
-		final_average_(final_ave(homeworks, exam)), final_median_(final_med(homeworks, exam)) {}
-
+	student();
+	student(std::string name, std::string surname, std::vector<int> homeworks, int exam);
 	student(std::string name, std::string surname);
-
-	student(const student& other) : person(other),
-		homeworks_(other.homeworks_), exam_(other.exam_), final_average_(other.final_average_), final_median_(other.final_median_) {
-		//std::cout << "Copy constructor!\n";
-	}
-
-	~student() {
-		homeworks_.clear();
-	};
+	student(const student& other);
+	~student();
 
 	inline void setName(const std::string& name) { name_ = name; }
 	inline void setSurname(const std::string& surname) { surname_ = surname; }
@@ -60,17 +45,7 @@ public:
 	inline double final_average() const { return final_average_; }
 	inline double final_median() const { return final_median_; }
 
-	student& operator=(const student& other) {
-		//std::cout << "Operator = was called!\n";
-		if (this == &other) return *this;
-		name_ = other.name_;
-		surname_ = other.surname_;
-		homeworks_ = other.homeworks_;
-		exam_ = other.exam_;
-		final_average_ = other.final_average_;
-		final_median_ = other.final_median_;
-		return *this;
-	}
+	student& operator=(const student& other);
 
 };
 

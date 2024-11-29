@@ -1,5 +1,6 @@
 #include "libs.h"
 #include "student.h"
+#include "person.h"
 #include "util.h"
 #include "data_util.h"
 
@@ -68,6 +69,9 @@ int main()
             ofstream test_output("Student_output.txt");
             test_output << d;
             test_output.close();
+
+            //person a;
+
         }
         //####################################################################################
         //Strategy

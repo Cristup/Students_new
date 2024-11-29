@@ -19,6 +19,66 @@ std::uniform_int_distribution<int> Results_interval(min_result, max_result);
 //-Interval for random number of homeworks
 std::uniform_int_distribution<int> Amount_interval(min_nd, max_nd);
 
+student::student() :
+	person("", ""), 
+	homeworks_({}), 
+	exam_(0), 
+	final_average_(0), 
+	final_median_(0) 
+{}
+
+student::student(std::string name, std::string surname, std::vector<int> homeworks, int exam) :
+	person(name, surname), 
+	homeworks_(homeworks), 
+	exam_(exam),
+	final_average_(final_ave(homeworks, exam)), 
+	final_median_(final_med(homeworks, exam)) 
+{}
+
+student::student(const student& other) :
+	person(other),
+	homeworks_(other.homeworks_),
+	exam_(other.exam_),
+	final_average_(other.final_average_),
+	final_median_(other.final_median_)
+{
+	//std::cout << "Copy constructor!\n";
+}
+
+student::student(std::string name, std::string surname)
+	: person(name, surname)
+{
+	exam_ = Results_interval(rd_generator);
+	std::cout << "\nGenerated egzam result: " << exam_ << std::endl;
+	int amount = Amount_interval(rd_generator);
+	homeworks_.reserve(amount);
+	std::cout << "Generated home work result: {";
+	for (int i = 0; i < amount; i++) {
+		homeworks_.push_back(Results_interval(rd_generator));
+		std::cout << homeworks_.at(i) << ", ";
+	}
+	std::cout << "}" << std::endl;
+	final_average_ = student::final_ave(homeworks_, exam_);
+	final_median_ = student::final_med(homeworks_, exam_);
+}
+
+student::~student() {
+	homeworks_.clear();
+}
+
+student& student::operator=(const student& other)
+{
+	//std::cout << "Operator = was called!\n";
+	if (this == &other) return *this;
+	name_ = other.name_;
+	surname_ = other.surname_;
+	homeworks_ = other.homeworks_;
+	exam_ = other.exam_;
+	final_average_ = other.final_average_;
+	final_median_ = other.final_median_;
+	return *this;
+}
+
 double student::final_ave(std::vector<int> homeworks, int exam)
 {
 	return (std::accumulate(homeworks.begin(), homeworks.end(), 0.0) / homeworks.size()) * 0.4 + exam * 0.6;
@@ -38,22 +98,7 @@ double student::final_med(std::vector<int> homeworks, int exam)
 	return median * 0.4 + exam * 0.6;
 }
 
-student::student(std::string name, std::string surname)
-	: person(name, surname)
-{
-	exam_ = Results_interval(rd_generator);
-	std::cout << "\nGenerated egzam result: " << exam_ << std::endl;
-	int amount = Amount_interval(rd_generator);
-	homeworks_.reserve(amount);
-	std::cout << "Generated home work result: {";
-	for (int i = 0; i < amount; i++) {
-		homeworks_.push_back(Results_interval(rd_generator));
-		std::cout << homeworks_.at(i) << ", ";
-	}
-	std::cout << "}" << std::endl;
-	final_average_ = student::final_ave(homeworks_, exam_);
-	final_median_ = student::final_med(homeworks_, exam_);
-}
+
 
 std::ostream& operator<<(std::ostream& os, const student& s) {
 	os << std::setw(18) << std::left << s.name() <<
