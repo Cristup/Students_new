@@ -226,17 +226,36 @@ If everything is done right program should run immediately. To run the program a
 
 ### Input Operator
 
-1. **Manual Input**: The user can input student data through terminal. Folowing instruction user can either enter: Name, Surname, Homework marks and Exam result or choose to generate data automaticaly. 
+1. **Manual Input**:
+In case student records are needed the user can interact with the terminal and input them directly. Depending on the instructions provided, the user may either:
+
+* Enter manually:
+* first name
+* last name
+* homework results
+* final exam result
+
+or take the easier way out by choosing to generate data automatically.
 
 
-2. **File Input** If stream isn't type std::cin data will be read without messages in the terminal.
-
-Operator checks wheather stream type is `cin`. This is used so that user would get input instructions, only when data input is manual. Data is read in this order: Name, Surnmae, Homeworks, Exam.
-For input from file all values after surname are read into the vector and after last one is taken and saved as exam result.
+2. **File Input** 
+If the input is not std::in, the program processes the input and does not prompt any further questions. The expected user’s input is in the following sequence:
+* first name
+* last name
+* scores given for the assignments (all but the last value given)
+* number of points scored on the final exam (the last value in the line)
+For efficiently operating, the operator in manual or files input checks the type of the stream, if it is std::cin stream to 
+enable input of their manual instructions and never display it unless user enter the data manually.
 
 ### Output Operator
 
-Output operator prints Name, Surname, Final result by Average and by Median values in order;
+For efficiently operating, the operator in manual or files input checks the type of the stream, if it is std::cin stream to enable input of their manual instructions and never display it unless I enter the data manually.
+
+### How the Input Operator Works:
+* In a scenario, where a user chooses to input data in a manual format, (which is std::cin), the first two details needed are Name and Surname.
+* This is followed by the program prompting the user, that you either enter the line with the number of .or enter the text "Auto" so that random data can be generated.
+* A user may still decide to enter details manually beginning with the last request for homework results, which are entered as a series of numbers.
+* When it comes to file input, the program does not alert the user that it has read all the character strings after the surname and takes the last string as the result of the exam.
 
 ## Efficiency
 
