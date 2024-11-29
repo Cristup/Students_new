@@ -38,20 +38,9 @@ double student::final_med(std::vector<int> homeworks, int exam)
 	return median * 0.4 + exam * 0.6;
 }
 
-student::student(std::string name, std::string surname, std::vector<int> homeworks, int exam)
-{
-	name_ = name;
-	surname_ = surname;
-	homeworks_ = homeworks;
-	exam_ = exam;
-	final_average_ = student::final_ave(homeworks, exam);
-	final_median_ = student::final_med(homeworks, exam);
-}
-
 student::student(std::string name, std::string surname)
+	: person(name, surname)
 {
-	name_ = name;
-	surname_ = surname;
 	exam_ = Results_interval(rd_generator);
 	std::cout << "\nGenerated egzam result: " << exam_ << std::endl;
 	int amount = Amount_interval(rd_generator);
@@ -67,10 +56,10 @@ student::student(std::string name, std::string surname)
 }
 
 std::ostream& operator<<(std::ostream& os, const student& s) {
-	os << std::setw(18) << std::left << s.name_ <<
-		std::setw(18) << std::left << s.surname_ <<
-		std::setw(19) << std::fixed << std::setprecision(2) << s.final_average_ <<
-		std::setw(18) << std::fixed << std::setprecision(2) << s.final_median_ << "\n";
+	os << std::setw(18) << std::left << s.name() <<
+		std::setw(18) << std::left << s.surname() <<
+		std::setw(19) << std::fixed << std::setprecision(2) << s.final_average() <<
+		std::setw(18) << std::fixed << std::setprecision(2) << s.final_median() << "\n";
 
 	return os;
 }

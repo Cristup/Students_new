@@ -1,6 +1,8 @@
 #ifndef STUDENT_H_INCLUDED
 #define STUDENT_H_INCLUDED
 
+#include "person.h"
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -14,14 +16,12 @@
 #include <iomanip>
 #include <sstream>
 
-class student {
+class student : public person{
 
 	friend std::ostream& operator<<(std::ostream& os, const student& s);
 	friend std::istream& operator>>(std::istream& is, student& s);
 
 private:
-	std::string name_;
-	std::string surname_;
 	std::vector<int> homeworks_;
 	int exam_;
 	double final_average_;
@@ -31,13 +31,19 @@ private:
 	double final_med(std::vector<int> homeworks, int exam);
 
 public:
-	student(std::string name, std::string surname, std::vector<int> homeworks, int exam);
+	student() : person("", ""), homeworks_({}), exam_(0), final_average_(0), final_median_(0) {}
+
+	student(std::string name, std::string surname, std::vector<int> homeworks, int exam) :
+		person(name, surname), homeworks_(homeworks), exam_(exam), 
+		final_average_(final_ave(homeworks, exam)), final_median_(final_med(homeworks, exam)) {}
+
 	student(std::string name, std::string surname);
-	student() : name_(""), surname_(""), homeworks_({}), exam_(0), final_average_(0), final_median_(0) {}
-	student(const student& other) : name_(other.name_), surname_(other.surname_),
+
+	student(const student& other) : person(other),
 		homeworks_(other.homeworks_), exam_(other.exam_), final_average_(other.final_average_), final_median_(other.final_median_) {
 		//std::cout << "Copy constructor!\n";
 	}
+
 	~student() {
 		homeworks_.clear();
 	};
@@ -47,8 +53,8 @@ public:
 	inline void setHomework(const std::vector<int>& homework) { homeworks_ = homework; }
 	inline void setExam(const int& exam) { exam_ = exam; }
 
-	inline std::string name() const { return name_; }
-	inline std::string surname() const { return surname_; }
+	inline std::string name() const override { return name_; }
+	inline std::string surname() const  override { return surname_; }
 	inline std::vector<int> homeworks() const { return homeworks_; }
 	inline int exam() const { return exam_; }
 	inline double final_average() const { return final_average_; }

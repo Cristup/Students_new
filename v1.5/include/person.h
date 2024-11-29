@@ -16,8 +16,8 @@ public:
 
 	virtual ~person() = default;
 
-	virtual inline std::string name() const { return name_; }
-	virtual inline std::string surname() const { return surname_; }
+	virtual std::string name() const = 0;
+	virtual std::string surname() const = 0;
 
 };
 	
