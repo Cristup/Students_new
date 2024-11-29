@@ -89,18 +89,38 @@ bool is_digits(const string& str)
 
 void progress_clock(const size_t& lines)
 {
-	const size_t parts = 50;
+	//OLD VERSION
+	/*const size_t parts = 50;
 	int progress = 0;
 	const int duration = lines / parts * 5;
 	for (int i = 0; i < parts; i++) {
 		cout << "Progress: " << "\033[" << 31 << "m" << progress << "%" << "\033[" << 97 << "m" << "\r";
 		progress += 100 / parts;
 		std::this_thread::sleep_for(std::chrono::microseconds(duration));
-	}
+	}*/
+
 	//NOTES
 	// //cout << "\033[" << 31 << "m";
 	//cout << "\033[" << 92 << "m"; //92 for bright green, 97 for bright white
 	//cout << "\033[0m";
+
+	//NEW VERSION
+	const size_t parts = 50;
+	const int duration = lines / parts * 5;
+	stringstream bar("");
+
+	for (int i = 0; i < parts; i++) {
+		cout << "Progress: " << "\033[" << 31 << "m" <<
+			 "[" << bar.str() << "]"
+			 << "\033[" << 97 << "m" << "\r";
+		for (int j = 0; j < 50 / 50; j++) {
+			bar.clear();
+			bar << "=";
+		}
+
+		std::this_thread::sleep_for(std::chrono::microseconds(duration));
+	}
+
 }
 
 void find_keys(string& line, const enum selection& print_by, size_t& n_keys, vector<string>& keys)

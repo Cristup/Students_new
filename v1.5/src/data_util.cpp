@@ -300,7 +300,7 @@ void create_multiple_files(vector<File_info>& files)
 		generate_file(file.name, file.size);
 		time = timer.elapsed();
 		clock.join();
-		cout << "Progress:" << "\033[" << 92 << "m" << " 100%" << "\033[" << 97 << "m" << endl;
+		cout << "Progress:" << "\033[" << 92 << "m" << "[==================================================]" << "\033[" << 97 << "m" << endl;
 		cout << "Creating file of size " << setw(8) << file.size << " took: " << time << endl;
 		test_results.fg_durations[file.name] = time;
 	}
