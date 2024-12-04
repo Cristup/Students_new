@@ -1,0 +1,62 @@
+\doxysection{data\+\_\+util.\+h}
+\hypertarget{data__util_8h_source}{}\label{data__util_8h_source}\index{include/data\_util.h@{include/data\_util.h}}
+\mbox{\hyperlink{data__util_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DATA\_UTIL\_H\_INCLUDED}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DATA\_UTIL\_H\_INCLUDED}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{libs_8h}{libs.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{student_8h}{student.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{util_8h}{util.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{timer_8h}{timer.h}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00010\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_abf32b076c482f410510bfd46c264fbb7}{Input\_from\_file}}(Container\&\ local,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename);}
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_abf32b076c482f410510bfd46c264fbb7}{Input\_from\_file<vector<student>}}>(vector<student>\&\ local,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename);}
+\DoxyCodeLine{00012\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_abf32b076c482f410510bfd46c264fbb7}{Input\_from\_file<list<student>}}>(list<student>\&\ local,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename);}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_adb4f54187cd29f1b1fd760c1b4cf1c9d}{output\_to\_file}}(T\&\ local,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}}\&\ print\_by);}
+\DoxyCodeLine{00016\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_adb4f54187cd29f1b1fd760c1b4cf1c9d}{output\_to\_file<vector<student>}}>(vector<student>\&\ local,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}}\&\ print\_by);}
+\DoxyCodeLine{00017\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_adb4f54187cd29f1b1fd760c1b4cf1c9d}{output\_to\_file<list<student>}}>(list<student>\&\ local,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}}\&\ print\_by);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a7ff4d475e884ba12dc6be9a2b64861de}{output\_to\_screen}}(T\&\ local);}
+\DoxyCodeLine{00021\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a7ff4d475e884ba12dc6be9a2b64861de}{output\_to\_screen<vector<student>}}>(vector<student>\&\ local);}
+\DoxyCodeLine{00022\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a7ff4d475e884ba12dc6be9a2b64861de}{output\_to\_screen<list<student>}}>(list<student>\&\ local);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00025\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a5a74a1ab36136c8d431cb64c77748f98}{manual\_input}}(T\&\ container);}
+\DoxyCodeLine{00026\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a5a74a1ab36136c8d431cb64c77748f98}{manual\_input<vector<student>}}>(vector<student>\&\ container);}
+\DoxyCodeLine{00027\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a5a74a1ab36136c8d431cb64c77748f98}{manual\_input<list<student>}}>(list<student>\&\ container);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a0a96ea334da407a5d5c04b2e2fa9e004}{homework\_input}}(vector<int>\&\ homework);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_af80958e71a80ce323aa093c5abc5bea0}{generate\_file}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ size);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a2c642d2d2e8cf7be27fa17aad3d51adf}{create\_multiple\_files}}(vector<File\_info>\&\ files);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a82e62941ecf3df7467ec6722a5cfe38d}{markdown\_table}}();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_aba7856c1bade5eecd0abd6bc911359d6}{test\_multiple\_files}}(\textcolor{keyword}{const}\ vector<string>\&\ files,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}}\&\ print\_by,}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ key,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a230c67393f7280922a1d4300e50b569a}{container\_types}}\&\ c\_type,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30c}{strategy}}\&\ strat);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a4521d0c73421e077fcda5d2d78056e77}{sort\_to\_categories}}(T\&\ local,\ T\&\ Under,\ T\&\ Over);}
+\DoxyCodeLine{00042\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a4521d0c73421e077fcda5d2d78056e77}{sort\_to\_categories<vector<student>}}>(vector<student>\&\ local,\ vector<student>\&\ Under,\ vector<student>\&\ Over);}
+\DoxyCodeLine{00043\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a4521d0c73421e077fcda5d2d78056e77}{sort\_to\_categories<list<student>}}>(list<student>\&\ local,\ list<student>\&\ Under,\ list<student>\&\ Over);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a5d36f239e7ed9f6c23f118cb886f567d}{sort\_to\_categories2}}(T\&\ firstc,\ T\&\ newc);}
+\DoxyCodeLine{00047\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a5d36f239e7ed9f6c23f118cb886f567d}{sort\_to\_categories2<vector<student>}}>(vector<student>\&\ firstc,\ vector<student>\&\ newc);}
+\DoxyCodeLine{00048\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a5d36f239e7ed9f6c23f118cb886f567d}{sort\_to\_categories2<list<student>}}>(list<student>\&\ firstc,\ list<student>\&\ newc);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a6e49a3147ee82f41d1380a269fbad656}{sort\_to\_categories3}}(T\&\ local,\ T\&\ over);}
+\DoxyCodeLine{00052\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a6e49a3147ee82f41d1380a269fbad656}{sort\_to\_categories3<vector<student>}}>(vector<student>\&\ local,\ vector<student>\&\ over);}
+\DoxyCodeLine{00053\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data__util_8h_a6e49a3147ee82f41d1380a269fbad656}{sort\_to\_categories3<list<student>}}>(list<student>\&\ local,\ list<student>\&\ over);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

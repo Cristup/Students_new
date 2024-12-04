@@ -1,0 +1,3 @@
+C:/Users/crist/OneDrive/Stalinis kompiuteris/v1.0/build/CMakeFiles/Students_App.dir
+C:/Users/crist/OneDrive/Stalinis kompiuteris/v1.0/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/crist/OneDrive/Stalinis kompiuteris/v1.0/build/CMakeFiles/ZERO_CHECK.dir

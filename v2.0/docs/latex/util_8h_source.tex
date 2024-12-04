@@ -1,0 +1,82 @@
+\doxysection{util.\+h}
+\hypertarget{util_8h_source}{}\label{util_8h_source}\index{include/util.h@{include/util.h}}
+\mbox{\hyperlink{util_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ UTIL\_H\_INCLUDED}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ UTIL\_H\_INCLUDED}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{libs_8h}{libs.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{student_8h}{student.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{timer_8h}{timer.h}}"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_file__info}{File\_info}}\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_file__info_a56c15321864504096802f0d88f7c01ad}{name}};}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_file__info_a9fef1d32f4323b273efde3daca5294cb}{size}};}
+\DoxyCodeLine{00011\ \};}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_directory__files}{Directory\_files}}\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_directory__files_a964a025fde14c0b5aaa90eb48e9b10fa}{id}};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_directory__files_a610d06e0bbf9407dade5db07c204599e}{name}};}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{struct_directory__files_a4a2546a1fa2d3507da34b83e96740602}{types}}\ \{\ \mbox{\hyperlink{struct_directory__files_a4a2546a1fa2d3507da34b83e96740602a7cbf3520245d48377e4aef46d7689570}{Data}},\ \mbox{\hyperlink{struct_directory__files_a4a2546a1fa2d3507da34b83e96740602a9fc1e5bf0c5d7c2e0f64da7ddcde91f2}{Results}}\ \}\ \mbox{\hyperlink{struct_directory__files_a3b9b36fc8b1a431e344eaa14ac0c21a6}{type}};}
+\DoxyCodeLine{00017\ \};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_record}{Record}}\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_record_ad467cdb26ec64dcec38f7049cbf71b75}{input}}\ =\ 0.0;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_record_ad57e09535c9be3f9b88412ddff9c81ae}{sorting}}\ =\ 0.0;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_record_a24b55b439f3697213492227003236676}{categorising}}\ =\ 0.0;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_record_afe03fb50f0f9aa2d986cb2ff8b63c9f9}{output}}\ =\ 0.0;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_record_ac1a0dd4c33ddd230e29eb20cd4dc7e15}{total}}\ =\ 0.0;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ count\ =\ 0;}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_test__data}{Test\_data}}\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ map<string,\ Record>\ \mbox{\hyperlink{struct_test__data_a52dcba08bbb3106f78a9bf8562fe2c34}{vec\_test}};}
+\DoxyCodeLine{00031\ \ \ \ \ map<string,\ Record>\ \mbox{\hyperlink{struct_test__data_aecf3017a589fde6cf2c883d46d6bb69c}{list\_test}};}
+\DoxyCodeLine{00032\ \ \ \ \ map<string,\ double>\ \mbox{\hyperlink{struct_test__data_a7ef72d1ca954e518b8ec390ffcc53fa0}{fg\_durations}};}
+\DoxyCodeLine{00033\ \};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}}\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1ab3c87ec2c47256239220b24e46acda7f}{Average}},}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1af73a513956cd3c0a2aec3ac169367ab3}{Median}},}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1aedf69634e61e7ec5d006874d299bc0d4}{Both}}}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30c}{strategy}}\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30ca9aad8b8adbe6ec1aef47dba5064b8785}{s1}}\ =\ 1,\ \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30ca2ba65cf51dfe40e58e06095ee2c3fec4}{s2}}\ =\ 2,\ \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30ca6603b456fde1c1d79360b2ca9224537b}{s3}}\ =\ 3}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a230c67393f7280922a1d4300e50b569a}{container\_types}}\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{util_8h_a230c67393f7280922a1d4300e50b569aab01795c8def509d833c47954f53637b1}{Vector}},}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{util_8h_a230c67393f7280922a1d4300e50b569aab62e104d38c9bf7a2efb6b244b4b9d3f}{List}}}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{util_8h_acee4c1dbc4fd157a39fa06b1632fac4c}{update\_info}}(stringstream\&\ info,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a230c67393f7280922a1d4300e50b569a}{container\_types}}\&\ type);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{util_8h_a7b5cf0c68fb00423166c0fc72df6b69b}{update\_files}}(vector<Directory\_files>\&\ files);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{util_8h_a537c68527135abe83df0eb30e8a4a6b2}{table}}(\textcolor{keyword}{const}\ vector<Directory\_files>\ files);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{util_8h_a37f38c7ae4ee674f6196d53ac27c119a}{is\_data\_file}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{util_8h_a849c429c6bb34fc2c0f7f38c1a99cc57}{get\_type}}(\textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a230c67393f7280922a1d4300e50b569a}{container\_types}}\&\ type);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{util_8h_ac4a09258a3d01747f692bb9be6a2a4c5}{is\_digits}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ str);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{util_8h_a4b20dc5715f8a590afd43e979ad07ee3}{progress\_clock}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\&\ lines);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{util_8h_a66f429983c999f42e24c3d9714df7b73}{find\_keys}}(\textcolor{keywordtype}{string}\&\ line,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}}\&\ print\_by,\ \textcolor{keywordtype}{size\_t}\&\ n\_keys,\ vector<string>\&\ keys);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}}\ \mbox{\hyperlink{util_8h_af0c60108e2ab2caf5943e84a33c28009}{print\_selection}}();}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{util_8h_aefb5f7192e319f7bb8706e797d7d9e5c}{sort\_selection}}(\textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}}\&\ print\_by);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{util_8h_a709824bea7bbeaa6914ea219a680e1e9}{create\_file\_selection}}(vector<File\_info>\&\ files);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{util_8h_ac838b6c02a39c915a1b81e8a43851931}{file\_selection}}(vector<string>\&\ files);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30c}{strategy}}\ \mbox{\hyperlink{util_8h_ae36a138d35722ea5bbd716e70cc896f0}{cycle\_strat}}(\textcolor{keyword}{enum}\ \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30c}{strategy}}\&\ strat);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

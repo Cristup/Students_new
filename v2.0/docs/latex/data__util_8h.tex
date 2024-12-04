@@ -1,0 +1,227 @@
+\doxysection{include/data\+\_\+util.h File Reference}
+\hypertarget{data__util_8h}{}\label{data__util_8h}\index{include/data\_util.h@{include/data\_util.h}}
+{\ttfamily \#include "{}libs.\+h"{}}\newline
+{\ttfamily \#include "{}student.\+h"{}}\newline
+{\ttfamily \#include "{}util.\+h"{}}\newline
+{\ttfamily \#include "{}timer.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Container $>$ }\\void \mbox{\hyperlink{data__util_8h_abf32b076c482f410510bfd46c264fbb7}{Input\+\_\+from\+\_\+file}} (Container \&local, const string \&filename)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a11be67ee5c930bca20f2ac910f036da9}{Input\+\_\+from\+\_\+file$<$ vector$<$ student $>$ $>$}} (vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local, const string \&filename)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a1d04a0b9a3038f08f4bcc8e8ad88c3d9}{Input\+\_\+from\+\_\+file$<$ list$<$ student $>$ $>$}} (list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local, const string \&filename)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{data__util_8h_adb4f54187cd29f1b1fd760c1b4cf1c9d}{output\+\_\+to\+\_\+file}} (T \&local, const string \&filename, const enum \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}} \&print\+\_\+by)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a23134a82438d7712d6bdc3f96b3a6225}{output\+\_\+to\+\_\+file$<$ vector$<$ student $>$ $>$}} (vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local, const string \&filename, const enum \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}} \&print\+\_\+by)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a4d0584a454c2baa182778cb8a80f7750}{output\+\_\+to\+\_\+file$<$ list$<$ student $>$ $>$}} (list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local, const string \&filename, const enum \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}} \&print\+\_\+by)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{data__util_8h_a7ff4d475e884ba12dc6be9a2b64861de}{output\+\_\+to\+\_\+screen}} (T \&local)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a715f1f5ae84e150b38aa2f10982e99f8}{output\+\_\+to\+\_\+screen$<$ vector$<$ student $>$ $>$}} (vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a6aa66673019c61c5313ad0f6adcdf135}{output\+\_\+to\+\_\+screen$<$ list$<$ student $>$ $>$}} (list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{data__util_8h_a5a74a1ab36136c8d431cb64c77748f98}{manual\+\_\+input}} (T \&container)
+\item 
+template void \mbox{\hyperlink{data__util_8h_ac6219f77d5865b190307b9d83401ea5f}{manual\+\_\+input$<$ vector$<$ student $>$ $>$}} (vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&container)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a70c3a89fa5c1b4ff29f861466f7cbb02}{manual\+\_\+input$<$ list$<$ student $>$ $>$}} (list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&container)
+\item 
+void \mbox{\hyperlink{data__util_8h_a0a96ea334da407a5d5c04b2e2fa9e004}{homework\+\_\+input}} (vector$<$ int $>$ \&homework)
+\item 
+void \mbox{\hyperlink{data__util_8h_af80958e71a80ce323aa093c5abc5bea0}{generate\+\_\+file}} (const string \&filename, const int \&size)
+\item 
+void \mbox{\hyperlink{data__util_8h_a2c642d2d2e8cf7be27fa17aad3d51adf}{create\+\_\+multiple\+\_\+files}} (vector$<$ \mbox{\hyperlink{struct_file__info}{File\+\_\+info}} $>$ \&files)
+\item 
+void \mbox{\hyperlink{data__util_8h_a82e62941ecf3df7467ec6722a5cfe38d}{markdown\+\_\+table}} ()
+\item 
+void \mbox{\hyperlink{data__util_8h_aba7856c1bade5eecd0abd6bc911359d6}{test\+\_\+multiple\+\_\+files}} (const vector$<$ string $>$ \&files, const enum \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}} \&print\+\_\+by, const string \&key, const enum \mbox{\hyperlink{util_8h_a230c67393f7280922a1d4300e50b569a}{container\+\_\+types}} \&c\+\_\+type, const enum \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30c}{strategy}} \&strat)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{data__util_8h_a4521d0c73421e077fcda5d2d78056e77}{sort\+\_\+to\+\_\+categories}} (T \&local, T \&Under, T \&Over)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a8215d6eef8be365471568aa522130fe0}{sort\+\_\+to\+\_\+categories$<$ vector$<$ student $>$ $>$}} (vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local, vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&Under, vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&Over)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a7f21db89198c0bad9463883b9525b93f}{sort\+\_\+to\+\_\+categories$<$ list$<$ student $>$ $>$}} (list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local, list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&Under, list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&Over)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{data__util_8h_a5d36f239e7ed9f6c23f118cb886f567d}{sort\+\_\+to\+\_\+categories2}} (T \&firstc, T \&newc)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a1e88f58f6e3e43067888e4d9b86485e8}{sort\+\_\+to\+\_\+categories2$<$ vector$<$ student $>$ $>$}} (vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&firstc, vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&newc)
+\item 
+template void \mbox{\hyperlink{data__util_8h_aee93a8f9e461d918be0fbc5998c41d52}{sort\+\_\+to\+\_\+categories2$<$ list$<$ student $>$ $>$}} (list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&firstc, list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&newc)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{data__util_8h_a6e49a3147ee82f41d1380a269fbad656}{sort\+\_\+to\+\_\+categories3}} (T \&local, T \&over)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a4214463ca2b6d15140ea4c6a37d3b1d5}{sort\+\_\+to\+\_\+categories3$<$ vector$<$ student $>$ $>$}} (vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local, vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&over)
+\item 
+template void \mbox{\hyperlink{data__util_8h_a1b96142dd9a55f3a07382ee26f97dfeb}{sort\+\_\+to\+\_\+categories3$<$ list$<$ student $>$ $>$}} (list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&local, list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&over)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{data__util_8h_a2c642d2d2e8cf7be27fa17aad3d51adf}\index{data\_util.h@{data\_util.h}!create\_multiple\_files@{create\_multiple\_files}}
+\index{create\_multiple\_files@{create\_multiple\_files}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{create\_multiple\_files()}{create\_multiple\_files()}}
+{\footnotesize\ttfamily \label{data__util_8h_a2c642d2d2e8cf7be27fa17aad3d51adf} 
+void create\+\_\+multiple\+\_\+files (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{struct_file__info}{File\+\_\+info}} $>$ \&}]{files}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_af80958e71a80ce323aa093c5abc5bea0}\index{data\_util.h@{data\_util.h}!generate\_file@{generate\_file}}
+\index{generate\_file@{generate\_file}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{generate\_file()}{generate\_file()}}
+{\footnotesize\ttfamily \label{data__util_8h_af80958e71a80ce323aa093c5abc5bea0} 
+void generate\+\_\+file (\begin{DoxyParamCaption}\item[{const string \&}]{filename}{, }\item[{const int \&}]{size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a0a96ea334da407a5d5c04b2e2fa9e004}\index{data\_util.h@{data\_util.h}!homework\_input@{homework\_input}}
+\index{homework\_input@{homework\_input}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{homework\_input()}{homework\_input()}}
+{\footnotesize\ttfamily \label{data__util_8h_a0a96ea334da407a5d5c04b2e2fa9e004} 
+void homework\+\_\+input (\begin{DoxyParamCaption}\item[{vector$<$ int $>$ \&}]{homework}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_abf32b076c482f410510bfd46c264fbb7}\index{data\_util.h@{data\_util.h}!Input\_from\_file@{Input\_from\_file}}
+\index{Input\_from\_file@{Input\_from\_file}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{Input\_from\_file()}{Input\_from\_file()}}
+{\footnotesize\ttfamily \label{data__util_8h_abf32b076c482f410510bfd46c264fbb7} 
+template$<$typename Container $>$ \\
+void Input\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{Container \&}]{local}{, }\item[{const string \&}]{filename}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a1d04a0b9a3038f08f4bcc8e8ad88c3d9}\index{data\_util.h@{data\_util.h}!Input\_from\_file$<$ list$<$ student $>$ $>$@{Input\_from\_file$<$ list$<$ student $>$ $>$}}
+\index{Input\_from\_file$<$ list$<$ student $>$ $>$@{Input\_from\_file$<$ list$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{Input\_from\_file$<$ list$<$ student $>$ $>$()}{Input\_from\_file< list< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a1d04a0b9a3038f08f4bcc8e8ad88c3d9} 
+template void \mbox{\hyperlink{data__util_8cpp_abf32b076c482f410510bfd46c264fbb7}{Input\+\_\+from\+\_\+file}}$<$ list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{, }\item[{const string \&}]{filename}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a11be67ee5c930bca20f2ac910f036da9}\index{data\_util.h@{data\_util.h}!Input\_from\_file$<$ vector$<$ student $>$ $>$@{Input\_from\_file$<$ vector$<$ student $>$ $>$}}
+\index{Input\_from\_file$<$ vector$<$ student $>$ $>$@{Input\_from\_file$<$ vector$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{Input\_from\_file$<$ vector$<$ student $>$ $>$()}{Input\_from\_file< vector< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a11be67ee5c930bca20f2ac910f036da9} 
+template void \mbox{\hyperlink{data__util_8cpp_abf32b076c482f410510bfd46c264fbb7}{Input\+\_\+from\+\_\+file}}$<$ vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{, }\item[{const string \&}]{filename}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a5a74a1ab36136c8d431cb64c77748f98}\index{data\_util.h@{data\_util.h}!manual\_input@{manual\_input}}
+\index{manual\_input@{manual\_input}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{manual\_input()}{manual\_input()}}
+{\footnotesize\ttfamily \label{data__util_8h_a5a74a1ab36136c8d431cb64c77748f98} 
+template$<$typename T $>$ \\
+void manual\+\_\+input (\begin{DoxyParamCaption}\item[{T \&}]{container}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a70c3a89fa5c1b4ff29f861466f7cbb02}\index{data\_util.h@{data\_util.h}!manual\_input$<$ list$<$ student $>$ $>$@{manual\_input$<$ list$<$ student $>$ $>$}}
+\index{manual\_input$<$ list$<$ student $>$ $>$@{manual\_input$<$ list$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{manual\_input$<$ list$<$ student $>$ $>$()}{manual\_input< list< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a70c3a89fa5c1b4ff29f861466f7cbb02} 
+template void \mbox{\hyperlink{data__util_8cpp_a5a74a1ab36136c8d431cb64c77748f98}{manual\+\_\+input}}$<$ list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{container}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_ac6219f77d5865b190307b9d83401ea5f}\index{data\_util.h@{data\_util.h}!manual\_input$<$ vector$<$ student $>$ $>$@{manual\_input$<$ vector$<$ student $>$ $>$}}
+\index{manual\_input$<$ vector$<$ student $>$ $>$@{manual\_input$<$ vector$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{manual\_input$<$ vector$<$ student $>$ $>$()}{manual\_input< vector< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_ac6219f77d5865b190307b9d83401ea5f} 
+template void \mbox{\hyperlink{data__util_8cpp_a5a74a1ab36136c8d431cb64c77748f98}{manual\+\_\+input}}$<$ vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{container}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a82e62941ecf3df7467ec6722a5cfe38d}\index{data\_util.h@{data\_util.h}!markdown\_table@{markdown\_table}}
+\index{markdown\_table@{markdown\_table}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{markdown\_table()}{markdown\_table()}}
+{\footnotesize\ttfamily \label{data__util_8h_a82e62941ecf3df7467ec6722a5cfe38d} 
+void markdown\+\_\+table (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_adb4f54187cd29f1b1fd760c1b4cf1c9d}\index{data\_util.h@{data\_util.h}!output\_to\_file@{output\_to\_file}}
+\index{output\_to\_file@{output\_to\_file}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{output\_to\_file()}{output\_to\_file()}}
+{\footnotesize\ttfamily \label{data__util_8h_adb4f54187cd29f1b1fd760c1b4cf1c9d} 
+template$<$typename T $>$ \\
+void output\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{T \&}]{local}{, }\item[{const string \&}]{filename}{, }\item[{const enum \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}} \&}]{print\+\_\+by}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a4d0584a454c2baa182778cb8a80f7750}\index{data\_util.h@{data\_util.h}!output\_to\_file$<$ list$<$ student $>$ $>$@{output\_to\_file$<$ list$<$ student $>$ $>$}}
+\index{output\_to\_file$<$ list$<$ student $>$ $>$@{output\_to\_file$<$ list$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{output\_to\_file$<$ list$<$ student $>$ $>$()}{output\_to\_file< list< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a4d0584a454c2baa182778cb8a80f7750} 
+template void \mbox{\hyperlink{data__util_8cpp_adb4f54187cd29f1b1fd760c1b4cf1c9d}{output\+\_\+to\+\_\+file}}$<$ list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{, }\item[{const string \&}]{filename}{, }\item[{const enum \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}} \&}]{print\+\_\+by}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a23134a82438d7712d6bdc3f96b3a6225}\index{data\_util.h@{data\_util.h}!output\_to\_file$<$ vector$<$ student $>$ $>$@{output\_to\_file$<$ vector$<$ student $>$ $>$}}
+\index{output\_to\_file$<$ vector$<$ student $>$ $>$@{output\_to\_file$<$ vector$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{output\_to\_file$<$ vector$<$ student $>$ $>$()}{output\_to\_file< vector< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a23134a82438d7712d6bdc3f96b3a6225} 
+template void \mbox{\hyperlink{data__util_8cpp_adb4f54187cd29f1b1fd760c1b4cf1c9d}{output\+\_\+to\+\_\+file}}$<$ vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{, }\item[{const string \&}]{filename}{, }\item[{const enum \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}} \&}]{print\+\_\+by}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a7ff4d475e884ba12dc6be9a2b64861de}\index{data\_util.h@{data\_util.h}!output\_to\_screen@{output\_to\_screen}}
+\index{output\_to\_screen@{output\_to\_screen}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{output\_to\_screen()}{output\_to\_screen()}}
+{\footnotesize\ttfamily \label{data__util_8h_a7ff4d475e884ba12dc6be9a2b64861de} 
+template$<$typename T $>$ \\
+void output\+\_\+to\+\_\+screen (\begin{DoxyParamCaption}\item[{T \&}]{local}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a6aa66673019c61c5313ad0f6adcdf135}\index{data\_util.h@{data\_util.h}!output\_to\_screen$<$ list$<$ student $>$ $>$@{output\_to\_screen$<$ list$<$ student $>$ $>$}}
+\index{output\_to\_screen$<$ list$<$ student $>$ $>$@{output\_to\_screen$<$ list$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{output\_to\_screen$<$ list$<$ student $>$ $>$()}{output\_to\_screen< list< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a6aa66673019c61c5313ad0f6adcdf135} 
+template void \mbox{\hyperlink{data__util_8cpp_a7ff4d475e884ba12dc6be9a2b64861de}{output\+\_\+to\+\_\+screen}}$<$ list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a715f1f5ae84e150b38aa2f10982e99f8}\index{data\_util.h@{data\_util.h}!output\_to\_screen$<$ vector$<$ student $>$ $>$@{output\_to\_screen$<$ vector$<$ student $>$ $>$}}
+\index{output\_to\_screen$<$ vector$<$ student $>$ $>$@{output\_to\_screen$<$ vector$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{output\_to\_screen$<$ vector$<$ student $>$ $>$()}{output\_to\_screen< vector< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a715f1f5ae84e150b38aa2f10982e99f8} 
+template void \mbox{\hyperlink{data__util_8cpp_a7ff4d475e884ba12dc6be9a2b64861de}{output\+\_\+to\+\_\+screen}}$<$ vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a4521d0c73421e077fcda5d2d78056e77}\index{data\_util.h@{data\_util.h}!sort\_to\_categories@{sort\_to\_categories}}
+\index{sort\_to\_categories@{sort\_to\_categories}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories()}{sort\_to\_categories()}}
+{\footnotesize\ttfamily \label{data__util_8h_a4521d0c73421e077fcda5d2d78056e77} 
+template$<$typename T $>$ \\
+void sort\+\_\+to\+\_\+categories (\begin{DoxyParamCaption}\item[{T \&}]{local}{, }\item[{T \&}]{Under}{, }\item[{T \&}]{Over}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a5d36f239e7ed9f6c23f118cb886f567d}\index{data\_util.h@{data\_util.h}!sort\_to\_categories2@{sort\_to\_categories2}}
+\index{sort\_to\_categories2@{sort\_to\_categories2}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories2()}{sort\_to\_categories2()}}
+{\footnotesize\ttfamily \label{data__util_8h_a5d36f239e7ed9f6c23f118cb886f567d} 
+template$<$typename T $>$ \\
+void sort\+\_\+to\+\_\+categories2 (\begin{DoxyParamCaption}\item[{T \&}]{firstc}{, }\item[{T \&}]{newc}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_aee93a8f9e461d918be0fbc5998c41d52}\index{data\_util.h@{data\_util.h}!sort\_to\_categories2$<$ list$<$ student $>$ $>$@{sort\_to\_categories2$<$ list$<$ student $>$ $>$}}
+\index{sort\_to\_categories2$<$ list$<$ student $>$ $>$@{sort\_to\_categories2$<$ list$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories2$<$ list$<$ student $>$ $>$()}{sort\_to\_categories2< list< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_aee93a8f9e461d918be0fbc5998c41d52} 
+template void \mbox{\hyperlink{data__util_8cpp_a5d36f239e7ed9f6c23f118cb886f567d}{sort\+\_\+to\+\_\+categories2}}$<$ list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{firstc}{, }\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{newc}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a1e88f58f6e3e43067888e4d9b86485e8}\index{data\_util.h@{data\_util.h}!sort\_to\_categories2$<$ vector$<$ student $>$ $>$@{sort\_to\_categories2$<$ vector$<$ student $>$ $>$}}
+\index{sort\_to\_categories2$<$ vector$<$ student $>$ $>$@{sort\_to\_categories2$<$ vector$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories2$<$ vector$<$ student $>$ $>$()}{sort\_to\_categories2< vector< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a1e88f58f6e3e43067888e4d9b86485e8} 
+template void \mbox{\hyperlink{data__util_8cpp_a5d36f239e7ed9f6c23f118cb886f567d}{sort\+\_\+to\+\_\+categories2}}$<$ vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{firstc}{, }\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{newc}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a6e49a3147ee82f41d1380a269fbad656}\index{data\_util.h@{data\_util.h}!sort\_to\_categories3@{sort\_to\_categories3}}
+\index{sort\_to\_categories3@{sort\_to\_categories3}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories3()}{sort\_to\_categories3()}}
+{\footnotesize\ttfamily \label{data__util_8h_a6e49a3147ee82f41d1380a269fbad656} 
+template$<$typename T $>$ \\
+void sort\+\_\+to\+\_\+categories3 (\begin{DoxyParamCaption}\item[{T \&}]{local}{, }\item[{T \&}]{over}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a1b96142dd9a55f3a07382ee26f97dfeb}\index{data\_util.h@{data\_util.h}!sort\_to\_categories3$<$ list$<$ student $>$ $>$@{sort\_to\_categories3$<$ list$<$ student $>$ $>$}}
+\index{sort\_to\_categories3$<$ list$<$ student $>$ $>$@{sort\_to\_categories3$<$ list$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories3$<$ list$<$ student $>$ $>$()}{sort\_to\_categories3< list< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a1b96142dd9a55f3a07382ee26f97dfeb} 
+template void \mbox{\hyperlink{data__util_8cpp_a6e49a3147ee82f41d1380a269fbad656}{sort\+\_\+to\+\_\+categories3}}$<$ list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{, }\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{over}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a4214463ca2b6d15140ea4c6a37d3b1d5}\index{data\_util.h@{data\_util.h}!sort\_to\_categories3$<$ vector$<$ student $>$ $>$@{sort\_to\_categories3$<$ vector$<$ student $>$ $>$}}
+\index{sort\_to\_categories3$<$ vector$<$ student $>$ $>$@{sort\_to\_categories3$<$ vector$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories3$<$ vector$<$ student $>$ $>$()}{sort\_to\_categories3< vector< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a4214463ca2b6d15140ea4c6a37d3b1d5} 
+template void \mbox{\hyperlink{data__util_8cpp_a6e49a3147ee82f41d1380a269fbad656}{sort\+\_\+to\+\_\+categories3}}$<$ vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{, }\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{over}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a7f21db89198c0bad9463883b9525b93f}\index{data\_util.h@{data\_util.h}!sort\_to\_categories$<$ list$<$ student $>$ $>$@{sort\_to\_categories$<$ list$<$ student $>$ $>$}}
+\index{sort\_to\_categories$<$ list$<$ student $>$ $>$@{sort\_to\_categories$<$ list$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories$<$ list$<$ student $>$ $>$()}{sort\_to\_categories< list< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a7f21db89198c0bad9463883b9525b93f} 
+template void \mbox{\hyperlink{data__util_8cpp_a4521d0c73421e077fcda5d2d78056e77}{sort\+\_\+to\+\_\+categories}}$<$ list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{, }\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{Under}{, }\item[{list$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{Over}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_a8215d6eef8be365471568aa522130fe0}\index{data\_util.h@{data\_util.h}!sort\_to\_categories$<$ vector$<$ student $>$ $>$@{sort\_to\_categories$<$ vector$<$ student $>$ $>$}}
+\index{sort\_to\_categories$<$ vector$<$ student $>$ $>$@{sort\_to\_categories$<$ vector$<$ student $>$ $>$}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{sort\_to\_categories$<$ vector$<$ student $>$ $>$()}{sort\_to\_categories< vector< student > >()}}
+{\footnotesize\ttfamily \label{data__util_8h_a8215d6eef8be365471568aa522130fe0} 
+template void \mbox{\hyperlink{data__util_8cpp_a4521d0c73421e077fcda5d2d78056e77}{sort\+\_\+to\+\_\+categories}}$<$ vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ $>$ (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{local}{, }\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{Under}{, }\item[{vector$<$ \mbox{\hyperlink{classstudent}{student}} $>$ \&}]{Over}{}\end{DoxyParamCaption})}
+
+\Hypertarget{data__util_8h_aba7856c1bade5eecd0abd6bc911359d6}\index{data\_util.h@{data\_util.h}!test\_multiple\_files@{test\_multiple\_files}}
+\index{test\_multiple\_files@{test\_multiple\_files}!data\_util.h@{data\_util.h}}
+\doxysubsubsection{\texorpdfstring{test\_multiple\_files()}{test\_multiple\_files()}}
+{\footnotesize\ttfamily \label{data__util_8h_aba7856c1bade5eecd0abd6bc911359d6} 
+void test\+\_\+multiple\+\_\+files (\begin{DoxyParamCaption}\item[{const vector$<$ string $>$ \&}]{files}{, }\item[{const enum \mbox{\hyperlink{util_8h_a79d1b0e96e042367a41a73d13a4a09f1}{selection}} \&}]{print\+\_\+by}{, }\item[{const string \&}]{key}{, }\item[{const enum \mbox{\hyperlink{util_8h_a230c67393f7280922a1d4300e50b569a}{container\+\_\+types}} \&}]{c\+\_\+type}{, }\item[{const enum \mbox{\hyperlink{util_8h_ab621d71bb2cf38b09419ef3a5047e30c}{strategy}} \&}]{strat}{}\end{DoxyParamCaption})}
+
