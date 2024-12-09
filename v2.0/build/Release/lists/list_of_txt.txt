@@ -1,3 +1,0 @@
-100000.txt
-100000_silpni.txt
-100000_stiprus.txt

@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['categorising_0',['categorising',['../struct_record.html#a24b55b439f3697213492227003236676',1,'Record']]],
-  ['container_5ftypes_1',['container_types',['../util_8h.html#a230c67393f7280922a1d4300e50b569a',1,'util.h']]],
-  ['count_2',['count',['../struct_record.html#ad5649cf42928e97400bd65e28ac3515c',1,'Record']]],
-  ['create_5ffile_5fselection_3',['create_file_selection',['../util_8cpp.html#a709824bea7bbeaa6914ea219a680e1e9',1,'create_file_selection(vector&lt; File_info &gt; &amp;files):&#160;util.cpp'],['../util_8h.html#a709824bea7bbeaa6914ea219a680e1e9',1,'create_file_selection(vector&lt; File_info &gt; &amp;files):&#160;util.cpp']]],
-  ['create_5fmultiple_5ffiles_4',['create_multiple_files',['../data__util_8cpp.html#a2c642d2d2e8cf7be27fa17aad3d51adf',1,'create_multiple_files(vector&lt; File_info &gt; &amp;files):&#160;data_util.cpp'],['../data__util_8h.html#a2c642d2d2e8cf7be27fa17aad3d51adf',1,'create_multiple_files(vector&lt; File_info &gt; &amp;files):&#160;data_util.cpp']]],
-  ['cycle_5fstrat_5',['cycle_strat',['../util_8cpp.html#ae36a138d35722ea5bbd716e70cc896f0',1,'cycle_strat(enum strategy &amp;strat):&#160;util.cpp'],['../util_8h.html#ae36a138d35722ea5bbd716e70cc896f0',1,'cycle_strat(enum strategy &amp;strat):&#160;util.cpp']]]
+  ['file_5finfo_0',['File_info',['../struct_file__info.html',1,'']]],
+  ['final_5fave_1',['final_ave',['../classstudent.html#a68b838d27b3bcc123e45393ee53ccb48',1,'student']]],
+  ['final_5faverage_5f_2',['final_average_',['../classstudent.html#afcd67796b3485c3cd2aa0e514215cae0',1,'student']]],
+  ['final_5fmed_3',['final_med',['../classstudent.html#acf22602891c15b2f08230bb2d4660fcb',1,'student']]],
+  ['final_5fmedian_5f_4',['final_median_',['../classstudent.html#a3070eb36bf80c7a5ccaeb0a7e8ae70d5',1,'student']]]
 ];
