@@ -319,3 +319,19 @@ What's new:
 1. Categorization strategies.
 2. Progress bar for file generation.
 3. Installation with CMake.
+
+#
+### v1.1
+'Student' class, that is, the previous 'Student' structure is recast into a class. The program code has been adjusted to work with the new 'Student' class.
+
+#
+### v1.2
+Version is supplemented with "Rule of three" - the rule of three methods and input and output operators, the program applies the output operator both to the file and to the terminal.
+
+#
+### v1.5
+Version supplemented with the base (abstract) class 'Person' and its derived class - Student.
+
+#
+### v2.0
+Version is supplemented with doxygen code documentation, the documentation is created in 'html' and 'pdf' format. Implemented Unit Tests using Google tests framework.
