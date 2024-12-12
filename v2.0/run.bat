@@ -1,3 +1,6 @@
+IF NOT EXIST "googletest" (
+    git clone https://github.com/google/googletest.git
+)
 cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
 cmake --build build --config Release
 
