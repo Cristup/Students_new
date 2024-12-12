@@ -1,3 +1,14 @@
+/**
+ * @file libs.h
+ * @brief A collection of standard and external library includes and using directives.
+ *
+ * This header file centralizes the inclusion of commonly used libraries and provides
+ * convenient `using` declarations for frequently utilized classes, functions, and types.
+ * It serves as a utility header to simplify and standardize code in larger projects.
+ *
+ * @note The use of this file helps reduce redundancy.
+ */
+
 #ifndef LIBS_H_INCLUDED
 #define LIBS_H_INCLUDED
 
