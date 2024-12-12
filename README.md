@@ -17,7 +17,7 @@ After running the program you will see the list of commands. Commands can be cat
 ### Working with data
 
 * `Open` - After running the command, the user is asked to make [these](#printing-and-sorting-key-selection) selections. The user will be provided with a similar table:   
-<img src="Table_OF_txts.png" alt="Table of available .txt files" style="height: 140px;"/>   
+<img src="images/Table_OF_txts.png" alt="Table of available .txt files" style="height: 140px;"/>   
 Then user just needs to enter the ID of the files it wants to open.
 
 * **Integer input** - After running the command, the user is asked to make [these](#printing-and-sorting-key-selection) selections. The integer 
@@ -50,10 +50,10 @@ void Automatic_input(Stud& local)
 Here are the commands for measuring program efficiency, meant for optimizing the program.
 
 * `Test` - This is the main command for testing the program's speed. After running the command, the user is asked to make [these](#printing-and-sorting-key-selection) selections. Then the user is provided with the same table of available **.txt** files. Then user needs to enter the IDs of files to be tested, also user can enter the same ID a few times and later get average value durations from all tests with that file.     
-<img src="Testing.png" alt="Testing" style="height: 380px;"/>   
+<img src="images/Testing.png" alt="Testing" style="height: 380px;"/>   
 
 * `Create` - This command is for creating test data. Users can create multiple files by writing the file name and size for each data file they want to create.      
-<img src="Generating.png" alt="File Generation" style="height: 220px;"/> 
+<img src="images/Generating.png" alt="File Generation" style="height: 220px;"/> 
 
 * `Change`- This command lets the user change the container type (either **vector** or **list**) that will be used for storing students' data during processing.
 
@@ -91,7 +91,7 @@ For printing results to file, the user can choose one out of three options.
 2. `Median` - to print the final result calculated using the median value of homework marks.
 3. `Both` - to print both **1.** and **2.** options.    
 
-<img src = "Print.png" alt = "Print Selection" style = "height: 130px;"/> 
+<img src = "images/Print.png" alt = "Print Selection" style = "height: 130px;"/> 
 
 For sorting data user can choose up to two keys from four available:
 * Name
@@ -99,7 +99,7 @@ For sorting data user can choose up to two keys from four available:
 * Average
 * Median
      
-<img src = "Keys.png" alt = "Print Selection" style = "height: 90px;"/> 
+<img src = "images/Keys.png" alt = "Print Selection" style = "height: 90px;"/> 
 
 Here is the code for how sorting was implemented (key selection from user input and comparator selector):
 
@@ -214,11 +214,13 @@ void sort_to_categories3(T& local, T& Under, T& Over)
 ## Installation
 
 Here are the steps to install and run the program:
-1. Download release **v1.0** by going to releases, then release `v1.0` and press on `Source code (zip)`.
-2. **Unzip** the file `Students-1.0.zip`.
-3. Run the `run.bat` file.
+0. If you don't have cmake installed, you will need to download it from a file in the latest release and run it.
+1. Download the latest release **v2.0** by going to releases, then release `v2.0` and press on `Source code (zip)`.
+2. **Unzip** the file `Students-2.0.zip`.
+3. Run the `run.bat` file. (It wiil also clone googletest repository from github to project directory if it isn't there already)
 4. Follow the instructions on the screen or read [instructions](#how-to-use-the-program) on how to use the program.
 
+Before being able to use the program, you will also see Unit Test results and by pressing any button, program will be executed.
 If everything is done right program should run immediately. To run the program again, next time you can run the `Students_App.exe` file found in the `Debug` folder or create **shortcut** by right-clicking on file `Students_App.exe` and there you should find an option **Create shortcut**, which can be moved to any convenient location from where then you'll be able to run the program.
 
 
@@ -319,3 +321,19 @@ What's new:
 1. Categorization strategies.
 2. Progress bar for file generation.
 3. Installation with CMake.
+
+#
+### v1.1
+'Student' class, that is, the previous 'Student' structure is recast into a class. The program code has been adjusted to work with the new 'Student' class.
+
+#
+### v1.2
+Version is supplemented with "Rule of three" - the rule of three methods and input and output operators, the program applies the output operator both to the file and to the terminal.
+
+#
+### v1.5
+Version supplemented with the base (abstract) class 'Person' and its derived class - Student.
+
+#
+### v2.0
+Version is supplemented with doxygen code documentation, the documentation is created in 'html' and 'pdf' format. Implemented Unit Tests using Google tests framework.
